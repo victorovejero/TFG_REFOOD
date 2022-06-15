@@ -67,7 +67,9 @@ SOFTWARE INICIAL – REFOOD
 
 a.	Algoritmo para que automáticamente la aplicación decida como se reparte la comida en base a la necesidad y alergias de cada familia.
 
-b.	Pegatinas de “comida amigable para niños” para priorizar comida para niños? Puede ser una idea. Por ejemplo pasta, hamburguesa, Nuggets, patatas fritas, golosinas y chocolate….
+b. Pegatinas para alérgenos las cuales se pueden escanear o simplemente meter en la applicación. La llevarían los voluntarios y, en base a lo que les digan los restaurantes, las pegan en cada tupper acorde con lo que se los datos que se les comparta.
+
+c.	Pegatinas de “comida amigable para niños” para priorizar comida para niños? Puede ser una idea. Por ejemplo pasta, hamburguesa, Nuggets, patatas fritas, golosinas y chocolate….
 
 2.	Interfaz sencilla para el usuario, meter lo que ha llegado y que la app te diga donde meterlo.
 
