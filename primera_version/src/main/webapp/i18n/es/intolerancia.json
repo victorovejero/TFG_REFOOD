@@ -1,0 +1,26 @@
+{
+  "refoodTrazabilidadApp": {
+    "intolerancia": {
+      "home": {
+        "title": "Intolerancias",
+        "refreshListLabel": "Refrescar lista",
+        "createLabel": "Crear nuevo Intolerancia",
+        "createOrEditLabel": "Crear o editar Intolerancia",
+        "notFound": "Ningún Intolerancias encontrado"
+      },
+      "created": "Un nuevo Intolerancia ha sido creado con el identificador {{ param }}",
+      "updated": "Un Intolerancia ha sido actualizado con el identificador {{ param }}",
+      "deleted": "Un Intolerancia ha sido eliminado con el identificador {{ param }}",
+      "delete": {
+        "question": "¿Seguro que quiere eliminar Intolerancia {{ id }}?"
+      },
+      "detail": {
+        "title": "Intolerancia"
+      },
+      "id": "ID",
+      "nombreIntolerancia": "Nombre Intolerancia",
+      "tipoDeAlimento": "Tipo De Alimento",
+      "beneficiario": "Beneficiario"
+    }
+  }
+}

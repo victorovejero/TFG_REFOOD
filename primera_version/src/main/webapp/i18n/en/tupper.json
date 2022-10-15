@@ -1,0 +1,29 @@
+{
+  "refoodTrazabilidadApp": {
+    "tupper": {
+      "home": {
+        "title": "Tuppers",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Tupper",
+        "createOrEditLabel": "Create or edit a Tupper",
+        "notFound": "No Tuppers found"
+      },
+      "created": "A new Tupper is created with identifier {{ param }}",
+      "updated": "A Tupper is updated with identifier {{ param }}",
+      "deleted": "A Tupper is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Tupper {{ id }}?"
+      },
+      "detail": {
+        "title": "Tupper"
+      },
+      "id": "ID",
+      "peso": "Peso",
+      "productor": "Productor",
+      "modelo": "Modelo",
+      "precio": "Precio",
+      "descripcion": "Descripcion",
+      "alimentoDeSalida": "Alimento De Salida"
+    }
+  }
+}

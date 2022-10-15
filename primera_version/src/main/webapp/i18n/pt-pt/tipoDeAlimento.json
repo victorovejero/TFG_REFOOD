@@ -1,0 +1,27 @@
+{
+  "refoodTrazabilidadApp": {
+    "tipoDeAlimento": {
+      "home": {
+        "title": "Tipo De Alimentos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Criar novo(a) Tipo De Alimento",
+        "createOrEditLabel": "Criar ou editar Tipo De Alimento",
+        "notFound": "Nenhum Tipo De Alimentos encontrado"
+      },
+      "created": "Um novo Tipo De Alimento foi criado com o identificador {{ param }}",
+      "updated": "Tipo De Alimento com identificador {{ param }} foi actualizado",
+      "deleted": "Tipo De Alimento com identificador {{ param }} foi eliminado",
+      "delete": {
+        "question": "Tem a certeza que pretende eliminar o(a) Tipo De Alimento {{ id }}?"
+      },
+      "detail": {
+        "title": "Tipo De Alimento"
+      },
+      "id": "ID",
+      "nombreAlimento": "Nombre Alimento",
+      "alimentoDeEntrada": "Alimento De Entrada",
+      "alimentoDeSalida": "Alimento De Salida",
+      "intolerancia": "Intolerancia"
+    }
+  }
+}

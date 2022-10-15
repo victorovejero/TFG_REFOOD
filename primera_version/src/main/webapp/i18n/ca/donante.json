@@ -1,0 +1,35 @@
+{
+  "refoodTrazabilidadApp": {
+    "donante": {
+      "home": {
+        "title": "Donantes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Donante",
+        "createOrEditLabel": "Create or edit a Donante",
+        "notFound": "No Donantes found"
+      },
+      "created": "A new Donante is created with identifier {{ param }}",
+      "updated": "A Donante is updated with identifier {{ param }}",
+      "deleted": "A Donante is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Donante {{ id }}?"
+      },
+      "detail": {
+        "title": "Donante"
+      },
+      "id": "ID",
+      "nombreDonante": "Nombre Donante",
+      "tipoDonante": "Tipo Donante",
+      "ruta": "Ruta",
+      "direccionDonante": "Direccion Donante",
+      "telefonoDonante": "Telefono Donante",
+      "emailDonante": "Email Donante",
+      "responsableDonante": "Responsable Donante",
+      "fechaAlta": "Fecha Alta",
+      "fechaBaja": "Fecha Baja",
+      "comentarios": "Comentarios",
+      "alimentoDeEntrada": "Alimento De Entrada",
+      "nucleo": "Nucleo"
+    }
+  }
+}

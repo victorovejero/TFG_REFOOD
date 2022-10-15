@@ -1,0 +1,55 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015111635",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "beneficiario",
+  "fields": [
+    {
+      "fieldName": "nombreBeneficiario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numPersonas",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numNinios",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "idDual",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Beneficiario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alimentoDeSalida",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "alimentoDeSalida",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "nucleo",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "nucleo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "intolerancia",
+      "otherEntityRelationshipName": "beneficiario",
+      "ownerSide": false,
+      "relationshipName": "intolerancia",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

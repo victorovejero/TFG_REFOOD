@@ -1,0 +1,27 @@
+{
+  "refoodTrazabilidadApp": {
+    "registro": {
+      "home": {
+        "title": "Registros",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Registro",
+        "createOrEditLabel": "Create or edit a Registro",
+        "notFound": "No Registros found"
+      },
+      "created": "A new Registro is created with identifier {{ param }}",
+      "updated": "A Registro is updated with identifier {{ param }}",
+      "deleted": "A Registro is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Registro {{ id }}?"
+      },
+      "detail": {
+        "title": "Registro"
+      },
+      "id": "ID",
+      "diaActividad": "Dia Actividad",
+      "ruta": "Ruta",
+      "voluntario": "Voluntario",
+      "nucleo": "Nucleo"
+    }
+  }
+}

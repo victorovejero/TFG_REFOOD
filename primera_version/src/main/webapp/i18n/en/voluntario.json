@@ -1,0 +1,41 @@
+{
+  "refoodTrazabilidadApp": {
+    "voluntario": {
+      "home": {
+        "title": "Voluntarios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Voluntario",
+        "createOrEditLabel": "Create or edit a Voluntario",
+        "notFound": "No Voluntarios found"
+      },
+      "created": "A new Voluntario is created with identifier {{ param }}",
+      "updated": "A Voluntario is updated with identifier {{ param }}",
+      "deleted": "A Voluntario is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Voluntario {{ id }}?"
+      },
+      "detail": {
+        "title": "Voluntario"
+      },
+      "id": "ID",
+      "nombreVoluntario": "Nombre Voluntario",
+      "primerApellido": "Primer Apellido",
+      "segundoApellido": "Segundo Apellido",
+      "emailVoluntario": "Email Voluntario",
+      "telefonoContactoVoluntario": "Telefono Contacto Voluntario",
+      "dniVoluntario": "Dni Voluntario",
+      "fechaNacimientoVoluntario": "Fecha Nacimiento Voluntario",
+      "sexoVoluntario": "Sexo Voluntario",
+      "fechaAlta": "Fecha Alta",
+      "fechaBaja": "Fecha Baja",
+      "tipoVoluntario": "Tipo Voluntario",
+      "tipoTurno": "Tipo Turno",
+      "responsableDia": "Responsable Dia",
+      "origenVoluntario": "Origen Voluntario",
+      "manipuladorAlimentos": "Manipulador Alimentos",
+      "codigoPostal": "Codigo Postal",
+      "nucleo": "Nucleo",
+      "registro": "Registro"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "refoodTrazabilidadApp": {
+    "beneficiario": {
+      "home": {
+        "title": "Beneficiarios",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Beneficiario",
+        "createOrEditLabel": "Create or edit a Beneficiario",
+        "notFound": "No Beneficiarios found"
+      },
+      "created": "A new Beneficiario is created with identifier {{ param }}",
+      "updated": "A Beneficiario is updated with identifier {{ param }}",
+      "deleted": "A Beneficiario is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Beneficiario {{ id }}?"
+      },
+      "detail": {
+        "title": "Beneficiario"
+      },
+      "id": "ID",
+      "nombreBeneficiario": "Nombre Beneficiario",
+      "numPersonas": "Num Personas",
+      "numNinios": "Num Ninios",
+      "idDual": "Id Dual",
+      "alimentoDeSalida": "Alimento De Salida",
+      "nucleo": "Nucleo",
+      "intolerancia": "Intolerancia"
+    }
+  }
+}

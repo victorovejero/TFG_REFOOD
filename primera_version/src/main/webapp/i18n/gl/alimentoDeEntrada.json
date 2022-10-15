@@ -1,0 +1,32 @@
+{
+  "refoodTrazabilidadApp": {
+    "alimentoDeEntrada": {
+      "home": {
+        "title": "AlimentoDeEntradas",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Crear novo Alimento De Entrada",
+        "createOrEditLabel": "Crear ou editar Alimento De Entrada",
+        "notFound": "No Alimento De Entradas found"
+      },
+      "created": "Un novo Alimento De Entrada foi creado co identificador {{ param }}",
+      "updated": "Un Alimento De Entrada foi actualizado co identificador {{ param }}",
+      "deleted": "Un Alimento De Entrada foi eliminado co identificador {{ param }}",
+      "delete": {
+        "question": "Seguro que desexa eliminar Alimento De Entrada {{ id }}?"
+      },
+      "detail": {
+        "title": "Alimento De Entrada"
+      },
+      "id": "ID",
+      "peso": "Peso",
+      "fechaEntrada": "Fecha Entrada",
+      "fechaYHoraLog": "Fecha Y Hora Log",
+      "fechaYHoraRecogida": "Fecha Y Hora Recogida",
+      "fechaYHoraPreparacion": "Fecha Y Hora Preparacion",
+      "alimentoDeEntrada": "Alimento De Entrada",
+      "alimentoDeSalida": "Alimento De Salida",
+      "donante": "Donante",
+      "tipoDeAlimento": "Tipo De Alimento"
+    }
+  }
+}

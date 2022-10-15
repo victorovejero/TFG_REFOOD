@@ -1,0 +1,82 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015111633",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "nucleo",
+  "fields": [
+    {
+      "fieldName": "nombreNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccionNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "provinciaNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "responsableNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonoNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "emailNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "numeroRutas",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Nucleo",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "donante",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "donante",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "beneficiario",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "beneficiario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "voluntario",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "voluntario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "socio",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "socio",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "registro",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "registro",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

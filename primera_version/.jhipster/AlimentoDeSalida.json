@@ -1,0 +1,69 @@
+{
+  "applications": "*",
+  "changelogDate": "20221015111637",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "alimento_de_salida",
+  "fields": [
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaEntrada",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaSalida",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraLog",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraPreparacion",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "fechaYHoraRecogida",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlimentoDeSalida",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tupper",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "tupper",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "beneficiario",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "beneficiario",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "alimentoDeEntrada",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "alimentoDeEntrada",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "tipoDeAlimento",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "tipoDeAlimento",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
