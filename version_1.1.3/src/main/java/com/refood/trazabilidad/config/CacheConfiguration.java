@@ -48,6 +48,34 @@ public class CacheConfiguration {
             createCache(cm, com.refood.trazabilidad.domain.User.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.Authority.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".donantes");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".beneficiarios");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".voluntarios");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".socios");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".registros");
+            createCache(cm, com.refood.trazabilidad.domain.Donante.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Donante.class.getName() + ".alimentoDeEntradas");
+            createCache(cm, com.refood.trazabilidad.domain.Beneficiario.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Beneficiario.class.getName() + ".alimentoDeSalidas");
+            createCache(cm, com.refood.trazabilidad.domain.Beneficiario.class.getName() + ".intolerancias");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeEntrada.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeEntrada.class.getName() + ".alimentoDeSalidas");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeSalida.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.TipoDeAlimento.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.TipoDeAlimento.class.getName() + ".alimentoDeSalidas");
+            createCache(cm, com.refood.trazabilidad.domain.TipoDeAlimento.class.getName() + ".intolerancias");
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName() + ".alimentoDeSalidas");
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName() + ".alimentoDeEntradas");
+            createCache(cm, com.refood.trazabilidad.domain.Intolerancia.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Intolerancia.class.getName() + ".tipoDeAlimentos");
+            createCache(cm, com.refood.trazabilidad.domain.Intolerancia.class.getName() + ".beneficiarios");
+            createCache(cm, com.refood.trazabilidad.domain.Voluntario.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Voluntario.class.getName() + ".registros");
+            createCache(cm, com.refood.trazabilidad.domain.Socio.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Registro.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Registro.class.getName() + ".voluntarios");
             // jhipster-needle-ehcache-add-entry
         };
     }

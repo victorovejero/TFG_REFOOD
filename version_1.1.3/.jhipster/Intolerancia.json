@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172022",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "intolerancia",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Intolerancia",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tipoDeAlimento",
+      "otherEntityRelationshipName": "intolerancia",
+      "ownerSide": true,
+      "relationshipName": "tipoDeAlimento",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "beneficiario",
+      "otherEntityRelationshipName": "intolerancia",
+      "ownerSide": true,
+      "relationshipName": "beneficiario",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

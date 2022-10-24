@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Intolerancia.
+    -->
+    <changeSet id="20221022172022-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id"
+                                 baseTableName="rel_intolerancia__tipo_de_alimento"
+                                 constraintName="fk_rel_intolerancia__tipo_de_alimento__intolerancia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intolerancia"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_de_alimento_id"
+                                 baseTableName="rel_intolerancia__tipo_de_alimento"
+                                 constraintName="fk_rel_intolerancia__tipo_de_alimento__tipo_de_alimento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_de_alimento"/>
+
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id"
+                                 baseTableName="rel_intolerancia__beneficiario"
+                                 constraintName="fk_rel_intolerancia__beneficiario__intolerancia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intolerancia"/>
+
+        <addForeignKeyConstraint baseColumnNames="beneficiario_id"
+                                 baseTableName="rel_intolerancia__beneficiario"
+                                 constraintName="fk_rel_intolerancia__beneficiario__beneficiario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="beneficiario"/>
+    </changeSet>
+</databaseChangeLog>

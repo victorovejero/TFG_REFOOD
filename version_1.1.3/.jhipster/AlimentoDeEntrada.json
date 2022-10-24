@@ -1,0 +1,59 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172018",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "alimento_de_entrada",
+  "fields": [
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraEntrada",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraRecogida",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "fechaYHoraPreparacion",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlimentoDeEntrada",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tipoDeAlimento",
+      "ownerSide": true,
+      "relationshipName": "tipoDeAlimento",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "alimentoDeSalida",
+      "otherEntityRelationshipName": "alimentoDeEntrada",
+      "relationshipName": "alimentoDeSalida",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "tupper",
+      "otherEntityRelationshipName": "alimentoDeEntrada",
+      "relationshipName": "tupper",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "donante",
+      "otherEntityRelationshipName": "alimentoDeEntrada",
+      "relationshipName": "donante",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

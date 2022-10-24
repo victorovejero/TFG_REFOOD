@@ -1,0 +1,104 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172023",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "voluntario",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerApellido",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellido",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonoContacto",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dni",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fechaNacimiento",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sexo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaBaja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "tipo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "tipoTurno",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "responsableDia",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "origen",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "manipuladorAlimentos",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Voluntario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "nucleo",
+      "otherEntityRelationshipName": "voluntario",
+      "relationshipName": "nucleo",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "registro",
+      "otherEntityRelationshipName": "voluntario",
+      "ownerSide": false,
+      "relationshipName": "registro",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}
