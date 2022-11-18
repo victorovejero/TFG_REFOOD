@@ -55,6 +55,9 @@ public class VoluntarioDTO implements Serializable {
     @NotNull
     private String codigoPostal;
 
+    @NotNull
+    private Boolean activo;
+
     private NucleoDTO nucleo;
 
     public Long getId() {
@@ -193,6 +196,14 @@ public class VoluntarioDTO implements Serializable {
         this.codigoPostal = codigoPostal;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public NucleoDTO getNucleo() {
         return nucleo;
     }
@@ -243,6 +254,7 @@ public class VoluntarioDTO implements Serializable {
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +
             ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", activo='" + getActivo() + "'" +
             ", nucleo=" + getNucleo() +
             "}";
     }

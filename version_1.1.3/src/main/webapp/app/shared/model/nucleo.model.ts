@@ -13,6 +13,7 @@ export interface INucleo {
   telefono?: string;
   email?: string;
   numeroRutas?: number;
+  activo?: boolean;
   donantes?: IDonante[] | null;
   beneficiarios?: IBeneficiario[] | null;
   voluntarios?: IVoluntario[] | null;
@@ -20,4 +21,6 @@ export interface INucleo {
   registros?: IRegistro[] | null;
 }
 
-export const defaultValue: Readonly<INucleo> = {};
+export const defaultValue: Readonly<INucleo> = {
+  activo: false,
+};

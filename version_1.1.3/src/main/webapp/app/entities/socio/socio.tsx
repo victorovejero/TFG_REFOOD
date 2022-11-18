@@ -159,6 +159,9 @@ export const Socio = () => {
                   <th className="hand" onClick={sort('periodoPago')}>
                     Periodo Pago <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('activo')}>
+                    Activo <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th>
                     Nucleo <FontAwesomeIcon icon="sort" />
                   </th>
@@ -189,6 +192,7 @@ export const Socio = () => {
                     <td>{socio.fechaBaja ? <TextFormat type="date" value={socio.fechaBaja} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                     <td>{socio.contribucionMensual}</td>
                     <td>{socio.periodoPago}</td>
+                    <td>{socio.activo ? 'true' : 'false'}</td>
                     <td>{socio.nucleo ? <Link to={`/nucleo/${socio.nucleo.id}`}>{socio.nucleo.id}</Link> : ''}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">

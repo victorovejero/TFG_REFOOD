@@ -2,22 +2,31 @@ package com.refood.trazabilidad.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.refood.trazabilidad.IntegrationTest;
 import com.refood.trazabilidad.domain.Beneficiario;
 import com.refood.trazabilidad.repository.BeneficiarioRepository;
+import com.refood.trazabilidad.service.BeneficiarioService;
 import com.refood.trazabilidad.service.dto.BeneficiarioDTO;
 import com.refood.trazabilidad.service.mapper.BeneficiarioMapper;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,9 +36,13 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link BeneficiarioResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class BeneficiarioResourceIT {
+
+    private static final String DEFAULT_ID_BENEFICIARIO = "AAAAAAAAAA";
+    private static final String UPDATED_ID_BENEFICIARIO = "BBBBBBBBBB";
 
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
@@ -43,6 +56,9 @@ class BeneficiarioResourceIT {
     private static final String DEFAULT_ID_DUAL = "AAAAAAAAAA";
     private static final String UPDATED_ID_DUAL = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ACTIVO = false;
+    private static final Boolean UPDATED_ACTIVO = true;
+
     private static final String ENTITY_API_URL = "/api/beneficiarios";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -52,8 +68,14 @@ class BeneficiarioResourceIT {
     @Autowired
     private BeneficiarioRepository beneficiarioRepository;
 
+    @Mock
+    private BeneficiarioRepository beneficiarioRepositoryMock;
+
     @Autowired
     private BeneficiarioMapper beneficiarioMapper;
+
+    @Mock
+    private BeneficiarioService beneficiarioServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -71,10 +93,12 @@ class BeneficiarioResourceIT {
      */
     public static Beneficiario createEntity(EntityManager em) {
         Beneficiario beneficiario = new Beneficiario()
+            .idBeneficiario(DEFAULT_ID_BENEFICIARIO)
             .nombre(DEFAULT_NOMBRE)
             .numeroPersonas(DEFAULT_NUMERO_PERSONAS)
             .numeroNinios(DEFAULT_NUMERO_NINIOS)
-            .idDual(DEFAULT_ID_DUAL);
+            .idDual(DEFAULT_ID_DUAL)
+            .activo(DEFAULT_ACTIVO);
         return beneficiario;
     }
 
@@ -86,10 +110,12 @@ class BeneficiarioResourceIT {
      */
     public static Beneficiario createUpdatedEntity(EntityManager em) {
         Beneficiario beneficiario = new Beneficiario()
+            .idBeneficiario(UPDATED_ID_BENEFICIARIO)
             .nombre(UPDATED_NOMBRE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
-            .idDual(UPDATED_ID_DUAL);
+            .idDual(UPDATED_ID_DUAL)
+            .activo(UPDATED_ACTIVO);
         return beneficiario;
     }
 
@@ -114,10 +140,12 @@ class BeneficiarioResourceIT {
         List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeCreate + 1);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
+        assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(DEFAULT_ID_BENEFICIARIO);
         assertThat(testBeneficiario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(DEFAULT_NUMERO_PERSONAS);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(DEFAULT_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(DEFAULT_ID_DUAL);
+        assertThat(testBeneficiario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -139,6 +167,26 @@ class BeneficiarioResourceIT {
         // Validate the Beneficiario in the database
         List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkIdBeneficiarioIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setIdBeneficiario(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -203,6 +251,26 @@ class BeneficiarioResourceIT {
 
     @Test
     @Transactional
+    void checkActivoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setActivo(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllBeneficiarios() throws Exception {
         // Initialize the database
         beneficiarioRepository.saveAndFlush(beneficiario);
@@ -213,10 +281,29 @@ class BeneficiarioResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(beneficiario.getId().intValue())))
+            .andExpect(jsonPath("$.[*].idBeneficiario").value(hasItem(DEFAULT_ID_BENEFICIARIO)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].numeroPersonas").value(hasItem(DEFAULT_NUMERO_PERSONAS)))
             .andExpect(jsonPath("$.[*].numeroNinios").value(hasItem(DEFAULT_NUMERO_NINIOS)))
-            .andExpect(jsonPath("$.[*].idDual").value(hasItem(DEFAULT_ID_DUAL)));
+            .andExpect(jsonPath("$.[*].idDual").value(hasItem(DEFAULT_ID_DUAL)))
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllBeneficiariosWithEagerRelationshipsIsEnabled() throws Exception {
+        when(beneficiarioServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restBeneficiarioMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(beneficiarioServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllBeneficiariosWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(beneficiarioServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restBeneficiarioMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(beneficiarioRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -231,10 +318,12 @@ class BeneficiarioResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(beneficiario.getId().intValue()))
+            .andExpect(jsonPath("$.idBeneficiario").value(DEFAULT_ID_BENEFICIARIO))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.numeroPersonas").value(DEFAULT_NUMERO_PERSONAS))
             .andExpect(jsonPath("$.numeroNinios").value(DEFAULT_NUMERO_NINIOS))
-            .andExpect(jsonPath("$.idDual").value(DEFAULT_ID_DUAL));
+            .andExpect(jsonPath("$.idDual").value(DEFAULT_ID_DUAL))
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
     @Test
@@ -257,10 +346,12 @@ class BeneficiarioResourceIT {
         // Disconnect from session so that the updates on updatedBeneficiario are not directly saved in db
         em.detach(updatedBeneficiario);
         updatedBeneficiario
+            .idBeneficiario(UPDATED_ID_BENEFICIARIO)
             .nombre(UPDATED_NOMBRE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
-            .idDual(UPDATED_ID_DUAL);
+            .idDual(UPDATED_ID_DUAL)
+            .activo(UPDATED_ACTIVO);
         BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(updatedBeneficiario);
 
         restBeneficiarioMockMvc
@@ -275,10 +366,12 @@ class BeneficiarioResourceIT {
         List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
+        assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
         assertThat(testBeneficiario.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(UPDATED_NUMERO_PERSONAS);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
+        assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -360,7 +453,11 @@ class BeneficiarioResourceIT {
         Beneficiario partialUpdatedBeneficiario = new Beneficiario();
         partialUpdatedBeneficiario.setId(beneficiario.getId());
 
-        partialUpdatedBeneficiario.nombre(UPDATED_NOMBRE).idDual(UPDATED_ID_DUAL);
+        partialUpdatedBeneficiario
+            .idBeneficiario(UPDATED_ID_BENEFICIARIO)
+            .numeroNinios(UPDATED_NUMERO_NINIOS)
+            .idDual(UPDATED_ID_DUAL)
+            .activo(UPDATED_ACTIVO);
 
         restBeneficiarioMockMvc
             .perform(
@@ -374,10 +471,12 @@ class BeneficiarioResourceIT {
         List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
-        assertThat(testBeneficiario.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
+        assertThat(testBeneficiario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(DEFAULT_NUMERO_PERSONAS);
-        assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(DEFAULT_NUMERO_NINIOS);
+        assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
+        assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -393,10 +492,12 @@ class BeneficiarioResourceIT {
         partialUpdatedBeneficiario.setId(beneficiario.getId());
 
         partialUpdatedBeneficiario
+            .idBeneficiario(UPDATED_ID_BENEFICIARIO)
             .nombre(UPDATED_NOMBRE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
-            .idDual(UPDATED_ID_DUAL);
+            .idDual(UPDATED_ID_DUAL)
+            .activo(UPDATED_ACTIVO);
 
         restBeneficiarioMockMvc
             .perform(
@@ -410,10 +511,12 @@ class BeneficiarioResourceIT {
         List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
+        assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
         assertThat(testBeneficiario.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(UPDATED_NUMERO_PERSONAS);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
+        assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test

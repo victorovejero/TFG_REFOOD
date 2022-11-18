@@ -81,6 +81,9 @@ class VoluntarioResourceIT {
     private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
     private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ACTIVO = false;
+    private static final Boolean UPDATED_ACTIVO = true;
+
     private static final String ENTITY_API_URL = "/api/voluntarios";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -124,7 +127,8 @@ class VoluntarioResourceIT {
             .responsableDia(DEFAULT_RESPONSABLE_DIA)
             .origen(DEFAULT_ORIGEN)
             .manipuladorAlimentos(DEFAULT_MANIPULADOR_ALIMENTOS)
-            .codigoPostal(DEFAULT_CODIGO_POSTAL);
+            .codigoPostal(DEFAULT_CODIGO_POSTAL)
+            .activo(DEFAULT_ACTIVO);
         return voluntario;
     }
 
@@ -151,7 +155,8 @@ class VoluntarioResourceIT {
             .responsableDia(UPDATED_RESPONSABLE_DIA)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
-            .codigoPostal(UPDATED_CODIGO_POSTAL);
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .activo(UPDATED_ACTIVO);
         return voluntario;
     }
 
@@ -190,6 +195,7 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getOrigen()).isEqualTo(DEFAULT_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(DEFAULT_MANIPULADOR_ALIMENTOS);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testVoluntario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -393,6 +399,24 @@ class VoluntarioResourceIT {
 
     @Test
     @Transactional
+    void checkActivoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
+        // set the field null
+        voluntario.setActivo(null);
+
+        // Create the Voluntario, which fails.
+        VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
+
+        restVoluntarioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(voluntarioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Voluntario> voluntarioList = voluntarioRepository.findAll();
+        assertThat(voluntarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllVoluntarios() throws Exception {
         // Initialize the database
         voluntarioRepository.saveAndFlush(voluntario);
@@ -418,7 +442,8 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.[*].responsableDia").value(hasItem(DEFAULT_RESPONSABLE_DIA.booleanValue())))
             .andExpect(jsonPath("$.[*].origen").value(hasItem(DEFAULT_ORIGEN)))
             .andExpect(jsonPath("$.[*].manipuladorAlimentos").value(hasItem(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue())))
-            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)));
+            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
 
     @Test
@@ -448,7 +473,8 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.responsableDia").value(DEFAULT_RESPONSABLE_DIA.booleanValue()))
             .andExpect(jsonPath("$.origen").value(DEFAULT_ORIGEN))
             .andExpect(jsonPath("$.manipuladorAlimentos").value(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue()))
-            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL));
+            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
     @Test
@@ -486,7 +512,8 @@ class VoluntarioResourceIT {
             .responsableDia(UPDATED_RESPONSABLE_DIA)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
-            .codigoPostal(UPDATED_CODIGO_POSTAL);
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .activo(UPDATED_ACTIVO);
         VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(updatedVoluntario);
 
         restVoluntarioMockMvc
@@ -517,6 +544,7 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -603,7 +631,8 @@ class VoluntarioResourceIT {
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
             .tipoTurno(UPDATED_TIPO_TURNO)
             .responsableDia(UPDATED_RESPONSABLE_DIA)
-            .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS);
+            .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
+            .activo(UPDATED_ACTIVO);
 
         restVoluntarioMockMvc
             .perform(
@@ -633,6 +662,7 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getOrigen()).isEqualTo(DEFAULT_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -663,7 +693,8 @@ class VoluntarioResourceIT {
             .responsableDia(UPDATED_RESPONSABLE_DIA)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
-            .codigoPostal(UPDATED_CODIGO_POSTAL);
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .activo(UPDATED_ACTIVO);
 
         restVoluntarioMockMvc
             .perform(
@@ -693,6 +724,7 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test

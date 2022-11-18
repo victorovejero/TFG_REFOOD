@@ -1,11 +1,11 @@
-id;nombre;direccion;provincia;responsable;telefono;email;numero_rutas
-1;web-readiness Madera;Estonia microchip;Infraestructura;Negro;Administrador;Juana.Jaimes27@gmail.com;70986
-2;Rica;Metal SMS;Infraestructura Diverso Colegio;generate Representante;COM Desarrollador;Gustavo.Ceballos32@hotmail.com;78980
-3;Hecho;Fantástico;optical;Distribuido hack Account;programming;Vicente_Moreno49@hotmail.com;9091
-4;Credit Uruguay transicional;Cambridgeshire e-services;wireless Acero;mobile;reboot;Graciela_Bravo5@hotmail.com;1874
-5;transmitter;Ghana Buckinghamshire Argentine;Gerente transmitting;mobile;invoice back-end;Manuel11@hotmail.com;64178
-6;Reactivo;panel override neural;Librería Navarra Gerente;Islands;utilize virtual Acero;Natalia81@gmail.com;90048
-7;no-volátil;Fantástico;Ingeniero scalable;Representante Castilla array;panel Supervisor;Maril_Dvila74@hotmail.com;55137
-8;Caserio Morado Andalucía;hacking;panel;recíproca deposit;mindshare driver withdrawal;Maril_Vela62@gmail.com;26783
-9;Sorprendente arquitectura;Valenciana whiteboard Berkshire;bricks-and-clicks Public-key web-enabled;estrategia;synthesizing invoice bandwidth;Juan_Vaca@yahoo.com;18396
-10;Marketing;Mesa Account array;Sri Ladrillo;visualize;Amarillo IB Seguridada;Ignacio.Vela46@hotmail.com;79523
+id;nombre;direccion;provincia;responsable;telefono;email;numero_rutas;activo
+1;web-readiness Madera;Estonia microchip;Infraestructura;Negro;Administrador;Juana.Jaimes27@gmail.com;70986;false
+2;Amarillo Metal;Cedi Infraestructura Diverso;Violeta generate;Factores COM Desarrollador;Bicicleta configurable Coche;Eduardo9@yahoo.com;36229;true
+3;optical;Distribuido hack Account;programming;Partida XML generating;Uruguay;Reina_Caraballo@gmail.com;97845;false
+4;sinergia wireless;Fantástico;Gerente reboot feed;HTTP Pescado Hormigon;Monte Puerta;Clara7@gmail.com;84527;true
+5;Ladrillo;Galicia;back-end;funcionalidad Metal Reactivo;panel override neural;Antonio_Altamirano82@hotmail.com;5217;true
+6;Senior;Buckinghamshire Informática world-class;Bedfordshire;Fácil;no-volátil;Cristin_Fras@gmail.com;96390;false
+7;scalable;Representante Castilla array;panel Supervisor;SQL Mobilidad indexing;Morado;Alberto83@yahoo.com;14258;false
+8;panel;recíproca deposit;mindshare driver withdrawal;XSS;Market Sorprendente arquitectura;Concepcin.Melndez68@hotmail.com;4855;true
+9;invoice capacitor;Gourde Exclusivo SAS;bluetooth Interno payment;Cliente;Sabroso;Virginia.Briones@yahoo.com;59644;false
+10;array Account Ergonómico;trabajo Salchichas Madrid;parsing models Configuración;multi-byte hack;Savings hacking;Eduardo.Hinojosa@gmail.com;5999;false

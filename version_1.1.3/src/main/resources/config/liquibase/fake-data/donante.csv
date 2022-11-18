@@ -1,11 +1,11 @@
-id;nombre;tipo;ruta;direccion;telefono;email;responsable;fecha_alta;fecha_baja;comentarios
-1;application one-to-one Account;Librería Ordenador Hecho;8389;array connect;no-volátil bus;Lola85@gmail.com;por Edificio;2022-10-21;2022-10-22;metódica Comunicaciones
-2;Sterling Fantástico cliente;bandwidth Cambridgeshire Credit;51693;Sincronizado basado;Investment content;LuisMiguel.Otero@yahoo.com;Pequeño deposit;2022-10-22;2022-10-22;calculating
-3;program XML port;HTTP out-of-the-box;78823;generación;Agente;Elsa47@yahoo.com;Sorprendente Ingeniero;2022-10-22;2022-10-21;monetize
-4;cross-platform extend digital;indexing;50725;Arquitecto;Algodón auxiliary;AnaMara90@gmail.com;Metal Guantes monitor;2022-10-22;2022-10-22;Plástico Normas
-5;Electrónica;Silla withdrawal Barein;15141;extranet;Comunicaciones Aragón Bicicleta;JorgeLuis_Escobar81@yahoo.com;La Ensalada synthesizing;2022-10-22;2022-10-22;payment
-6;redundant Intercambiable heurística;Asturias Coordinador;15682;Morado Representante Navarra;invoice Suiza;AnaMara10@yahoo.com;generate Guapa Loan;2022-10-22;2022-10-22;Arroyo Andalucía SDD
-7;middleware Guantes;Extremadura Kazajistan alianza;67749;viral;Albania red;Carmen.Velasco41@hotmail.com;Compartible International bus;2022-10-22;2022-10-22;Artesanal eyeballs TCP
-8;Granito;Pakistan Pataca;65003;Amarillo Mesa 4th;digital;Daniela86@hotmail.com;Salud;2022-10-22;2022-10-22;Dollar Borders
-9;Berkshire;jerarquía deposit moderador;78611;Decoración Sorprendente;syndicate Sopa quantifying;Andrea_Guerra@gmail.com;a digital scale;2022-10-22;2022-10-22;Supervisor Soluciones Pollo
-10;intermedia;transicional;2964;coherente;mano Algodón Borders;Guillermina21@gmail.com;Multi;2022-10-22;2022-10-22;e-commerce Bloque Juguetería
+id;id_donante;nombre;tipo;ruta;direccion;telefono;email;responsable;fecha_alta;fecha_baja;comentarios;activo
+1;application one-to-one Account;Librería Ordenador Hecho;Filipinas;12607;Calleja no-volátil bus;Auto;Antonia46@hotmail.com;logística Mesa;2022-10-22;2022-10-22;Account Sterling Fantástico;false
+2;out-of-the-box;Aplicaciones Metal;Sincronizado basado;51812;Berkshire deliverables;payment;Cristin_Alonzo@yahoo.com;array;2022-10-22;2022-10-21;experiences Fundamental Bedfordshire;false
+3;invoice;out-of-the-box;Extendido Jefe International;64491;Blanco Sorprendente Ingeniero;Ejecutivo;Jacobo.Santana96@gmail.com;digital Morado;2022-10-21;2022-10-22;Bedfordshire Puerta;false
+4;Ladrillo gestión;tangible Metal;algoritmo;74284;Granito parsing Soluciones;payment;Vctor_Ornelas@gmail.com;Guapo web-enabled;2022-10-21;2022-10-22;Aragón Bicicleta;false
+5;soporte;drive streamline Bacon;architect payment Interno;59351;TCP;Mascotas Hormigon;Ramn.Briones83@yahoo.com;Representante Navarra;2022-10-22;2022-10-22;logística Macedonia Madera;true
+6;Estados synthesizing quantifying;Distrito;Andalucía SDD withdrawal;89129;moderador;deposit Berkshire;Ester33@gmail.com;Distrito Moda;2022-10-22;2022-10-21;Murcia Grupo Compartible;true
+7;innovate holística up;por Negro Videojuegos;Borders;68154;orquestar Galicia;Navarra;Gonzalo16@yahoo.com;digital;2022-10-21;2022-10-22;Morado Salud;true
+8;Puente;Borders Coche;Bloque;12462;moderador;Apartamento Rojo revolutionize;Carolina.Almarz59@yahoo.com;quantifying En Vasco;2022-10-22;2022-10-22;digital scale;false
+9;matrix;Soluciones Pollo;intermedia;16366;Implementación;coherente;Cristin.Prado41@hotmail.com;Borders;2022-10-22;2022-10-22;Azul Multi Metal;false
+10;Plástico brand;Account;generate systems compelling;82651;Guinea open-source Marca;Quinta Terrenos;Cecilia_Espinosa28@yahoo.com;Paradigma División Futuro;2022-10-22;2022-10-21;quantifying Metal hacking;false

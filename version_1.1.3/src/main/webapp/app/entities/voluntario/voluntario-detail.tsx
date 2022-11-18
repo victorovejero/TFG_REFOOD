@@ -104,6 +104,10 @@ export const VoluntarioDetail = () => {
             <span id="codigoPostal">Codigo Postal</span>
           </dt>
           <dd>{voluntarioEntity.codigoPostal}</dd>
+          <dt>
+            <span id="activo">Activo</span>
+          </dt>
+          <dd>{voluntarioEntity.activo ? 'true' : 'false'}</dd>
           <dt>Nucleo</dt>
           <dd>{voluntarioEntity.nucleo ? voluntarioEntity.nucleo.id : ''}</dd>
         </dl>

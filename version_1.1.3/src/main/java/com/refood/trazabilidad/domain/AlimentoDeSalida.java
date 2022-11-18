@@ -37,16 +37,12 @@ public class AlimentoDeSalida implements Serializable {
     private Tupper tupper;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "nucleo", "intolerancias" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias", "nucleo" }, allowSetters = true)
     private Beneficiario beneficiario;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "tipoDeAlimento", "alimentoDeSalidas", "tupper", "donante" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
     private AlimentoDeEntrada alimentoDeEntrada;
-
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias" }, allowSetters = true)
-    private TipoDeAlimento tipoDeAlimento;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,19 +121,6 @@ public class AlimentoDeSalida implements Serializable {
 
     public AlimentoDeSalida alimentoDeEntrada(AlimentoDeEntrada alimentoDeEntrada) {
         this.setAlimentoDeEntrada(alimentoDeEntrada);
-        return this;
-    }
-
-    public TipoDeAlimento getTipoDeAlimento() {
-        return this.tipoDeAlimento;
-    }
-
-    public void setTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.tipoDeAlimento = tipoDeAlimento;
-    }
-
-    public AlimentoDeSalida tipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.setTipoDeAlimento(tipoDeAlimento);
         return this;
     }
 

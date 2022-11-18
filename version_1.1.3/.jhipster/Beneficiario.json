@@ -6,6 +6,11 @@
   "entityTableName": "beneficiario",
   "fields": [
     {
+      "fieldName": "idBeneficiario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "nombre",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -23,6 +28,11 @@
     {
       "fieldName": "idDual",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -38,17 +48,17 @@
       "relationshipType": "one-to-many"
     },
     {
+      "otherEntityName": "intolerancia",
+      "otherEntityRelationshipName": "beneficiario",
+      "ownerSide": true,
+      "relationshipName": "intolerancia",
+      "relationshipType": "many-to-many"
+    },
+    {
       "otherEntityName": "nucleo",
       "otherEntityRelationshipName": "beneficiario",
       "relationshipName": "nucleo",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "intolerancia",
-      "otherEntityRelationshipName": "beneficiario",
-      "ownerSide": false,
-      "relationshipName": "intolerancia",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

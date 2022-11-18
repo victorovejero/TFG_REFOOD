@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,28 +25,22 @@ public class Intolerancia implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre")
+    @NotNull
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_intolerancia__tipo_de_alimento",
-        joinColumns = @JoinColumn(name = "intolerancia_id"),
-        inverseJoinColumns = @JoinColumn(name = "tipo_de_alimento_id")
-    )
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias" }, allowSetters = true)
-    private Set<TipoDeAlimento> tipoDeAlimentos = new HashSet<>();
+    @Column(name = "descripcion")
+    private String descripcion;
 
-    @ManyToMany
-    @JoinTable(
-        name = "rel_intolerancia__beneficiario",
-        joinColumns = @JoinColumn(name = "intolerancia_id"),
-        inverseJoinColumns = @JoinColumn(name = "beneficiario_id")
-    )
+    @ManyToMany(mappedBy = "intolerancias")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "nucleo", "intolerancias" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias", "nucleo" }, allowSetters = true)
     private Set<Beneficiario> beneficiarios = new HashSet<>();
+
+    @ManyToMany(mappedBy = "intolerancias")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "alimentoDeEntradas", "intolerancias" }, allowSetters = true)
+    private Set<TipoDeAlimento> tipoDeAlimentos = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -75,29 +70,17 @@ public class Intolerancia implements Serializable {
         this.nombre = nombre;
     }
 
-    public Set<TipoDeAlimento> getTipoDeAlimentos() {
-        return this.tipoDeAlimentos;
+    public String getDescripcion() {
+        return this.descripcion;
     }
 
-    public void setTipoDeAlimentos(Set<TipoDeAlimento> tipoDeAlimentos) {
-        this.tipoDeAlimentos = tipoDeAlimentos;
-    }
-
-    public Intolerancia tipoDeAlimentos(Set<TipoDeAlimento> tipoDeAlimentos) {
-        this.setTipoDeAlimentos(tipoDeAlimentos);
+    public Intolerancia descripcion(String descripcion) {
+        this.setDescripcion(descripcion);
         return this;
     }
 
-    public Intolerancia addTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.tipoDeAlimentos.add(tipoDeAlimento);
-        tipoDeAlimento.getIntolerancias().add(this);
-        return this;
-    }
-
-    public Intolerancia removeTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.tipoDeAlimentos.remove(tipoDeAlimento);
-        tipoDeAlimento.getIntolerancias().remove(this);
-        return this;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Set<Beneficiario> getBeneficiarios() {
@@ -105,6 +88,12 @@ public class Intolerancia implements Serializable {
     }
 
     public void setBeneficiarios(Set<Beneficiario> beneficiarios) {
+        if (this.beneficiarios != null) {
+            this.beneficiarios.forEach(i -> i.removeIntolerancia(this));
+        }
+        if (beneficiarios != null) {
+            beneficiarios.forEach(i -> i.addIntolerancia(this));
+        }
         this.beneficiarios = beneficiarios;
     }
 
@@ -122,6 +111,37 @@ public class Intolerancia implements Serializable {
     public Intolerancia removeBeneficiario(Beneficiario beneficiario) {
         this.beneficiarios.remove(beneficiario);
         beneficiario.getIntolerancias().remove(this);
+        return this;
+    }
+
+    public Set<TipoDeAlimento> getTipoDeAlimentos() {
+        return this.tipoDeAlimentos;
+    }
+
+    public void setTipoDeAlimentos(Set<TipoDeAlimento> tipoDeAlimentos) {
+        if (this.tipoDeAlimentos != null) {
+            this.tipoDeAlimentos.forEach(i -> i.removeIntolerancia(this));
+        }
+        if (tipoDeAlimentos != null) {
+            tipoDeAlimentos.forEach(i -> i.addIntolerancia(this));
+        }
+        this.tipoDeAlimentos = tipoDeAlimentos;
+    }
+
+    public Intolerancia tipoDeAlimentos(Set<TipoDeAlimento> tipoDeAlimentos) {
+        this.setTipoDeAlimentos(tipoDeAlimentos);
+        return this;
+    }
+
+    public Intolerancia addTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
+        this.tipoDeAlimentos.add(tipoDeAlimento);
+        tipoDeAlimento.getIntolerancias().add(this);
+        return this;
+    }
+
+    public Intolerancia removeTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
+        this.tipoDeAlimentos.remove(tipoDeAlimento);
+        tipoDeAlimento.getIntolerancias().remove(this);
         return this;
     }
 
@@ -150,6 +170,7 @@ public class Intolerancia implements Serializable {
         return "Intolerancia{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             "}";
     }
 }

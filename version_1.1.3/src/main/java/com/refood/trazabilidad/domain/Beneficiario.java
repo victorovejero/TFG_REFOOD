@@ -26,6 +26,10 @@ public class Beneficiario implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "id_beneficiario", nullable = false)
+    private String idBeneficiario;
+
+    @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
@@ -40,19 +44,28 @@ public class Beneficiario implements Serializable {
     @Column(name = "id_dual")
     private String idDual;
 
+    @NotNull
+    @Column(name = "activo", nullable = false)
+    private Boolean activo;
+
     @OneToMany(mappedBy = "beneficiario")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada", "tipoDeAlimento" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada" }, allowSetters = true)
     private Set<AlimentoDeSalida> alimentoDeSalidas = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_beneficiario__intolerancia",
+        joinColumns = @JoinColumn(name = "beneficiario_id"),
+        inverseJoinColumns = @JoinColumn(name = "intolerancia_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "beneficiarios", "tipoDeAlimentos" }, allowSetters = true)
+    private Set<Intolerancia> intolerancias = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
     private Nucleo nucleo;
-
-    @ManyToMany(mappedBy = "beneficiarios")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tipoDeAlimentos", "beneficiarios" }, allowSetters = true)
-    private Set<Intolerancia> intolerancias = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -67,6 +80,19 @@ public class Beneficiario implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdBeneficiario() {
+        return this.idBeneficiario;
+    }
+
+    public Beneficiario idBeneficiario(String idBeneficiario) {
+        this.setIdBeneficiario(idBeneficiario);
+        return this;
+    }
+
+    public void setIdBeneficiario(String idBeneficiario) {
+        this.idBeneficiario = idBeneficiario;
     }
 
     public String getNombre() {
@@ -121,6 +147,19 @@ public class Beneficiario implements Serializable {
         this.idDual = idDual;
     }
 
+    public Boolean getActivo() {
+        return this.activo;
+    }
+
+    public Beneficiario activo(Boolean activo) {
+        this.setActivo(activo);
+        return this;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Set<AlimentoDeSalida> getAlimentoDeSalidas() {
         return this.alimentoDeSalidas;
     }
@@ -152,30 +191,11 @@ public class Beneficiario implements Serializable {
         return this;
     }
 
-    public Nucleo getNucleo() {
-        return this.nucleo;
-    }
-
-    public void setNucleo(Nucleo nucleo) {
-        this.nucleo = nucleo;
-    }
-
-    public Beneficiario nucleo(Nucleo nucleo) {
-        this.setNucleo(nucleo);
-        return this;
-    }
-
     public Set<Intolerancia> getIntolerancias() {
         return this.intolerancias;
     }
 
     public void setIntolerancias(Set<Intolerancia> intolerancias) {
-        if (this.intolerancias != null) {
-            this.intolerancias.forEach(i -> i.removeBeneficiario(this));
-        }
-        if (intolerancias != null) {
-            intolerancias.forEach(i -> i.addBeneficiario(this));
-        }
         this.intolerancias = intolerancias;
     }
 
@@ -193,6 +213,19 @@ public class Beneficiario implements Serializable {
     public Beneficiario removeIntolerancia(Intolerancia intolerancia) {
         this.intolerancias.remove(intolerancia);
         intolerancia.getBeneficiarios().remove(this);
+        return this;
+    }
+
+    public Nucleo getNucleo() {
+        return this.nucleo;
+    }
+
+    public void setNucleo(Nucleo nucleo) {
+        this.nucleo = nucleo;
+    }
+
+    public Beneficiario nucleo(Nucleo nucleo) {
+        this.setNucleo(nucleo);
         return this;
     }
 
@@ -220,10 +253,12 @@ public class Beneficiario implements Serializable {
     public String toString() {
         return "Beneficiario{" +
             "id=" + getId() +
+            ", idBeneficiario='" + getIdBeneficiario() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", numeroPersonas=" + getNumeroPersonas() +
             ", numeroNinios=" + getNumeroNinios() +
             ", idDual='" + getIdDual() + "'" +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

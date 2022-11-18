@@ -29,6 +29,10 @@ export const DonanteDetail = () => {
           </dt>
           <dd>{donanteEntity.id}</dd>
           <dt>
+            <span id="idDonante">Id Donante</span>
+          </dt>
+          <dd>{donanteEntity.idDonante}</dd>
+          <dt>
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{donanteEntity.nombre}</dd>
@@ -72,6 +76,10 @@ export const DonanteDetail = () => {
             <span id="comentarios">Comentarios</span>
           </dt>
           <dd>{donanteEntity.comentarios}</dd>
+          <dt>
+            <span id="activo">Activo</span>
+          </dt>
+          <dd>{donanteEntity.activo ? 'true' : 'false'}</dd>
           <dt>Nucleo</dt>
           <dd>{donanteEntity.nucleo ? donanteEntity.nucleo.id : ''}</dd>
         </dl>

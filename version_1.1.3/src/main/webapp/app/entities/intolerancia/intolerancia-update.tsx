@@ -8,10 +8,10 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
-import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IBeneficiario } from 'app/shared/model/beneficiario.model';
 import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
+import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
+import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IIntolerancia } from 'app/shared/model/intolerancia.model';
 import { getEntity, updateEntity, createEntity, reset } from './intolerancia.reducer';
 
@@ -23,8 +23,8 @@ export const IntoleranciaUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const tipoDeAlimentos = useAppSelector(state => state.tipoDeAlimento.entities);
   const beneficiarios = useAppSelector(state => state.beneficiario.entities);
+  const tipoDeAlimentos = useAppSelector(state => state.tipoDeAlimento.entities);
   const intoleranciaEntity = useAppSelector(state => state.intolerancia.entity);
   const loading = useAppSelector(state => state.intolerancia.loading);
   const updating = useAppSelector(state => state.intolerancia.updating);
@@ -39,8 +39,8 @@ export const IntoleranciaUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getTipoDeAlimentos({}));
     dispatch(getBeneficiarios({}));
+    dispatch(getTipoDeAlimentos({}));
   }, []);
 
   useEffect(() => {
@@ -53,8 +53,6 @@ export const IntoleranciaUpdate = () => {
     const entity = {
       ...intoleranciaEntity,
       ...values,
-      tipoDeAlimentos: mapIdList(values.tipoDeAlimentos),
-      beneficiarios: mapIdList(values.beneficiarios),
     };
 
     if (isNew) {
@@ -69,8 +67,6 @@ export const IntoleranciaUpdate = () => {
       ? {}
       : {
           ...intoleranciaEntity,
-          tipoDeAlimentos: intoleranciaEntity?.tipoDeAlimentos?.map(e => e.id.toString()),
-          beneficiarios: intoleranciaEntity?.beneficiarios?.map(e => e.id.toString()),
         };
 
   return (
@@ -89,41 +85,17 @@ export const IntoleranciaUpdate = () => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="intolerancia-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Nombre" id="intolerancia-nombre" name="nombre" data-cy="nombre" type="text" />
               <ValidatedField
-                label="Tipo De Alimento"
-                id="intolerancia-tipoDeAlimento"
-                data-cy="tipoDeAlimento"
-                type="select"
-                multiple
-                name="tipoDeAlimentos"
-              >
-                <option value="" key="0" />
-                {tipoDeAlimentos
-                  ? tipoDeAlimentos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                label="Beneficiario"
-                id="intolerancia-beneficiario"
-                data-cy="beneficiario"
-                type="select"
-                multiple
-                name="beneficiarios"
-              >
-                <option value="" key="0" />
-                {beneficiarios
-                  ? beneficiarios.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
+                label="Nombre"
+                id="intolerancia-nombre"
+                name="nombre"
+                data-cy="nombre"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField label="Descripcion" id="intolerancia-descripcion" name="descripcion" data-cy="descripcion" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/intolerancia" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

@@ -39,12 +39,6 @@
       "otherEntityRelationshipName": "alimentoDeSalida",
       "relationshipName": "alimentoDeEntrada",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "tipoDeAlimento",
-      "otherEntityRelationshipName": "alimentoDeSalida",
-      "relationshipName": "tipoDeAlimento",
-      "relationshipType": "many-to-one"
     }
   ],
   "service": "serviceImpl"

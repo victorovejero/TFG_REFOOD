@@ -76,6 +76,9 @@ public class CacheConfiguration {
             createCache(cm, com.refood.trazabilidad.domain.Socio.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.Registro.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.Registro.class.getName() + ".voluntarios");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeSalida.class.getName() + ".tipoDeAlimentos");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeEntrada.class.getName() + ".tipoDeAlimentos");
+            createCache(cm, com.refood.trazabilidad.domain.TipoDeAlimento.class.getName() + ".alimentoDeEntradas");
             // jhipster-needle-ehcache-add-entry
         };
     }

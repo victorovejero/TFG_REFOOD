@@ -12,6 +12,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IDonante } from 'app/shared/model/donante.model';
 import { getEntities } from './donante.reducer';
 
+import './donante.css';
+
 export const Donante = () => {
   const dispatch = useAppDispatch();
 
@@ -100,8 +102,11 @@ export const Donante = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/* <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
+                </th> */}
+                <th className="hand" onClick={sort('idDonante')}>
+                  Id Donante <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('nombre')}>
                   Nombre <FontAwesomeIcon icon="sort" />
@@ -133,6 +138,10 @@ export const Donante = () => {
                 <th className="hand" onClick={sort('comentarios')}>
                   Comentarios <FontAwesomeIcon icon="sort" />
                 </th>
+                {/* Quitamos la columna de activo */}
+                {/* <th className="hand" onClick={sort('activo')}>
+                  Activo <FontAwesomeIcon icon="sort" />
+                </th> */}
                 <th>
                   Nucleo <FontAwesomeIcon icon="sort" />
                 </th>
@@ -141,12 +150,17 @@ export const Donante = () => {
             </thead>
             <tbody>
               {donanteList.map((donante, i) => (
-                <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                <tr className={donante.activo ? "" : "strikeout"}key={`entity-${i}`} data-cy="entityTable">
+                  {/* <td>
                     <Button tag={Link} to={`/donante/${donante.id}`} color="link" size="sm">
                       {donante.id}
                     </Button>
-                  </td>
+                  </td> */}
+                  <td>
+                    {donante.activo ? <Button tag={Link} to={`/donante/${donante.id}`} color="link" size="sm">
+                      {donante.idDonante}
+                    </Button> : "INACTIVO"}
+                    </td>
                   <td>{donante.nombre}</td>
                   <td>{donante.tipo}</td>
                   <td>{donante.ruta}</td>
@@ -157,7 +171,8 @@ export const Donante = () => {
                   <td>{donante.fechaAlta ? <TextFormat type="date" value={donante.fechaAlta} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{donante.fechaBaja ? <TextFormat type="date" value={donante.fechaBaja} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{donante.comentarios}</td>
-                  <td>{donante.nucleo ? <Link to={`/nucleo/${donante.nucleo.id}`}>{donante.nucleo.id}</Link> : ''}</td>
+                  {/* <td>{donante.activo ? 'true' : 'false'}</td> */}
+                  <td>{donante.nucleo ? <Link to={`/nucleo/${donante.nucleo.id}`}>{donante.nucleo.nombre}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/donante/${donante.id}`} color="info" size="sm" data-cy="entityDetailsButton">
@@ -172,7 +187,10 @@ export const Donante = () => {
                       >
                         <FontAwesomeIcon icon="pencil-alt" /> <span className="d-none d-md-inline">Editar</span>
                       </Button>
-                      <Button
+
+                      {/* Quitamos el botón de tirar a la basura para no poder borrer */}
+
+                      {/* <Button
                         tag={Link}
                         to={`/donante/${donante.id}/delete?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`}
                         color="danger"
@@ -180,7 +198,8 @@ export const Donante = () => {
                         data-cy="entityDeleteButton"
                       >
                         <FontAwesomeIcon icon="trash" /> <span className="d-none d-md-inline">Eliminar</span>
-                      </Button>
+                      </Button> */}
+
                     </div>
                   </td>
                 </tr>

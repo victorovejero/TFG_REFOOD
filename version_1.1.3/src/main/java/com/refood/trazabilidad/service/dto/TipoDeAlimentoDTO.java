@@ -1,7 +1,9 @@
 package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -14,6 +16,8 @@ public class TipoDeAlimentoDTO implements Serializable {
 
     @NotNull
     private String nombreAlimento;
+
+    private Set<IntoleranciaDTO> intolerancias = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -29,6 +33,14 @@ public class TipoDeAlimentoDTO implements Serializable {
 
     public void setNombreAlimento(String nombreAlimento) {
         this.nombreAlimento = nombreAlimento;
+    }
+
+    public Set<IntoleranciaDTO> getIntolerancias() {
+        return intolerancias;
+    }
+
+    public void setIntolerancias(Set<IntoleranciaDTO> intolerancias) {
+        this.intolerancias = intolerancias;
     }
 
     @Override
@@ -58,6 +70,7 @@ public class TipoDeAlimentoDTO implements Serializable {
         return "TipoDeAlimentoDTO{" +
             "id=" + getId() +
             ", nombreAlimento='" + getNombreAlimento() + "'" +
+            ", intolerancias=" + getIntolerancias() +
             "}";
     }
 }

@@ -49,6 +49,7 @@ export const TipoDeAlimentoUpdate = () => {
     const entity = {
       ...tipoDeAlimentoEntity,
       ...values,
+      intolerancias: mapIdList(values.intolerancias),
     };
 
     if (isNew) {
@@ -63,6 +64,7 @@ export const TipoDeAlimentoUpdate = () => {
       ? {}
       : {
           ...tipoDeAlimentoEntity,
+          intolerancias: tipoDeAlimentoEntity?.intolerancias?.map(e => e.id.toString()),
         };
 
   return (
@@ -93,6 +95,23 @@ export const TipoDeAlimentoUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField
+                label="Intolerancia"
+                id="tipo-de-alimento-intolerancia"
+                data-cy="intolerancia"
+                type="select"
+                multiple
+                name="intolerancias"
+              >
+                <option value="" key="0" />
+                {intolerancias
+                  ? intolerancias.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/tipo-de-alimento" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

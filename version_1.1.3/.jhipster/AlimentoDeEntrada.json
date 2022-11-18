@@ -31,12 +31,6 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "tipoDeAlimento",
-      "ownerSide": true,
-      "relationshipName": "tipoDeAlimento",
-      "relationshipType": "one-to-one"
-    },
-    {
       "otherEntityName": "alimentoDeSalida",
       "otherEntityRelationshipName": "alimentoDeEntrada",
       "relationshipName": "alimentoDeSalida",
@@ -52,6 +46,12 @@
       "otherEntityName": "donante",
       "otherEntityRelationshipName": "alimentoDeEntrada",
       "relationshipName": "donante",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "tipoDeAlimento",
+      "otherEntityRelationshipName": "alimentoDeEntrada",
+      "relationshipName": "tipoDeAlimento",
       "relationshipType": "many-to-one"
     }
   ],

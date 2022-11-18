@@ -69,6 +69,9 @@ class SocioResourceIT {
     private static final String DEFAULT_PERIODO_PAGO = "AAAAAAAAAA";
     private static final String UPDATED_PERIODO_PAGO = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ACTIVO = false;
+    private static final Boolean UPDATED_ACTIVO = true;
+
     private static final String ENTITY_API_URL = "/api/socios";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -108,7 +111,8 @@ class SocioResourceIT {
             .fechaAlta(DEFAULT_FECHA_ALTA)
             .fechaBaja(DEFAULT_FECHA_BAJA)
             .contribucionMensual(DEFAULT_CONTRIBUCION_MENSUAL)
-            .periodoPago(DEFAULT_PERIODO_PAGO);
+            .periodoPago(DEFAULT_PERIODO_PAGO)
+            .activo(DEFAULT_ACTIVO);
         return socio;
     }
 
@@ -131,7 +135,8 @@ class SocioResourceIT {
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
-            .periodoPago(UPDATED_PERIODO_PAGO);
+            .periodoPago(UPDATED_PERIODO_PAGO)
+            .activo(UPDATED_ACTIVO);
         return socio;
     }
 
@@ -166,6 +171,7 @@ class SocioResourceIT {
         assertThat(testSocio.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testSocio.getContribucionMensual()).isEqualTo(DEFAULT_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(DEFAULT_PERIODO_PAGO);
+        assertThat(testSocio.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -369,6 +375,24 @@ class SocioResourceIT {
 
     @Test
     @Transactional
+    void checkActivoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = socioRepository.findAll().size();
+        // set the field null
+        socio.setActivo(null);
+
+        // Create the Socio, which fails.
+        SocioDTO socioDTO = socioMapper.toDto(socio);
+
+        restSocioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(socioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Socio> socioList = socioRepository.findAll();
+        assertThat(socioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllSocios() throws Exception {
         // Initialize the database
         socioRepository.saveAndFlush(socio);
@@ -390,7 +414,8 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(DEFAULT_FECHA_ALTA.toString())))
             .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
             .andExpect(jsonPath("$.[*].contribucionMensual").value(hasItem(DEFAULT_CONTRIBUCION_MENSUAL.doubleValue())))
-            .andExpect(jsonPath("$.[*].periodoPago").value(hasItem(DEFAULT_PERIODO_PAGO)));
+            .andExpect(jsonPath("$.[*].periodoPago").value(hasItem(DEFAULT_PERIODO_PAGO)))
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
 
     @Test
@@ -416,7 +441,8 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.fechaAlta").value(DEFAULT_FECHA_ALTA.toString()))
             .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
             .andExpect(jsonPath("$.contribucionMensual").value(DEFAULT_CONTRIBUCION_MENSUAL.doubleValue()))
-            .andExpect(jsonPath("$.periodoPago").value(DEFAULT_PERIODO_PAGO));
+            .andExpect(jsonPath("$.periodoPago").value(DEFAULT_PERIODO_PAGO))
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
     @Test
@@ -450,7 +476,8 @@ class SocioResourceIT {
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
-            .periodoPago(UPDATED_PERIODO_PAGO);
+            .periodoPago(UPDATED_PERIODO_PAGO)
+            .activo(UPDATED_ACTIVO);
         SocioDTO socioDTO = socioMapper.toDto(updatedSocio);
 
         restSocioMockMvc
@@ -477,6 +504,7 @@ class SocioResourceIT {
         assertThat(testSocio.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testSocio.getContribucionMensual()).isEqualTo(UPDATED_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
+        assertThat(testSocio.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -589,6 +617,7 @@ class SocioResourceIT {
         assertThat(testSocio.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testSocio.getContribucionMensual()).isEqualTo(DEFAULT_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
+        assertThat(testSocio.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -615,7 +644,8 @@ class SocioResourceIT {
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
-            .periodoPago(UPDATED_PERIODO_PAGO);
+            .periodoPago(UPDATED_PERIODO_PAGO)
+            .activo(UPDATED_ACTIVO);
 
         restSocioMockMvc
             .perform(
@@ -641,6 +671,7 @@ class SocioResourceIT {
         assertThat(testSocio.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testSocio.getContribucionMensual()).isEqualTo(UPDATED_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
+        assertThat(testSocio.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test

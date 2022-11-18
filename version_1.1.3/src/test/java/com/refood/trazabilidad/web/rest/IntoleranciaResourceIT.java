@@ -2,31 +2,22 @@ package com.refood.trazabilidad.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.refood.trazabilidad.IntegrationTest;
 import com.refood.trazabilidad.domain.Intolerancia;
 import com.refood.trazabilidad.repository.IntoleranciaRepository;
-import com.refood.trazabilidad.service.IntoleranciaService;
 import com.refood.trazabilidad.service.dto.IntoleranciaDTO;
 import com.refood.trazabilidad.service.mapper.IntoleranciaMapper;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,13 +27,15 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link IntoleranciaResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class IntoleranciaResourceIT {
 
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/intolerancias";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -53,14 +46,8 @@ class IntoleranciaResourceIT {
     @Autowired
     private IntoleranciaRepository intoleranciaRepository;
 
-    @Mock
-    private IntoleranciaRepository intoleranciaRepositoryMock;
-
     @Autowired
     private IntoleranciaMapper intoleranciaMapper;
-
-    @Mock
-    private IntoleranciaService intoleranciaServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -77,7 +64,7 @@ class IntoleranciaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Intolerancia createEntity(EntityManager em) {
-        Intolerancia intolerancia = new Intolerancia().nombre(DEFAULT_NOMBRE);
+        Intolerancia intolerancia = new Intolerancia().nombre(DEFAULT_NOMBRE).descripcion(DEFAULT_DESCRIPCION);
         return intolerancia;
     }
 
@@ -88,7 +75,7 @@ class IntoleranciaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Intolerancia createUpdatedEntity(EntityManager em) {
-        Intolerancia intolerancia = new Intolerancia().nombre(UPDATED_NOMBRE);
+        Intolerancia intolerancia = new Intolerancia().nombre(UPDATED_NOMBRE).descripcion(UPDATED_DESCRIPCION);
         return intolerancia;
     }
 
@@ -114,6 +101,7 @@ class IntoleranciaResourceIT {
         assertThat(intoleranciaList).hasSize(databaseSizeBeforeCreate + 1);
         Intolerancia testIntolerancia = intoleranciaList.get(intoleranciaList.size() - 1);
         assertThat(testIntolerancia.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testIntolerancia.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -139,6 +127,26 @@ class IntoleranciaResourceIT {
 
     @Test
     @Transactional
+    void checkNombreIsRequired() throws Exception {
+        int databaseSizeBeforeTest = intoleranciaRepository.findAll().size();
+        // set the field null
+        intolerancia.setNombre(null);
+
+        // Create the Intolerancia, which fails.
+        IntoleranciaDTO intoleranciaDTO = intoleranciaMapper.toDto(intolerancia);
+
+        restIntoleranciaMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(intoleranciaDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Intolerancia> intoleranciaList = intoleranciaRepository.findAll();
+        assertThat(intoleranciaList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllIntolerancias() throws Exception {
         // Initialize the database
         intoleranciaRepository.saveAndFlush(intolerancia);
@@ -149,24 +157,8 @@ class IntoleranciaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(intolerancia.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllIntoleranciasWithEagerRelationshipsIsEnabled() throws Exception {
-        when(intoleranciaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restIntoleranciaMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(intoleranciaServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllIntoleranciasWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(intoleranciaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restIntoleranciaMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(intoleranciaRepositoryMock, times(1)).findAll(any(Pageable.class));
+            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
 
     @Test
@@ -181,7 +173,8 @@ class IntoleranciaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(intolerancia.getId().intValue()))
-            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE));
+            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
     @Test
@@ -203,7 +196,7 @@ class IntoleranciaResourceIT {
         Intolerancia updatedIntolerancia = intoleranciaRepository.findById(intolerancia.getId()).get();
         // Disconnect from session so that the updates on updatedIntolerancia are not directly saved in db
         em.detach(updatedIntolerancia);
-        updatedIntolerancia.nombre(UPDATED_NOMBRE);
+        updatedIntolerancia.nombre(UPDATED_NOMBRE).descripcion(UPDATED_DESCRIPCION);
         IntoleranciaDTO intoleranciaDTO = intoleranciaMapper.toDto(updatedIntolerancia);
 
         restIntoleranciaMockMvc
@@ -219,6 +212,7 @@ class IntoleranciaResourceIT {
         assertThat(intoleranciaList).hasSize(databaseSizeBeforeUpdate);
         Intolerancia testIntolerancia = intoleranciaList.get(intoleranciaList.size() - 1);
         assertThat(testIntolerancia.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testIntolerancia.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test
@@ -313,6 +307,7 @@ class IntoleranciaResourceIT {
         assertThat(intoleranciaList).hasSize(databaseSizeBeforeUpdate);
         Intolerancia testIntolerancia = intoleranciaList.get(intoleranciaList.size() - 1);
         assertThat(testIntolerancia.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testIntolerancia.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -327,7 +322,7 @@ class IntoleranciaResourceIT {
         Intolerancia partialUpdatedIntolerancia = new Intolerancia();
         partialUpdatedIntolerancia.setId(intolerancia.getId());
 
-        partialUpdatedIntolerancia.nombre(UPDATED_NOMBRE);
+        partialUpdatedIntolerancia.nombre(UPDATED_NOMBRE).descripcion(UPDATED_DESCRIPCION);
 
         restIntoleranciaMockMvc
             .perform(
@@ -342,6 +337,7 @@ class IntoleranciaResourceIT {
         assertThat(intoleranciaList).hasSize(databaseSizeBeforeUpdate);
         Intolerancia testIntolerancia = intoleranciaList.get(intoleranciaList.size() - 1);
         assertThat(testIntolerancia.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testIntolerancia.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test

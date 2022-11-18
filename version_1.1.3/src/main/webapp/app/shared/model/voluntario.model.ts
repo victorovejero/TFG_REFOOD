@@ -20,6 +20,7 @@ export interface IVoluntario {
   origen?: string | null;
   manipuladorAlimentos?: boolean;
   codigoPostal?: string;
+  activo?: boolean;
   nucleo?: INucleo | null;
   registros?: IRegistro[] | null;
 }
@@ -27,4 +28,5 @@ export interface IVoluntario {
 export const defaultValue: Readonly<IVoluntario> = {
   responsableDia: false,
   manipuladorAlimentos: false,
+  activo: false,
 };

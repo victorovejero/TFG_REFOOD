@@ -29,6 +29,10 @@ export const BeneficiarioDetail = () => {
           </dt>
           <dd>{beneficiarioEntity.id}</dd>
           <dt>
+            <span id="idBeneficiario">Id Beneficiario</span>
+          </dt>
+          <dd>{beneficiarioEntity.idBeneficiario}</dd>
+          <dt>
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{beneficiarioEntity.nombre}</dd>
@@ -44,6 +48,21 @@ export const BeneficiarioDetail = () => {
             <span id="idDual">Id Dual</span>
           </dt>
           <dd>{beneficiarioEntity.idDual}</dd>
+          <dt>
+            <span id="activo">Activo</span>
+          </dt>
+          <dd>{beneficiarioEntity.activo ? 'true' : 'false'}</dd>
+          <dt>Intolerancia</dt>
+          <dd>
+            {beneficiarioEntity.intolerancias
+              ? beneficiarioEntity.intolerancias.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {beneficiarioEntity.intolerancias && i === beneficiarioEntity.intolerancias.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
           <dt>Nucleo</dt>
           <dd>{beneficiarioEntity.nucleo ? beneficiarioEntity.nucleo.id : ''}</dd>
         </dl>

@@ -46,12 +46,12 @@ public class Tupper implements Serializable {
 
     @OneToMany(mappedBy = "tupper")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada", "tipoDeAlimento" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada" }, allowSetters = true)
     private Set<AlimentoDeSalida> alimentoDeSalidas = new HashSet<>();
 
     @OneToMany(mappedBy = "tupper")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tipoDeAlimento", "alimentoDeSalidas", "tupper", "donante" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
     private Set<AlimentoDeEntrada> alimentoDeEntradas = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

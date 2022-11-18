@@ -47,6 +47,9 @@ public class SocioDTO implements Serializable {
     @NotNull
     private String periodoPago;
 
+    @NotNull
+    private Boolean activo;
+
     private NucleoDTO nucleo;
 
     public Long getId() {
@@ -153,6 +156,14 @@ public class SocioDTO implements Serializable {
         this.periodoPago = periodoPago;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public NucleoDTO getNucleo() {
         return nucleo;
     }
@@ -199,6 +210,7 @@ public class SocioDTO implements Serializable {
             ", fechaBaja='" + getFechaBaja() + "'" +
             ", contribucionMensual=" + getContribucionMensual() +
             ", periodoPago='" + getPeriodoPago() + "'" +
+            ", activo='" + getActivo() + "'" +
             ", nucleo=" + getNucleo() +
             "}";
     }

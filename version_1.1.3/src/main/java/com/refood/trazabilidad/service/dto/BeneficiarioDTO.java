@@ -1,7 +1,9 @@
 package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -11,6 +13,9 @@ import javax.validation.constraints.*;
 public class BeneficiarioDTO implements Serializable {
 
     private Long id;
+
+    @NotNull
+    private String idBeneficiario;
 
     @NotNull
     private String nombre;
@@ -23,6 +28,11 @@ public class BeneficiarioDTO implements Serializable {
 
     private String idDual;
 
+    @NotNull
+    private Boolean activo;
+
+    private Set<IntoleranciaDTO> intolerancias = new HashSet<>();
+
     private NucleoDTO nucleo;
 
     public Long getId() {
@@ -31,6 +41,14 @@ public class BeneficiarioDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdBeneficiario() {
+        return idBeneficiario;
+    }
+
+    public void setIdBeneficiario(String idBeneficiario) {
+        this.idBeneficiario = idBeneficiario;
     }
 
     public String getNombre() {
@@ -63,6 +81,22 @@ public class BeneficiarioDTO implements Serializable {
 
     public void setIdDual(String idDual) {
         this.idDual = idDual;
+    }
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
+    public Set<IntoleranciaDTO> getIntolerancias() {
+        return intolerancias;
+    }
+
+    public void setIntolerancias(Set<IntoleranciaDTO> intolerancias) {
+        this.intolerancias = intolerancias;
     }
 
     public NucleoDTO getNucleo() {
@@ -99,10 +133,13 @@ public class BeneficiarioDTO implements Serializable {
     public String toString() {
         return "BeneficiarioDTO{" +
             "id=" + getId() +
+            ", idBeneficiario='" + getIdBeneficiario() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", numeroPersonas=" + getNumeroPersonas() +
             ", numeroNinios=" + getNumeroNinios() +
             ", idDual='" + getIdDual() + "'" +
+            ", activo='" + getActivo() + "'" +
+            ", intolerancias=" + getIntolerancias() +
             ", nucleo=" + getNucleo() +
             "}";
     }

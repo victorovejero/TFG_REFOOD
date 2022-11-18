@@ -41,13 +41,11 @@ export const AlimentoDeSalidaDetail = () => {
             ) : null}
           </dd>
           <dt>Tupper</dt>
-          <dd>{alimentoDeSalidaEntity.tupper ? alimentoDeSalidaEntity.tupper.modelo : ''}</dd>
+          <dd>{alimentoDeSalidaEntity.tupper ? alimentoDeSalidaEntity.tupper.id : ''}</dd>
           <dt>Beneficiario</dt>
-          <dd>{alimentoDeSalidaEntity.beneficiario ? alimentoDeSalidaEntity.beneficiario.nombre : ''}</dd>
+          <dd>{alimentoDeSalidaEntity.beneficiario ? alimentoDeSalidaEntity.beneficiario.id : ''}</dd>
           <dt>Alimento De Entrada</dt>
           <dd>{alimentoDeSalidaEntity.alimentoDeEntrada ? alimentoDeSalidaEntity.alimentoDeEntrada.id : ''}</dd>
-          <dt>Tipo De Alimento</dt>
-          <dd>{alimentoDeSalidaEntity.tipoDeAlimento ? alimentoDeSalidaEntity.tipoDeAlimento.nombreAlimento : ''}</dd>
         </dl>
         <Button tag={Link} to="/alimento-de-salida" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

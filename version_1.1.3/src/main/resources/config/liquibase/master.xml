@@ -31,6 +31,7 @@
     <include file="config/liquibase/changelog/20221022172023_added_entity_constraints_Voluntario.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172024_added_entity_constraints_Socio.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172025_added_entity_constraints_Registro.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221022172020_added_entity_constraints_TipoDeAlimento.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

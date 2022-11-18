@@ -121,13 +121,13 @@ export const AlimentoDeEntrada = () => {
                   Fecha Y Hora Preparacion <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  Tipo De Alimento <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
                   Tupper <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   Donante <FontAwesomeIcon icon="sort" />
+                </th>
+                <th>
+                  Tipo De Alimento <FontAwesomeIcon icon="sort" />
                 </th>
                 <th />
               </tr>
@@ -140,7 +140,7 @@ export const AlimentoDeEntrada = () => {
                       {alimentoDeEntrada.id}
                     </Button>
                   </td>
-                  <td>{alimentoDeEntrada.peso} kg</td>
+                  <td>{alimentoDeEntrada.peso}</td>
                   <td>
                     {alimentoDeEntrada.fechaYHoraEntrada ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraEntrada} format={APP_DATE_FORMAT} />
@@ -149,30 +149,30 @@ export const AlimentoDeEntrada = () => {
                   <td>
                     {alimentoDeEntrada.fechaYHoraRecogida ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraRecogida} format={APP_DATE_FORMAT} />
-                    ) : "N/A"}
+                    ) : null}
                   </td>
                   <td>
                     {alimentoDeEntrada.fechaYHoraPreparacion ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
-                    ) : "N/A"}
-                  </td>
-                  <td>
-                    {alimentoDeEntrada.tipoDeAlimento ? (
-                      <Link to={`/tipo-de-alimento/${alimentoDeEntrada.tipoDeAlimento.id}`}>{alimentoDeEntrada.tipoDeAlimento.nombreAlimento}</Link>
-                    ) : (
-                      ''
-                    )}
+                    ) : null}
                   </td>
                   <td>
                     {alimentoDeEntrada.tupper ? (
-                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.modelo}</Link>
+                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.id}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {alimentoDeEntrada.donante ? (
-                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.nombre}</Link>
+                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.id}</Link>
+                    ) : (
+                      ''
+                    )}
+                  </td>
+                  <td>
+                    {alimentoDeEntrada.tipoDeAlimento ? (
+                      <Link to={`/tipo-de-alimento/${alimentoDeEntrada.tipoDeAlimento.id}`}>{alimentoDeEntrada.tipoDeAlimento.id}</Link>
                     ) : (
                       ''
                     )}

@@ -33,6 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class DonanteResourceIT {
 
+    private static final String DEFAULT_ID_DONANTE = "AAAAAAAAAA";
+    private static final String UPDATED_ID_DONANTE = "BBBBBBBBBB";
+
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
@@ -63,6 +66,9 @@ class DonanteResourceIT {
     private static final String DEFAULT_COMENTARIOS = "AAAAAAAAAA";
     private static final String UPDATED_COMENTARIOS = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ACTIVO = false;
+    private static final Boolean UPDATED_ACTIVO = true;
+
     private static final String ENTITY_API_URL = "/api/donantes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -91,6 +97,7 @@ class DonanteResourceIT {
      */
     public static Donante createEntity(EntityManager em) {
         Donante donante = new Donante()
+            .idDonante(DEFAULT_ID_DONANTE)
             .nombre(DEFAULT_NOMBRE)
             .tipo(DEFAULT_TIPO)
             .ruta(DEFAULT_RUTA)
@@ -100,7 +107,8 @@ class DonanteResourceIT {
             .responsable(DEFAULT_RESPONSABLE)
             .fechaAlta(DEFAULT_FECHA_ALTA)
             .fechaBaja(DEFAULT_FECHA_BAJA)
-            .comentarios(DEFAULT_COMENTARIOS);
+            .comentarios(DEFAULT_COMENTARIOS)
+            .activo(DEFAULT_ACTIVO);
         return donante;
     }
 
@@ -112,6 +120,7 @@ class DonanteResourceIT {
      */
     public static Donante createUpdatedEntity(EntityManager em) {
         Donante donante = new Donante()
+            .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
             .tipo(UPDATED_TIPO)
             .ruta(UPDATED_RUTA)
@@ -121,7 +130,8 @@ class DonanteResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .comentarios(UPDATED_COMENTARIOS);
+            .comentarios(UPDATED_COMENTARIOS)
+            .activo(UPDATED_ACTIVO);
         return donante;
     }
 
@@ -144,6 +154,7 @@ class DonanteResourceIT {
         List<Donante> donanteList = donanteRepository.findAll();
         assertThat(donanteList).hasSize(databaseSizeBeforeCreate + 1);
         Donante testDonante = donanteList.get(donanteList.size() - 1);
+        assertThat(testDonante.getIdDonante()).isEqualTo(DEFAULT_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testDonante.getTipo()).isEqualTo(DEFAULT_TIPO);
         assertThat(testDonante.getRuta()).isEqualTo(DEFAULT_RUTA);
@@ -154,6 +165,7 @@ class DonanteResourceIT {
         assertThat(testDonante.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testDonante.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testDonante.getComentarios()).isEqualTo(DEFAULT_COMENTARIOS);
+        assertThat(testDonante.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -173,6 +185,24 @@ class DonanteResourceIT {
         // Validate the Donante in the database
         List<Donante> donanteList = donanteRepository.findAll();
         assertThat(donanteList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkIdDonanteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = donanteRepository.findAll().size();
+        // set the field null
+        donante.setIdDonante(null);
+
+        // Create the Donante, which fails.
+        DonanteDTO donanteDTO = donanteMapper.toDto(donante);
+
+        restDonanteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(donanteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Donante> donanteList = donanteRepository.findAll();
+        assertThat(donanteList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -321,6 +351,24 @@ class DonanteResourceIT {
 
     @Test
     @Transactional
+    void checkActivoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = donanteRepository.findAll().size();
+        // set the field null
+        donante.setActivo(null);
+
+        // Create the Donante, which fails.
+        DonanteDTO donanteDTO = donanteMapper.toDto(donante);
+
+        restDonanteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(donanteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Donante> donanteList = donanteRepository.findAll();
+        assertThat(donanteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllDonantes() throws Exception {
         // Initialize the database
         donanteRepository.saveAndFlush(donante);
@@ -331,6 +379,7 @@ class DonanteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(donante.getId().intValue())))
+            .andExpect(jsonPath("$.[*].idDonante").value(hasItem(DEFAULT_ID_DONANTE)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
             .andExpect(jsonPath("$.[*].ruta").value(hasItem(DEFAULT_RUTA)))
@@ -340,7 +389,8 @@ class DonanteResourceIT {
             .andExpect(jsonPath("$.[*].responsable").value(hasItem(DEFAULT_RESPONSABLE)))
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(DEFAULT_FECHA_ALTA.toString())))
             .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
-            .andExpect(jsonPath("$.[*].comentarios").value(hasItem(DEFAULT_COMENTARIOS)));
+            .andExpect(jsonPath("$.[*].comentarios").value(hasItem(DEFAULT_COMENTARIOS)))
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
 
     @Test
@@ -355,6 +405,7 @@ class DonanteResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(donante.getId().intValue()))
+            .andExpect(jsonPath("$.idDonante").value(DEFAULT_ID_DONANTE))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
             .andExpect(jsonPath("$.ruta").value(DEFAULT_RUTA))
@@ -364,7 +415,8 @@ class DonanteResourceIT {
             .andExpect(jsonPath("$.responsable").value(DEFAULT_RESPONSABLE))
             .andExpect(jsonPath("$.fechaAlta").value(DEFAULT_FECHA_ALTA.toString()))
             .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
-            .andExpect(jsonPath("$.comentarios").value(DEFAULT_COMENTARIOS));
+            .andExpect(jsonPath("$.comentarios").value(DEFAULT_COMENTARIOS))
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
     @Test
@@ -387,6 +439,7 @@ class DonanteResourceIT {
         // Disconnect from session so that the updates on updatedDonante are not directly saved in db
         em.detach(updatedDonante);
         updatedDonante
+            .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
             .tipo(UPDATED_TIPO)
             .ruta(UPDATED_RUTA)
@@ -396,7 +449,8 @@ class DonanteResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .comentarios(UPDATED_COMENTARIOS);
+            .comentarios(UPDATED_COMENTARIOS)
+            .activo(UPDATED_ACTIVO);
         DonanteDTO donanteDTO = donanteMapper.toDto(updatedDonante);
 
         restDonanteMockMvc
@@ -411,6 +465,7 @@ class DonanteResourceIT {
         List<Donante> donanteList = donanteRepository.findAll();
         assertThat(donanteList).hasSize(databaseSizeBeforeUpdate);
         Donante testDonante = donanteList.get(donanteList.size() - 1);
+        assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testDonante.getRuta()).isEqualTo(UPDATED_RUTA);
@@ -421,6 +476,7 @@ class DonanteResourceIT {
         assertThat(testDonante.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testDonante.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testDonante.getComentarios()).isEqualTo(UPDATED_COMENTARIOS);
+        assertThat(testDonante.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -501,11 +557,11 @@ class DonanteResourceIT {
         partialUpdatedDonante.setId(donante.getId());
 
         partialUpdatedDonante
+            .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
             .tipo(UPDATED_TIPO)
-            .ruta(UPDATED_RUTA)
-            .responsable(UPDATED_RESPONSABLE)
-            .fechaAlta(UPDATED_FECHA_ALTA);
+            .email(UPDATED_EMAIL)
+            .responsable(UPDATED_RESPONSABLE);
 
         restDonanteMockMvc
             .perform(
@@ -519,16 +575,18 @@ class DonanteResourceIT {
         List<Donante> donanteList = donanteRepository.findAll();
         assertThat(donanteList).hasSize(databaseSizeBeforeUpdate);
         Donante testDonante = donanteList.get(donanteList.size() - 1);
+        assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testDonante.getRuta()).isEqualTo(UPDATED_RUTA);
+        assertThat(testDonante.getRuta()).isEqualTo(DEFAULT_RUTA);
         assertThat(testDonante.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
         assertThat(testDonante.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
-        assertThat(testDonante.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testDonante.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testDonante.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
-        assertThat(testDonante.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testDonante.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testDonante.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testDonante.getComentarios()).isEqualTo(DEFAULT_COMENTARIOS);
+        assertThat(testDonante.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -544,6 +602,7 @@ class DonanteResourceIT {
         partialUpdatedDonante.setId(donante.getId());
 
         partialUpdatedDonante
+            .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
             .tipo(UPDATED_TIPO)
             .ruta(UPDATED_RUTA)
@@ -553,7 +612,8 @@ class DonanteResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .comentarios(UPDATED_COMENTARIOS);
+            .comentarios(UPDATED_COMENTARIOS)
+            .activo(UPDATED_ACTIVO);
 
         restDonanteMockMvc
             .perform(
@@ -567,6 +627,7 @@ class DonanteResourceIT {
         List<Donante> donanteList = donanteRepository.findAll();
         assertThat(donanteList).hasSize(databaseSizeBeforeUpdate);
         Donante testDonante = donanteList.get(donanteList.size() - 1);
+        assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
         assertThat(testDonante.getRuta()).isEqualTo(UPDATED_RUTA);
@@ -577,6 +638,7 @@ class DonanteResourceIT {
         assertThat(testDonante.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testDonante.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testDonante.getComentarios()).isEqualTo(UPDATED_COMENTARIOS);
+        assertThat(testDonante.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test

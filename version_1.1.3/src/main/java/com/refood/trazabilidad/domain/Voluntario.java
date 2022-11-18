@@ -84,6 +84,10 @@ public class Voluntario implements Serializable {
     @Column(name = "codigo_postal", nullable = false)
     private String codigoPostal;
 
+    @NotNull
+    @Column(name = "activo", nullable = false)
+    private Boolean activo;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
     private Nucleo nucleo;
@@ -316,6 +320,19 @@ public class Voluntario implements Serializable {
         this.codigoPostal = codigoPostal;
     }
 
+    public Boolean getActivo() {
+        return this.activo;
+    }
+
+    public Voluntario activo(Boolean activo) {
+        this.setActivo(activo);
+        return this;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Nucleo getNucleo() {
         return this.nucleo;
     }
@@ -400,6 +417,7 @@ public class Voluntario implements Serializable {
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +
             ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

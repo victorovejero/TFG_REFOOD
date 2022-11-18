@@ -7,6 +7,11 @@
   "fields": [
     {
       "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcion",
       "fieldType": "String"
     }
   ],
@@ -17,17 +22,17 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "tipoDeAlimento",
+      "otherEntityName": "beneficiario",
       "otherEntityRelationshipName": "intolerancia",
-      "ownerSide": true,
-      "relationshipName": "tipoDeAlimento",
+      "ownerSide": false,
+      "relationshipName": "beneficiario",
       "relationshipType": "many-to-many"
     },
     {
-      "otherEntityName": "beneficiario",
+      "otherEntityName": "tipoDeAlimento",
       "otherEntityRelationshipName": "intolerancia",
-      "ownerSide": true,
-      "relationshipName": "beneficiario",
+      "ownerSide": false,
+      "relationshipName": "tipoDeAlimento",
       "relationshipType": "many-to-many"
     }
   ],

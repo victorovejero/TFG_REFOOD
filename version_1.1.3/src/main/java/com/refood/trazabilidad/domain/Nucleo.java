@@ -53,6 +53,10 @@ public class Nucleo implements Serializable {
     @Column(name = "numero_rutas", nullable = false)
     private Integer numeroRutas;
 
+    @NotNull
+    @Column(name = "activo", nullable = false)
+    private Boolean activo;
+
     @OneToMany(mappedBy = "nucleo")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "alimentoDeEntradas", "nucleo" }, allowSetters = true)
@@ -60,7 +64,7 @@ public class Nucleo implements Serializable {
 
     @OneToMany(mappedBy = "nucleo")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "nucleo", "intolerancias" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias", "nucleo" }, allowSetters = true)
     private Set<Beneficiario> beneficiarios = new HashSet<>();
 
     @OneToMany(mappedBy = "nucleo")
@@ -182,6 +186,19 @@ public class Nucleo implements Serializable {
 
     public void setNumeroRutas(Integer numeroRutas) {
         this.numeroRutas = numeroRutas;
+    }
+
+    public Boolean getActivo() {
+        return this.activo;
+    }
+
+    public Nucleo activo(Boolean activo) {
+        this.setActivo(activo);
+        return this;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
     }
 
     public Set<Donante> getDonantes() {
@@ -370,6 +387,7 @@ public class Nucleo implements Serializable {
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
             ", numeroRutas=" + getNumeroRutas() +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

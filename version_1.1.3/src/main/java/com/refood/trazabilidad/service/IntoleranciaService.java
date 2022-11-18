@@ -42,14 +42,6 @@ public interface IntoleranciaService {
     Page<IntoleranciaDTO> findAll(Pageable pageable);
 
     /**
-     * Get all the intolerancias with eager load of many-to-many relationships.
-     *
-     * @param pageable the pagination information.
-     * @return the list of entities.
-     */
-    Page<IntoleranciaDTO> findAllWithEagerRelationships(Pageable pageable);
-
-    /**
      * Get the "id" intolerancia.
      *
      * @param id the id of the entity.

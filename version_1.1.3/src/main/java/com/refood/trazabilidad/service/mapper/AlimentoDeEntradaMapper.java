@@ -15,23 +15,23 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface AlimentoDeEntradaMapper extends EntityMapper<AlimentoDeEntradaDTO, AlimentoDeEntrada> {
-    // @Mapping(target = "tipoDeAlimento", source = "tipoDeAlimento", qualifiedByName = "tipoDeAlimentoId")
-    // @Mapping(target = "tupper", source = "tupper", qualifiedByName = "tupperId")
-    // @Mapping(target = "donante", source = "donante", qualifiedByName = "donanteId")
-    // AlimentoDeEntradaDTO toDto(AlimentoDeEntrada s);
+    @Mapping(target = "tupper", source = "tupper", qualifiedByName = "tupperId")
+    @Mapping(target = "donante", source = "donante", qualifiedByName = "donanteId")
+    @Mapping(target = "tipoDeAlimento", source = "tipoDeAlimento", qualifiedByName = "tipoDeAlimentoId")
+    AlimentoDeEntradaDTO toDto(AlimentoDeEntrada s);
 
-    // @Named("tipoDeAlimentoId")
-    // @BeanMapping(ignoreByDefault = true)
-    // @Mapping(target = "id", source = "id")
-    TipoDeAlimentoDTO toDtoTipoDeAlimentoId(TipoDeAlimento tipoDeAlimento);
-
-    // @Named("tupperId")
-    // @BeanMapping(ignoreByDefault = true)
-    // @Mapping(target = "id", source = "id")
+    @Named("tupperId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
     TupperDTO toDtoTupperId(Tupper tupper);
 
-    // @Named("donanteId")
-    // @BeanMapping(ignoreByDefault = true)
-    // @Mapping(target = "id", source = "id")
+    @Named("donanteId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
     DonanteDTO toDtoDonanteId(Donante donante);
+
+    @Named("tipoDeAlimentoId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
+    TipoDeAlimentoDTO toDtoTipoDeAlimentoId(TipoDeAlimento tipoDeAlimento);
 }

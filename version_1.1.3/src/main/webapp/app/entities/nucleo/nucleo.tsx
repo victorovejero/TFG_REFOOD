@@ -144,6 +144,9 @@ export const Nucleo = () => {
                   <th className="hand" onClick={sort('numeroRutas')}>
                     Numero Rutas <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('activo')}>
+                    Activo <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -162,6 +165,7 @@ export const Nucleo = () => {
                     <td>{nucleo.telefono}</td>
                     <td>{nucleo.email}</td>
                     <td>{nucleo.numeroRutas}</td>
+                    <td>{nucleo.activo ? 'true' : 'false'}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/nucleo/${nucleo.id}`} color="info" size="sm" data-cy="entityDetailsButton">

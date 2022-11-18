@@ -27,6 +27,10 @@ public class Donante implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "id_donante", nullable = false)
+    private String idDonante;
+
+    @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
@@ -64,9 +68,13 @@ public class Donante implements Serializable {
     @Column(name = "comentarios")
     private String comentarios;
 
+    @NotNull
+    @Column(name = "activo", nullable = false)
+    private Boolean activo;
+
     @OneToMany(mappedBy = "donante")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tipoDeAlimento", "alimentoDeSalidas", "tupper", "donante" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
     private Set<AlimentoDeEntrada> alimentoDeEntradas = new HashSet<>();
 
     @ManyToOne
@@ -86,6 +94,19 @@ public class Donante implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdDonante() {
+        return this.idDonante;
+    }
+
+    public Donante idDonante(String idDonante) {
+        this.setIdDonante(idDonante);
+        return this;
+    }
+
+    public void setIdDonante(String idDonante) {
+        this.idDonante = idDonante;
     }
 
     public String getNombre() {
@@ -218,6 +239,19 @@ public class Donante implements Serializable {
         this.comentarios = comentarios;
     }
 
+    public Boolean getActivo() {
+        return this.activo;
+    }
+
+    public Donante activo(Boolean activo) {
+        this.setActivo(activo);
+        return this;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Set<AlimentoDeEntrada> getAlimentoDeEntradas() {
         return this.alimentoDeEntradas;
     }
@@ -286,6 +320,7 @@ public class Donante implements Serializable {
     public String toString() {
         return "Donante{" +
             "id=" + getId() +
+            ", idDonante='" + getIdDonante() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", tipo='" + getTipo() + "'" +
             ", ruta=" + getRuta() +
@@ -296,6 +331,7 @@ public class Donante implements Serializable {
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
             ", comentarios='" + getComentarios() + "'" +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

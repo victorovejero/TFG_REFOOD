@@ -21,6 +21,20 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="20221022172020-1-relations" author="jhipster">
+
+        <createTable tableName="rel_tipo_de_alimento__intolerancia">
+            <column name="intolerancia_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tipo_de_alimento_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="tipo_de_alimento_id, intolerancia_id" tableName="rel_tipo_de_alimento__intolerancia"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--

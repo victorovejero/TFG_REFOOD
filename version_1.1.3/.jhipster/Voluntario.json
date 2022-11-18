@@ -78,6 +78,11 @@
       "fieldName": "codigoPostal",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

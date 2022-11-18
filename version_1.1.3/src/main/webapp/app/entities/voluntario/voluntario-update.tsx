@@ -206,6 +206,7 @@ export const VoluntarioUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField label="Activo" id="voluntario-activo" name="activo" data-cy="activo" check type="checkbox" />
               <ValidatedField id="voluntario-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
                 <option value="" key="0" />
                 {nucleos

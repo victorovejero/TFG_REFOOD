@@ -32,28 +32,10 @@ export const IntoleranciaDetail = () => {
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{intoleranciaEntity.nombre}</dd>
-          <dt>Tipo De Alimento</dt>
-          <dd>
-            {intoleranciaEntity.tipoDeAlimentos
-              ? intoleranciaEntity.tipoDeAlimentos.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {intoleranciaEntity.tipoDeAlimentos && i === intoleranciaEntity.tipoDeAlimentos.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
-          <dt>Beneficiario</dt>
-          <dd>
-            {intoleranciaEntity.beneficiarios
-              ? intoleranciaEntity.beneficiarios.map((val, i) => (
-                  <span key={val.id}>
-                    <a>{val.id}</a>
-                    {intoleranciaEntity.beneficiarios && i === intoleranciaEntity.beneficiarios.length - 1 ? '' : ', '}
-                  </span>
-                ))
-              : null}
-          </dd>
+          <dt>
+            <span id="descripcion">Descripcion</span>
+          </dt>
+          <dd>{intoleranciaEntity.descripcion}</dd>
         </dl>
         <Button tag={Link} to="/intolerancia" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

@@ -126,6 +126,9 @@ export const Intolerancia = () => {
                   <th className="hand" onClick={sort('nombre')}>
                     Nombre <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('descripcion')}>
+                    Descripcion <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -138,6 +141,7 @@ export const Intolerancia = () => {
                       </Button>
                     </td>
                     <td>{intolerancia.nombre}</td>
+                    <td>{intolerancia.descripcion}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/intolerancia/${intolerancia.id}`} color="info" size="sm" data-cy="entityDetailsButton">

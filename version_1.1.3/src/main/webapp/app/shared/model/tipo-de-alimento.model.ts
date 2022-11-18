@@ -1,10 +1,10 @@
-import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
+import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { IIntolerancia } from 'app/shared/model/intolerancia.model';
 
 export interface ITipoDeAlimento {
   id?: number;
   nombreAlimento?: string;
-  alimentoDeSalidas?: IAlimentoDeSalida[] | null;
+  alimentoDeEntradas?: IAlimentoDeEntrada[] | null;
   intolerancias?: IIntolerancia[] | null;
 }
 

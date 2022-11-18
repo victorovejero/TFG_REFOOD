@@ -23,11 +23,11 @@ public class AlimentoDeEntradaDTO implements Serializable {
 
     private ZonedDateTime fechaYHoraPreparacion;
 
-    private TipoDeAlimentoDTO tipoDeAlimento;
-
     private TupperDTO tupper;
 
     private DonanteDTO donante;
+
+    private TipoDeAlimentoDTO tipoDeAlimento;
 
     public Long getId() {
         return id;
@@ -69,14 +69,6 @@ public class AlimentoDeEntradaDTO implements Serializable {
         this.fechaYHoraPreparacion = fechaYHoraPreparacion;
     }
 
-    public TipoDeAlimentoDTO getTipoDeAlimento() {
-        return tipoDeAlimento;
-    }
-
-    public void setTipoDeAlimento(TipoDeAlimentoDTO tipoDeAlimento) {
-        this.tipoDeAlimento = tipoDeAlimento;
-    }
-
     public TupperDTO getTupper() {
         return tupper;
     }
@@ -91,6 +83,14 @@ public class AlimentoDeEntradaDTO implements Serializable {
 
     public void setDonante(DonanteDTO donante) {
         this.donante = donante;
+    }
+
+    public TipoDeAlimentoDTO getTipoDeAlimento() {
+        return tipoDeAlimento;
+    }
+
+    public void setTipoDeAlimento(TipoDeAlimentoDTO tipoDeAlimento) {
+        this.tipoDeAlimento = tipoDeAlimento;
     }
 
     @Override
@@ -123,9 +123,9 @@ public class AlimentoDeEntradaDTO implements Serializable {
             ", fechaYHoraEntrada='" + getFechaYHoraEntrada() + "'" +
             ", fechaYHoraRecogida='" + getFechaYHoraRecogida() + "'" +
             ", fechaYHoraPreparacion='" + getFechaYHoraPreparacion() + "'" +
-            ", tipoDeAlimento=" + getTipoDeAlimento() +
             ", tupper=" + getTupper() +
             ", donante=" + getDonante() +
+            ", tipoDeAlimento=" + getTipoDeAlimento() +
             "}";
     }
 }

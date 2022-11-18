@@ -42,6 +42,14 @@ public interface TipoDeAlimentoService {
     Page<TipoDeAlimentoDTO> findAll(Pageable pageable);
 
     /**
+     * Get all the tipoDeAlimentos with eager load of many-to-many relationships.
+     *
+     * @param pageable the pagination information.
+     * @return the list of entities.
+     */
+    Page<TipoDeAlimentoDTO> findAllWithEagerRelationships(Pageable pageable);
+
+    /**
      * Get the "id" tipoDeAlimento.
      *
      * @param id the id of the entity.

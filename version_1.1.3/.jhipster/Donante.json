@@ -6,6 +6,11 @@
   "entityTableName": "donante",
   "fields": [
     {
+      "fieldName": "idDonante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "nombre",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -52,6 +57,11 @@
     {
       "fieldName": "comentarios",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

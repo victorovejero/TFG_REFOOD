@@ -22,7 +22,7 @@ public class IntoleranciaRepositoryWithBagRelationshipsImpl implements Intoleran
 
     @Override
     public Optional<Intolerancia> fetchBagRelationships(Optional<Intolerancia> intolerancia) {
-        return intolerancia.map(this::fetchTipoDeAlimentos).map(this::fetchBeneficiarios);
+        return intolerancia.map(this::fetchBeneficiarios);
     }
 
     @Override
@@ -36,33 +36,7 @@ public class IntoleranciaRepositoryWithBagRelationshipsImpl implements Intoleran
 
     @Override
     public List<Intolerancia> fetchBagRelationships(List<Intolerancia> intolerancias) {
-        return Optional.of(intolerancias).map(this::fetchTipoDeAlimentos).map(this::fetchBeneficiarios).orElse(Collections.emptyList());
-    }
-
-    Intolerancia fetchTipoDeAlimentos(Intolerancia result) {
-        return entityManager
-            .createQuery(
-                "select intolerancia from Intolerancia intolerancia left join fetch intolerancia.tipoDeAlimentos where intolerancia is :intolerancia",
-                Intolerancia.class
-            )
-            .setParameter("intolerancia", result)
-            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-            .getSingleResult();
-    }
-
-    List<Intolerancia> fetchTipoDeAlimentos(List<Intolerancia> intolerancias) {
-        HashMap<Object, Integer> order = new HashMap<>();
-        IntStream.range(0, intolerancias.size()).forEach(index -> order.put(intolerancias.get(index).getId(), index));
-        List<Intolerancia> result = entityManager
-            .createQuery(
-                "select distinct intolerancia from Intolerancia intolerancia left join fetch intolerancia.tipoDeAlimentos where intolerancia in :intolerancias",
-                Intolerancia.class
-            )
-            .setParameter("intolerancias", intolerancias)
-            .setHint(QueryHints.PASS_DISTINCT_THROUGH, false)
-            .getResultList();
-        Collections.sort(result, (o1, o2) -> Integer.compare(order.get(o1.getId()), order.get(o2.getId())));
-        return result;
+        return Optional.of(intolerancias).map(this::fetchBeneficiarios).orElse(Collections.emptyList());
     }
 
     Intolerancia fetchBeneficiarios(Intolerancia result) {

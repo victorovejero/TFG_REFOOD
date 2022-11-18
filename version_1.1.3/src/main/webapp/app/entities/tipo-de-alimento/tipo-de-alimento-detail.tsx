@@ -32,6 +32,17 @@ export const TipoDeAlimentoDetail = () => {
             <span id="nombreAlimento">Nombre Alimento</span>
           </dt>
           <dd>{tipoDeAlimentoEntity.nombreAlimento}</dd>
+          <dt>Intolerancia</dt>
+          <dd>
+            {tipoDeAlimentoEntity.intolerancias
+              ? tipoDeAlimentoEntity.intolerancias.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {tipoDeAlimentoEntity.intolerancias && i === tipoDeAlimentoEntity.intolerancias.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
         </dl>
         <Button tag={Link} to="/tipo-de-alimento" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

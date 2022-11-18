@@ -147,6 +147,7 @@ export const NucleoUpdate = () => {
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
+              <ValidatedField label="Activo" id="nucleo-activo" name="activo" data-cy="activo" check type="checkbox" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/nucleo" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

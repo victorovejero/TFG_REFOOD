@@ -69,11 +69,15 @@ public class BeneficiarioServiceImpl implements BeneficiarioService {
         return beneficiarioRepository.findAll(pageable).map(beneficiarioMapper::toDto);
     }
 
+    public Page<BeneficiarioDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return beneficiarioRepository.findAllWithEagerRelationships(pageable).map(beneficiarioMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<BeneficiarioDTO> findOne(Long id) {
         log.debug("Request to get Beneficiario : {}", id);
-        return beneficiarioRepository.findById(id).map(beneficiarioMapper::toDto);
+        return beneficiarioRepository.findOneWithEagerRelationships(id).map(beneficiarioMapper::toDto);
     }
 
     @Override

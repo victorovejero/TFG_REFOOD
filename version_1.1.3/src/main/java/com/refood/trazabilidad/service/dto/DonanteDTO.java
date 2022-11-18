@@ -14,6 +14,9 @@ public class DonanteDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String idDonante;
+
+    @NotNull
     private String nombre;
 
     @NotNull
@@ -41,6 +44,9 @@ public class DonanteDTO implements Serializable {
 
     private String comentarios;
 
+    @NotNull
+    private Boolean activo;
+
     private NucleoDTO nucleo;
 
     public Long getId() {
@@ -49,6 +55,14 @@ public class DonanteDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdDonante() {
+        return idDonante;
+    }
+
+    public void setIdDonante(String idDonante) {
+        this.idDonante = idDonante;
     }
 
     public String getNombre() {
@@ -131,6 +145,14 @@ public class DonanteDTO implements Serializable {
         this.comentarios = comentarios;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public NucleoDTO getNucleo() {
         return nucleo;
     }
@@ -165,6 +187,7 @@ public class DonanteDTO implements Serializable {
     public String toString() {
         return "DonanteDTO{" +
             "id=" + getId() +
+            ", idDonante='" + getIdDonante() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", tipo='" + getTipo() + "'" +
             ", ruta=" + getRuta() +
@@ -175,6 +198,7 @@ public class DonanteDTO implements Serializable {
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
             ", comentarios='" + getComentarios() + "'" +
+            ", activo='" + getActivo() + "'" +
             ", nucleo=" + getNucleo() +
             "}";
     }

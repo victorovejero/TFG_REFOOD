@@ -8,6 +8,18 @@
     -->
     <changeSet id="20221022172017-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="beneficiario_id"
+                                 baseTableName="rel_beneficiario__intolerancia"
+                                 constraintName="fk_rel_beneficiario__intolerancia__beneficiario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="beneficiario"/>
+
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id"
+                                 baseTableName="rel_beneficiario__intolerancia"
+                                 constraintName="fk_rel_beneficiario__intolerancia__intolerancia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intolerancia"/>
+
         <addForeignKeyConstraint baseColumnNames="nucleo_id"
                                  baseTableName="beneficiario"
                                  constraintName="fk_beneficiario__nucleo_id"

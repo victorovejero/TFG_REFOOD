@@ -2,40 +2,40 @@ import React from 'react';
 
 import MenuItem from 'app/shared/layout/menus/menu-item';
 
-const EntitiesMenu = () => {
+const EntitiesMenu = ({Admin}) => {
   return (
     <>
       {/* prettier-ignore */}
-      <MenuItem icon="asterisk" to="/nucleo">
+      {Admin ? <MenuItem icon="asterisk" to="/nucleo">
         Nucleo
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/donante">
+      </MenuItem> : null}
+      {Admin ? <MenuItem icon="asterisk" to="/donante">
         Donante
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/beneficiario">
+      </MenuItem> : null}
+      {Admin ? <MenuItem icon="asterisk" to="/beneficiario">
         Beneficiario
-      </MenuItem>
+      </MenuItem> : null}
       <MenuItem icon="asterisk" to="/alimento-de-entrada">
         Alimento De Entrada
       </MenuItem>
       <MenuItem icon="asterisk" to="/alimento-de-salida">
         Alimento De Salida
       </MenuItem>
-      <MenuItem icon="asterisk" to="/tipo-de-alimento">
+      {Admin ? <MenuItem icon="asterisk" to="/tipo-de-alimento">
         Tipo De Alimento
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/tupper">
+      </MenuItem> : null}
+      {Admin ? <MenuItem icon="asterisk" to="/tupper">
         Tupper
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/intolerancia">
+      </MenuItem> : null}
+      {Admin ? <MenuItem icon="asterisk" to="/intolerancia">
         Intolerancia
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/voluntario">
+      </MenuItem> : null}
+      {Admin ? <MenuItem icon="asterisk" to="/voluntario">
         Voluntario
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/socio">
+      </MenuItem> : null}
+      {Admin ?<MenuItem icon="asterisk" to="/socio">
         Socio
-      </MenuItem>
+      </MenuItem> : null}
       <MenuItem icon="asterisk" to="/registro">
         Registro
       </MenuItem>

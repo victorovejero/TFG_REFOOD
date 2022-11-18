@@ -95,6 +95,20 @@ export const TipoDeAlimento = () => {
     resetAll();
   };
 
+  const printList = (i) => {
+    let arr = []
+    let counter = 0;
+    for (const int of tipoDeAlimentoList[i].intolerancias){ 
+      arr[counter] =  int ? <Link to={`/intolerancia/${int.id}`}>{int.nombre}</Link> : ''
+      counter++;
+      
+      arr[counter] = " - "
+      counter++;
+    }
+    return arr.slice(0,-1);
+    
+  }
+
   return (
     <div>
       <h2 id="tipo-de-alimento-heading" data-cy="TipoDeAlimentoHeading">
@@ -126,6 +140,9 @@ export const TipoDeAlimento = () => {
                   <th className="hand" onClick={sort('nombreAlimento')}>
                     Nombre Alimento <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th>
+                    Intolerancias
+                  </th>
                   <th />
                 </tr>
               </thead>
@@ -138,6 +155,7 @@ export const TipoDeAlimento = () => {
                       </Button>
                     </td>
                     <td>{tipoDeAlimento.nombreAlimento}</td>
+                    <td>{printList(i)}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button

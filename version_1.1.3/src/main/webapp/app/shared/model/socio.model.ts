@@ -15,7 +15,10 @@ export interface ISocio {
   fechaBaja?: string | null;
   contribucionMensual?: number;
   periodoPago?: string;
+  activo?: boolean;
   nucleo?: INucleo | null;
 }
 
-export const defaultValue: Readonly<ISocio> = {};
+export const defaultValue: Readonly<ISocio> = {
+  activo: false,
+};

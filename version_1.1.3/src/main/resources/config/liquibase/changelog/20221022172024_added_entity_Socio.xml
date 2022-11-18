@@ -50,6 +50,9 @@
             <column name="periodo_pago" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="activo" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <column name="nucleo_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -86,6 +89,7 @@
             <column name="fecha_baja" type="date"/>
             <column name="contribucion_mensual" type="numeric"/>
             <column name="periodo_pago" type="string"/>
+            <column name="activo" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -29,9 +29,6 @@
             <column name="alimento_de_entrada_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="tipo_de_alimento_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
     </changeSet>

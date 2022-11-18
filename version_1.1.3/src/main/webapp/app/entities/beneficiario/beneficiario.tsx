@@ -103,6 +103,9 @@ export const Beneficiario = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('idBeneficiario')}>
+                  Id Beneficiario <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('nombre')}>
                   Nombre <FontAwesomeIcon icon="sort" />
                 </th>
@@ -114,6 +117,9 @@ export const Beneficiario = () => {
                 </th>
                 <th className="hand" onClick={sort('idDual')}>
                   Id Dual <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('activo')}>
+                  Activo <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   Nucleo <FontAwesomeIcon icon="sort" />
@@ -129,10 +135,12 @@ export const Beneficiario = () => {
                       {beneficiario.id}
                     </Button>
                   </td>
+                  <td>{beneficiario.idBeneficiario}</td>
                   <td>{beneficiario.nombre}</td>
                   <td>{beneficiario.numeroPersonas}</td>
                   <td>{beneficiario.numeroNinios}</td>
                   <td>{beneficiario.idDual}</td>
+                  <td>{beneficiario.activo ? 'true' : 'false'}</td>
                   <td>{beneficiario.nucleo ? <Link to={`/nucleo/${beneficiario.nucleo.id}`}>{beneficiario.nucleo.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

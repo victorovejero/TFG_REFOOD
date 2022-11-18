@@ -33,6 +33,9 @@ public class NucleoDTO implements Serializable {
     @NotNull
     private Integer numeroRutas;
 
+    @NotNull
+    private Boolean activo;
+
     public Long getId() {
         return id;
     }
@@ -97,6 +100,14 @@ public class NucleoDTO implements Serializable {
         this.numeroRutas = numeroRutas;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -130,6 +141,7 @@ public class NucleoDTO implements Serializable {
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
             ", numeroRutas=" + getNumeroRutas() +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

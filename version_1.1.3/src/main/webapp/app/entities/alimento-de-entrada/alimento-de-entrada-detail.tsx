@@ -56,12 +56,12 @@ export const AlimentoDeEntradaDetail = () => {
               <TextFormat value={alimentoDeEntradaEntity.fechaYHoraPreparacion} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
-          <dt>Tipo De Alimento</dt>
-          <dd>{alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.nombreAlimento : ''}</dd>
           <dt>Tupper</dt>
-          <dd>{alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.modelo : ''}</dd>
+          <dd>{alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.id : ''}</dd>
           <dt>Donante</dt>
-          <dd>{alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.nombre : ''}</dd>
+          <dd>{alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.id : ''}</dd>
+          <dt>Tipo De Alimento</dt>
+          <dd>{alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/alimento-de-entrada" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

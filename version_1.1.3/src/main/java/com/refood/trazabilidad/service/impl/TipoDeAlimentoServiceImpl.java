@@ -69,11 +69,15 @@ public class TipoDeAlimentoServiceImpl implements TipoDeAlimentoService {
         return tipoDeAlimentoRepository.findAll(pageable).map(tipoDeAlimentoMapper::toDto);
     }
 
+    public Page<TipoDeAlimentoDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return tipoDeAlimentoRepository.findAllWithEagerRelationships(pageable).map(tipoDeAlimentoMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<TipoDeAlimentoDTO> findOne(Long id) {
         log.debug("Request to get TipoDeAlimento : {}", id);
-        return tipoDeAlimentoRepository.findById(id).map(tipoDeAlimentoMapper::toDto);
+        return tipoDeAlimentoRepository.findOneWithEagerRelationships(id).map(tipoDeAlimentoMapper::toDto);
     }
 
     @Override

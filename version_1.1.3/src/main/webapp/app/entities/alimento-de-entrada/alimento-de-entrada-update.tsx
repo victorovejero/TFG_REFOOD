@@ -8,12 +8,12 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
-import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { ITupper } from 'app/shared/model/tupper.model';
 import { getEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IDonante } from 'app/shared/model/donante.model';
 import { getEntities as getDonantes } from 'app/entities/donante/donante.reducer';
+import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
+import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-entrada.reducer';
 
@@ -25,9 +25,9 @@ export const AlimentoDeEntradaUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const tipoDeAlimentos = useAppSelector(state => state.tipoDeAlimento.entities);
   const tuppers = useAppSelector(state => state.tupper.entities);
   const donantes = useAppSelector(state => state.donante.entities);
+  const tipoDeAlimentos = useAppSelector(state => state.tipoDeAlimento.entities);
   const alimentoDeEntradaEntity = useAppSelector(state => state.alimentoDeEntrada.entity);
   const loading = useAppSelector(state => state.alimentoDeEntrada.loading);
   const updating = useAppSelector(state => state.alimentoDeEntrada.updating);
@@ -44,9 +44,9 @@ export const AlimentoDeEntradaUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getTipoDeAlimentos({}));
     dispatch(getTuppers({}));
     dispatch(getDonantes({}));
+    dispatch(getTipoDeAlimentos({}));
   }, []);
 
   useEffect(() => {
@@ -63,9 +63,9 @@ export const AlimentoDeEntradaUpdate = () => {
     const entity = {
       ...alimentoDeEntradaEntity,
       ...values,
-      tipoDeAlimento: tipoDeAlimentos.find(it => it.id.toString() === values.tipoDeAlimento.toString()),
       tupper: tuppers.find(it => it.id.toString() === values.tupper.toString()),
       donante: donantes.find(it => it.id.toString() === values.donante.toString()),
+      tipoDeAlimento: tipoDeAlimentos.find(it => it.id.toString() === values.tipoDeAlimento.toString()),
     };
 
     if (isNew) {
@@ -87,9 +87,9 @@ export const AlimentoDeEntradaUpdate = () => {
           fechaYHoraEntrada: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraEntrada),
           fechaYHoraRecogida: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraRecogida),
           fechaYHoraPreparacion: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraPreparacion),
-          tipoDeAlimento: alimentoDeEntradaEntity?.tipoDeAlimento?.id,
           tupper: alimentoDeEntradaEntity?.tupper?.id,
           donante: alimentoDeEntradaEntity?.donante?.id,
+          tipoDeAlimento: alimentoDeEntradaEntity?.tipoDeAlimento?.id,
         };
 
   return (
@@ -148,6 +148,26 @@ export const AlimentoDeEntradaUpdate = () => {
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select">
+                <option value="" key="0" />
+                {tuppers
+                  ? tuppers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select">
+                <option value="" key="0" />
+                {donantes
+                  ? donantes.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 id="alimento-de-entrada-tipoDeAlimento"
                 name="tipoDeAlimento"
@@ -159,27 +179,7 @@ export const AlimentoDeEntradaUpdate = () => {
                 {tipoDeAlimentos
                   ? tipoDeAlimentos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nombreAlimento}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select">
-                <option value="" key="0" />
-                {tuppers
-                  ? tuppers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.modelo}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select">
-                <option value="" key="0" />
-                {donantes
-                  ? donantes.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nombre}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

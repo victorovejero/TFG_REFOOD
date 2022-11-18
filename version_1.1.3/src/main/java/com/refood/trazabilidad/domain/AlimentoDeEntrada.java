@@ -40,14 +40,9 @@ public class AlimentoDeEntrada implements Serializable {
     @Column(name = "fecha_y_hora_preparacion")
     private ZonedDateTime fechaYHoraPreparacion;
 
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias" }, allowSetters = true)
-    @OneToOne
-    @JoinColumn(unique = true)
-    private TipoDeAlimento tipoDeAlimento;
-
     @OneToMany(mappedBy = "alimentoDeEntrada")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada", "tipoDeAlimento" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada" }, allowSetters = true)
     private Set<AlimentoDeSalida> alimentoDeSalidas = new HashSet<>();
 
     @ManyToOne
@@ -57,6 +52,10 @@ public class AlimentoDeEntrada implements Serializable {
     @ManyToOne
     @JsonIgnoreProperties(value = { "alimentoDeEntradas", "nucleo" }, allowSetters = true)
     private Donante donante;
+
+    @ManyToOne
+    @JsonIgnoreProperties(value = { "alimentoDeEntradas", "intolerancias" }, allowSetters = true)
+    private TipoDeAlimento tipoDeAlimento;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -125,19 +124,6 @@ public class AlimentoDeEntrada implements Serializable {
         this.fechaYHoraPreparacion = fechaYHoraPreparacion;
     }
 
-    public TipoDeAlimento getTipoDeAlimento() {
-        return this.tipoDeAlimento;
-    }
-
-    public void setTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.tipoDeAlimento = tipoDeAlimento;
-    }
-
-    public AlimentoDeEntrada tipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
-        this.setTipoDeAlimento(tipoDeAlimento);
-        return this;
-    }
-
     public Set<AlimentoDeSalida> getAlimentoDeSalidas() {
         return this.alimentoDeSalidas;
     }
@@ -192,6 +178,19 @@ public class AlimentoDeEntrada implements Serializable {
 
     public AlimentoDeEntrada donante(Donante donante) {
         this.setDonante(donante);
+        return this;
+    }
+
+    public TipoDeAlimento getTipoDeAlimento() {
+        return this.tipoDeAlimento;
+    }
+
+    public void setTipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
+        this.tipoDeAlimento = tipoDeAlimento;
+    }
+
+    public AlimentoDeEntrada tipoDeAlimento(TipoDeAlimento tipoDeAlimento) {
+        this.setTipoDeAlimento(tipoDeAlimento);
         return this;
     }
 

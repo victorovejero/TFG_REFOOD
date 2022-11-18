@@ -18,15 +18,15 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "alimentoDeSalida",
+      "otherEntityName": "alimentoDeEntrada",
       "otherEntityRelationshipName": "tipoDeAlimento",
-      "relationshipName": "alimentoDeSalida",
+      "relationshipName": "alimentoDeEntrada",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "intolerancia",
       "otherEntityRelationshipName": "tipoDeAlimento",
-      "ownerSide": false,
+      "ownerSide": true,
       "relationshipName": "intolerancia",
       "relationshipType": "many-to-many"
     }

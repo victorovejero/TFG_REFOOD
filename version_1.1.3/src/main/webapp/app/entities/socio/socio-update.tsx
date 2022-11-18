@@ -192,6 +192,7 @@ export const SocioUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField label="Activo" id="socio-activo" name="activo" data-cy="activo" check type="checkbox" />
               <ValidatedField id="socio-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
                 <option value="" key="0" />
                 {nucleos

@@ -151,6 +151,9 @@ export const Voluntario = () => {
                 <th className="hand" onClick={sort('codigoPostal')}>
                   Codigo Postal <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('activo')}>
+                  Activo <FontAwesomeIcon icon="sort" />
+                </th>
                 <th>
                   Nucleo <FontAwesomeIcon icon="sort" />
                 </th>
@@ -189,6 +192,7 @@ export const Voluntario = () => {
                   <td>{voluntario.origen}</td>
                   <td>{voluntario.manipuladorAlimentos ? 'true' : 'false'}</td>
                   <td>{voluntario.codigoPostal}</td>
+                  <td>{voluntario.activo ? 'true' : 'false'}</td>
                   <td>{voluntario.nucleo ? <Link to={`/nucleo/${voluntario.nucleo.id}`}>{voluntario.nucleo.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

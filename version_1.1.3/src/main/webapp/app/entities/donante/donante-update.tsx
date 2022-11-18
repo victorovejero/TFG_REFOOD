@@ -84,7 +84,21 @@ export const DonanteUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="donante-id" label="ID" validate={{ required: true }} /> : null}
+              {/* Quitamos el id autogenerado para que no se vea */}
+              {/* {!isNew ? <ValidatedField name="id" required readOnly id="donante-id" label="ID" validate={{ required: true }} /> : null} */}
+              <ValidatedField
+                label="Id Donante"
+                id="donante-idDonante"
+                name="idDonante"
+                data-cy="idDonante"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+                defaultValue="D-"
+                pattern="D-+[0-9]{2,5}"
+                title="Tiene que ser del tipo: D-XXXX"
+              />
               <ValidatedField
                 label="Nombre"
                 id="donante-nombre"
@@ -95,16 +109,23 @@ export const DonanteUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              {/* Creamos un select para el tipo de donante, para que no hay lugar a interpretación. */}
               <ValidatedField
                 label="Tipo"
                 id="donante-tipo"
                 name="tipo"
                 data-cy="tipo"
-                type="text"
+                type="select"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
-                }}
-              />
+                }}>
+                <option>Catering</option>
+                <option>Colegio Mayor</option>
+                <option>Frutería</option>
+                <option>Panadería</option>
+                <option>Restaurante</option>
+              </ValidatedField>
+              
               <ValidatedField
                 label="Ruta"
                 id="donante-ruta"
@@ -135,16 +156,20 @@ export const DonanteUpdate = () => {
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
+                defaultValue=""
+                pattern="[0-9]{9}"
+                title="El número tiene que tener 9 cifras."
               />
               <ValidatedField
                 label="Email"
                 id="donante-email"
                 name="email"
                 data-cy="email"
-                type="text"
+                type="email"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
+                placeholder="ejemplo@gmail.com"
               />
               <ValidatedField
                 label="Responsable"
@@ -166,14 +191,17 @@ export const DonanteUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <ValidatedField label="Fecha Baja" id="donante-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" />
+              {!isNew ? <ValidatedField label="Fecha Baja" id="donante-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" /> : null}
               <ValidatedField label="Comentarios" id="donante-comentarios" name="comentarios" data-cy="comentarios" type="text" />
-              <ValidatedField id="donante-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
+              <ValidatedField label="Activo" id="donante-activo" name="activo" data-cy="activo" check type="checkbox" />
+              <ValidatedField id="donante-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select" validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}>
                 <option value="" key="0" />
                 {nucleos
                   ? nucleos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombre}
                       </option>
                     ))
                   : null}

@@ -80,6 +80,10 @@ export const SocioDetail = () => {
             <span id="periodoPago">Periodo Pago</span>
           </dt>
           <dd>{socioEntity.periodoPago}</dd>
+          <dt>
+            <span id="activo">Activo</span>
+          </dt>
+          <dd>{socioEntity.activo ? 'true' : 'false'}</dd>
           <dt>Nucleo</dt>
           <dd>{socioEntity.nucleo ? socioEntity.nucleo.id : ''}</dd>
         </dl>

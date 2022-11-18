@@ -25,8 +25,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
 
     private AlimentoDeEntradaDTO alimentoDeEntrada;
 
-    private TipoDeAlimentoDTO tipoDeAlimento;
-
     public Long getId() {
         return id;
     }
@@ -75,14 +73,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
         this.alimentoDeEntrada = alimentoDeEntrada;
     }
 
-    public TipoDeAlimentoDTO getTipoDeAlimento() {
-        return tipoDeAlimento;
-    }
-
-    public void setTipoDeAlimento(TipoDeAlimentoDTO tipoDeAlimento) {
-        this.tipoDeAlimento = tipoDeAlimento;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -114,7 +104,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
             ", tupper=" + getTupper() +
             ", beneficiario=" + getBeneficiario() +
             ", alimentoDeEntrada=" + getAlimentoDeEntrada() +
-            ", tipoDeAlimento=" + getTipoDeAlimento() +
             "}";
     }
 }

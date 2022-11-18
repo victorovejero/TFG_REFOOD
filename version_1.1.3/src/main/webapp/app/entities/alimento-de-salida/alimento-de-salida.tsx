@@ -123,9 +123,6 @@ export const AlimentoDeSalida = () => {
                 <th>
                   Alimento De Entrada <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  Tipo De Alimento <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -137,18 +134,18 @@ export const AlimentoDeSalida = () => {
                       {alimentoDeSalida.id}
                     </Button>
                   </td>
-                  <td>{alimentoDeSalida.peso} kg</td>
+                  <td>{alimentoDeSalida.peso}</td>
                   <td>
                     {alimentoDeSalida.fechaSalida ? (
                       <TextFormat type="date" value={alimentoDeSalida.fechaSalida} format={APP_LOCAL_DATE_FORMAT} />
                     ) : null}
                   </td>
                   <td>
-                    {alimentoDeSalida.tupper ? <Link to={`/tupper/${alimentoDeSalida.tupper.id}`}>{alimentoDeSalida.tupper.modelo}</Link> : ''}
+                    {alimentoDeSalida.tupper ? <Link to={`/tupper/${alimentoDeSalida.tupper.id}`}>{alimentoDeSalida.tupper.id}</Link> : ''}
                   </td>
                   <td>
                     {alimentoDeSalida.beneficiario ? (
-                      <Link to={`/beneficiario/${alimentoDeSalida.beneficiario.id}`}>{alimentoDeSalida.beneficiario.nombre}</Link>
+                      <Link to={`/beneficiario/${alimentoDeSalida.beneficiario.id}`}>{alimentoDeSalida.beneficiario.id}</Link>
                     ) : (
                       ''
                     )}
@@ -158,13 +155,6 @@ export const AlimentoDeSalida = () => {
                       <Link to={`/alimento-de-entrada/${alimentoDeSalida.alimentoDeEntrada.id}`}>
                         {alimentoDeSalida.alimentoDeEntrada.id}
                       </Link>
-                    ) : (
-                      ''
-                    )}
-                  </td>
-                  <td>
-                    {alimentoDeSalida.tipoDeAlimento ? (
-                      <Link to={`/tipo-de-alimento/${alimentoDeSalida.tipoDeAlimento.id}`}>{alimentoDeSalida.tipoDeAlimento.nombreAlimento}</Link>
                     ) : (
                       ''
                     )}

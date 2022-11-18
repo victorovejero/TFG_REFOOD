@@ -1,9 +1,8 @@
 package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.refood.trazabilidad.domain.Intolerancia} entity.
@@ -13,11 +12,10 @@ public class IntoleranciaDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String nombre;
 
-    private Set<TipoDeAlimentoDTO> tipoDeAlimentos = new HashSet<>();
-
-    private Set<BeneficiarioDTO> beneficiarios = new HashSet<>();
+    private String descripcion;
 
     public Long getId() {
         return id;
@@ -35,20 +33,12 @@ public class IntoleranciaDTO implements Serializable {
         this.nombre = nombre;
     }
 
-    public Set<TipoDeAlimentoDTO> getTipoDeAlimentos() {
-        return tipoDeAlimentos;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setTipoDeAlimentos(Set<TipoDeAlimentoDTO> tipoDeAlimentos) {
-        this.tipoDeAlimentos = tipoDeAlimentos;
-    }
-
-    public Set<BeneficiarioDTO> getBeneficiarios() {
-        return beneficiarios;
-    }
-
-    public void setBeneficiarios(Set<BeneficiarioDTO> beneficiarios) {
-        this.beneficiarios = beneficiarios;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     @Override
@@ -78,8 +68,7 @@ public class IntoleranciaDTO implements Serializable {
         return "IntoleranciaDTO{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
-            ", tipoDeAlimentos=" + getTipoDeAlimentos() +
-            ", beneficiarios=" + getBeneficiarios() +
+            ", descripcion='" + getDescripcion() + "'" +
             "}";
     }
 }

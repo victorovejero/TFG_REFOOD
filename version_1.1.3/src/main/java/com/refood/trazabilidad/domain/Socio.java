@@ -70,6 +70,10 @@ public class Socio implements Serializable {
     @Column(name = "periodo_pago", nullable = false)
     private String periodoPago;
 
+    @NotNull
+    @Column(name = "activo", nullable = false)
+    private Boolean activo;
+
     @ManyToOne
     @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
     private Nucleo nucleo;
@@ -245,6 +249,19 @@ public class Socio implements Serializable {
         this.periodoPago = periodoPago;
     }
 
+    public Boolean getActivo() {
+        return this.activo;
+    }
+
+    public Socio activo(Boolean activo) {
+        this.setActivo(activo);
+        return this;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+
     public Nucleo getNucleo() {
         return this.nucleo;
     }
@@ -294,6 +311,7 @@ public class Socio implements Serializable {
             ", fechaBaja='" + getFechaBaja() + "'" +
             ", contribucionMensual=" + getContribucionMensual() +
             ", periodoPago='" + getPeriodoPago() + "'" +
+            ", activo='" + getActivo() + "'" +
             "}";
     }
 }

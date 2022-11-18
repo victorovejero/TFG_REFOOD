@@ -52,6 +52,9 @@ class NucleoResourceIT {
     private static final Integer DEFAULT_NUMERO_RUTAS = 1;
     private static final Integer UPDATED_NUMERO_RUTAS = 2;
 
+    private static final Boolean DEFAULT_ACTIVO = false;
+    private static final Boolean UPDATED_ACTIVO = true;
+
     private static final String ENTITY_API_URL = "/api/nucleos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -86,7 +89,8 @@ class NucleoResourceIT {
             .responsable(DEFAULT_RESPONSABLE)
             .telefono(DEFAULT_TELEFONO)
             .email(DEFAULT_EMAIL)
-            .numeroRutas(DEFAULT_NUMERO_RUTAS);
+            .numeroRutas(DEFAULT_NUMERO_RUTAS)
+            .activo(DEFAULT_ACTIVO);
         return nucleo;
     }
 
@@ -104,7 +108,8 @@ class NucleoResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS);
+            .numeroRutas(UPDATED_NUMERO_RUTAS)
+            .activo(UPDATED_ACTIVO);
         return nucleo;
     }
 
@@ -134,6 +139,7 @@ class NucleoResourceIT {
         assertThat(testNucleo.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testNucleo.getNumeroRutas()).isEqualTo(DEFAULT_NUMERO_RUTAS);
+        assertThat(testNucleo.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -283,6 +289,24 @@ class NucleoResourceIT {
 
     @Test
     @Transactional
+    void checkActivoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = nucleoRepository.findAll().size();
+        // set the field null
+        nucleo.setActivo(null);
+
+        // Create the Nucleo, which fails.
+        NucleoDTO nucleoDTO = nucleoMapper.toDto(nucleo);
+
+        restNucleoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(nucleoDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Nucleo> nucleoList = nucleoRepository.findAll();
+        assertThat(nucleoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllNucleos() throws Exception {
         // Initialize the database
         nucleoRepository.saveAndFlush(nucleo);
@@ -299,7 +323,8 @@ class NucleoResourceIT {
             .andExpect(jsonPath("$.[*].responsable").value(hasItem(DEFAULT_RESPONSABLE)))
             .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].numeroRutas").value(hasItem(DEFAULT_NUMERO_RUTAS)));
+            .andExpect(jsonPath("$.[*].numeroRutas").value(hasItem(DEFAULT_NUMERO_RUTAS)))
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
 
     @Test
@@ -320,7 +345,8 @@ class NucleoResourceIT {
             .andExpect(jsonPath("$.responsable").value(DEFAULT_RESPONSABLE))
             .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.numeroRutas").value(DEFAULT_NUMERO_RUTAS));
+            .andExpect(jsonPath("$.numeroRutas").value(DEFAULT_NUMERO_RUTAS))
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
     @Test
@@ -349,7 +375,8 @@ class NucleoResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS);
+            .numeroRutas(UPDATED_NUMERO_RUTAS)
+            .activo(UPDATED_ACTIVO);
         NucleoDTO nucleoDTO = nucleoMapper.toDto(updatedNucleo);
 
         restNucleoMockMvc
@@ -371,6 +398,7 @@ class NucleoResourceIT {
         assertThat(testNucleo.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testNucleo.getNumeroRutas()).isEqualTo(UPDATED_NUMERO_RUTAS);
+        assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -450,7 +478,7 @@ class NucleoResourceIT {
         Nucleo partialUpdatedNucleo = new Nucleo();
         partialUpdatedNucleo.setId(nucleo.getId());
 
-        partialUpdatedNucleo.nombre(UPDATED_NOMBRE).responsable(UPDATED_RESPONSABLE).email(UPDATED_EMAIL);
+        partialUpdatedNucleo.nombre(UPDATED_NOMBRE).responsable(UPDATED_RESPONSABLE).email(UPDATED_EMAIL).activo(UPDATED_ACTIVO);
 
         restNucleoMockMvc
             .perform(
@@ -471,6 +499,7 @@ class NucleoResourceIT {
         assertThat(testNucleo.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testNucleo.getNumeroRutas()).isEqualTo(DEFAULT_NUMERO_RUTAS);
+        assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -492,7 +521,8 @@ class NucleoResourceIT {
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS);
+            .numeroRutas(UPDATED_NUMERO_RUTAS)
+            .activo(UPDATED_ACTIVO);
 
         restNucleoMockMvc
             .perform(
@@ -513,6 +543,7 @@ class NucleoResourceIT {
         assertThat(testNucleo.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testNucleo.getNumeroRutas()).isEqualTo(UPDATED_NUMERO_RUTAS);
+        assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test

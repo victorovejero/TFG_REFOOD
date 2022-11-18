@@ -7,10 +7,12 @@ entity Nucleo {
     responsable String required,
     telefono String required,
     email String required,
-    numeroRutas Integer required
+    numeroRutas Integer required,
+    activo Boolean required
 }
 entity Donante {
     // @Id idDonante Integer required,
+    idDonante String required,
     nombre String required,
     //idNucleo Integer required, //1 to many with NUCLEOS
     tipo String required,
@@ -21,30 +23,30 @@ entity Donante {
     responsable String required,
     fechaAlta LocalDate required,
     fechaBaja LocalDate,
-    comentarios String
+    comentarios String,
+    activo Boolean required
 }
 entity Beneficiario {
 // @Id idBeneficiario Integer required,
-nombre String required,
+    idBeneficiario String required,
+    nombre String required,
     numeroPersonas Integer required,
     //idNucleo Integer required, //1 to many rel. with NUCLEOS
     numeroNinios Integer required,
     idDual String, // ACLARAR QUE TIPO Y QUE ES
 // intolerancias String
+    activo Boolean required
 }
-
 entity AlimentoDeEntrada {
     // @Id idRegistroEntrada Integer required,
     // tipoAlimento String required, ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ON TO MANY
     // descripcionAlimento String required, LO MISMO AQUI
-    //idDonante Integer required, //1 to many rel. with DONANTE
+    // idDonante Integer required, // 1 to many rel. with DONANTE
     peso Double required,
     fechaYHoraEntrada ZonedDateTime required,
     fechaYHoraRecogida ZonedDateTime,
     fechaYHoraPreparacion ZonedDateTime
-
 }
-
 entity AlimentoDeSalida {
 // @Id idRegistroSalida Integer required,
 // tipoAlimento String required, // ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ONE TO MANY
@@ -54,7 +56,7 @@ peso Double required,
 }
 
 entity TipoDeAlimento{
-    nombreAlimento String required,
+    nombreAlimento String required
     //intolerancias String
 }
 
@@ -66,7 +68,8 @@ entity Tupper{
     descripcion String
 }
 entity Intolerancia {
-    nombre String
+    nombre String required,
+    descripcion String
 }
 entity Voluntario {
     nombre String required,
@@ -85,7 +88,8 @@ entity Voluntario {
     responsableDia Boolean,
     origen String,
     manipuladorAlimentos Boolean required,
-    codigoPostal String required
+    codigoPostal String required,
+    activo Boolean required
 }
 entity Socio{
     nombre String required,
@@ -99,22 +103,23 @@ entity Socio{
     fechaAlta LocalDate required,
     fechaBaja LocalDate,
     contribucionMensual Double required,
-    periodoPago String required
+    periodoPago String required,
+    activo Boolean required
 }
 entity Registro {
-    diaActividad LocalDate required,
+diaActividad LocalDate required,
     //voluntario String required (1 to many)
     //nucleo String required ?? (1 to many)
     ruta String required, // responsableTrazabilidad
-    }
-
-
-
-relationship OneToOne {
-    AlimentoDeEntrada {tipoDeAlimento
 }
-to TipoDeAlimento
-}
+
+
+
+// relationship OneToOne {
+// //     AlimentoDeEntrada {tipoDeAlimento
+// // }
+// // to TipoDeAlimento
+// }
 relationship OneToMany {
     Nucleo to Donante{nucleo}
     Nucleo to Beneficiario{nucleo}
@@ -126,13 +131,18 @@ relationship OneToMany {
     Beneficiario to AlimentoDeSalida{beneficiario}
     Donante to AlimentoDeEntrada{donante}
     AlimentoDeEntrada to AlimentoDeSalida{alimentoDeEntrada}
-    //TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
-    TipoDeAlimento to AlimentoDeSalida{tipoDeAlimento}
+// TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
+// TipoDeAlimento to AlimentoDeSalida{tipoDeAlimento}
+    TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
+    
 }
+
+
 relationship ManyToMany {
-    Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
-    Intolerancia{beneficiario} to Beneficiario{intolerancia}
+    // Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
+    Beneficiario{intolerancia} to Intolerancia{beneficiario}
     Registro{voluntario} to Voluntario{registro}
+    TipoDeAlimento{intolerancia} to Intolerancia{tipoDeAlimento}
 }
 paginate Intolerancia, Nucleo, Tupper, Socio, TipoDeAlimento with infinite-scroll
 paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Registro, Voluntario with pagination

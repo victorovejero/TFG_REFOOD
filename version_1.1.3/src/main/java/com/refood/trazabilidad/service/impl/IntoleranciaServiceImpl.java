@@ -69,15 +69,11 @@ public class IntoleranciaServiceImpl implements IntoleranciaService {
         return intoleranciaRepository.findAll(pageable).map(intoleranciaMapper::toDto);
     }
 
-    public Page<IntoleranciaDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return intoleranciaRepository.findAllWithEagerRelationships(pageable).map(intoleranciaMapper::toDto);
-    }
-
     @Override
     @Transactional(readOnly = true)
     public Optional<IntoleranciaDTO> findOne(Long id) {
         log.debug("Request to get Intolerancia : {}", id);
-        return intoleranciaRepository.findOneWithEagerRelationships(id).map(intoleranciaMapper::toDto);
+        return intoleranciaRepository.findById(id).map(intoleranciaMapper::toDto);
     }
 
     @Override

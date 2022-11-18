@@ -11,11 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface DonanteMapper extends EntityMapper<DonanteDTO, Donante> {
-    @Mapping(target = "nucleo", source = "nucleo", qualifiedByName = "nucleoId")
+    //@Mapping(target = "nucleo", source = "nucleo", qualifiedByName = "nucleoId")
     DonanteDTO toDto(Donante s);
 
-    @Named("nucleoId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("nucleoId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     NucleoDTO toDtoNucleoId(Nucleo nucleo);
 }

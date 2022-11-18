@@ -56,6 +56,10 @@ export const NucleoDetail = () => {
             <span id="numeroRutas">Numero Rutas</span>
           </dt>
           <dd>{nucleoEntity.numeroRutas}</dd>
+          <dt>
+            <span id="activo">Activo</span>
+          </dt>
+          <dd>{nucleoEntity.activo ? 'true' : 'false'}</dd>
         </dl>
         <Button tag={Link} to="/nucleo" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>
