@@ -1,6 +1,7 @@
 export const AUTHORITIES = {
   ADMIN: 'ROLE_ADMIN',
   USER: 'ROLE_USER',
+  NUCLEO: 'ROLE_NUCLEO',
 };
 
 export const messages = {

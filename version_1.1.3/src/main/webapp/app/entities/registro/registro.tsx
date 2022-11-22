@@ -81,6 +81,19 @@ export const Registro = () => {
     sortEntities();
   };
 
+  const printList = (i) => {
+    let arr = []
+    let counter = 0;
+    for (const int of registroList[i].voluntarios){ 
+      arr[counter] =  int ? <Link key={counter} to={`/voluntario/${int.id}`}>{int.nombre}</Link> : ''
+      counter++;
+      
+      arr[counter] = " - "
+      counter++;
+    }
+    return arr.slice(0,-1);
+    
+  }
   return (
     <div>
       <h2 id="registro-heading" data-cy="RegistroHeading">
@@ -110,8 +123,12 @@ export const Registro = () => {
                   Ruta <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
+                  Voluntarios
+                </th>
+                <th>
                   Nucleo <FontAwesomeIcon icon="sort" />
                 </th>
+                
                 <th />
               </tr>
             </thead>
@@ -127,6 +144,7 @@ export const Registro = () => {
                     {registro.diaActividad ? <TextFormat type="date" value={registro.diaActividad} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{registro.ruta}</td>
+                  <td>{printList(i)}</td>
                   <td>{registro.nucleo ? <Link to={`/nucleo/${registro.nucleo.id}`}>{registro.nucleo.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

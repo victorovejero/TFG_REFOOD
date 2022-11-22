@@ -91,8 +91,8 @@
 
         <!-- jhipster-needle-maven-property -->
     </properties>
-
     <dependencyManagement>
+        
         <dependencies>
             <dependency>
                 <groupId>tech.jhipster</groupId>
@@ -263,10 +263,17 @@
             <groupId>org.zalando</groupId>
             <artifactId>problem-spring-web</artifactId>
         </dependency>
+        <!-- FOR WEBDEV BUILD -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
+        <!-- FOR PRODUCTION BUILD -->
+        <!-- <dependency>
+              <groupId>org.springframework.boot</groupId>
+              <artifactId>spring-boot-starter-undertow</artifactId>
+              <scope>provided</scope>
+        </dependency> -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>

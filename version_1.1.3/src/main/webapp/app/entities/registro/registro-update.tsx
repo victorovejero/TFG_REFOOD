@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
@@ -24,7 +24,7 @@ export const RegistroUpdate = () => {
   const isNew = id === undefined;
 
   const voluntarios = useAppSelector(state => state.voluntario.entities);
-  const nucleos = useAppSelector(state => state.nucleo.entities);
+  const nucleos = useAppSelector(state => state.nucleo.entities).filter(x => x.activo == true);
   const registroEntity = useAppSelector(state => state.registro.entity);
   const loading = useAppSelector(state => state.registro.loading);
   const updating = useAppSelector(state => state.registro.updating);
@@ -52,6 +52,7 @@ export const RegistroUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
+    console.log(values);
     const entity = {
       ...registroEntity,
       ...values,
@@ -74,7 +75,46 @@ export const RegistroUpdate = () => {
           voluntarios: registroEntity?.voluntarios?.map(e => e.id.toString()),
           nucleo: registroEntity?.nucleo?.id,
         };
+  
+        // SOLO PODER ESCOGER RUTAS DEL NUCLEO PARA EVITAR ERRORES
+  // const idNucleo = useRef<Number>();
+  // //const [nombreNucleo, setnombreNucleo] = useState<string>();
+  // const [numRutas, setNumRutas] = useState<number>(3);
+  
+  // const numRutasToArray = (numeroRutas) => {
+  //   return Array.from(Array(numeroRutas + 1).keys()).slice(1);
+  // }
 
+ 
+  // const nucleoRutasSelector = (idNucleo_) => {
+  //   console.log("Value of Select: " + idNucleo_);
+  //   //if(!(idNucleo == "")){
+  //    // setnombreNucleo(nombreNucleo)
+  //     idNucleo.current = idNucleo_;
+  //     console.log("Ref Value is " + idNucleo.current)
+  //     let numeroRutas = [];
+  //     nucleos.map((x,i) => {
+  //       numeroRutas[i] = x.numeroRutas;
+  //     })
+  //     let nucleo = nucleos.map(x => x.id == idNucleo.current)
+  //     const indice = nucleo.flatMap((bool, index) => bool ? index : [])
+  //     console.log("INDICE: " + indice);
+  //     let numRutas_ = numeroRutas[indice];
+  //     console.log(nucleo);
+  //     console.log(numeroRutas);
+  //     console.log("State numRutas: " + numRutas_);
+  //     console.log("State nombreNucleo: " + idNucleo.current);
+  //     setNumRutas(numRutas_);
+      
+  //   //}else{
+  //     //idNucleo.current = 1;
+  //     // setnombreNucleo("");
+  //     //setNumRutas(3);
+  //   //}  
+  // }
+
+  
+  //FIN DE SELECCION DE RUTAS DEL NUCLEO
   return (
     <div>
       <Row className="justify-content-center">
@@ -90,7 +130,8 @@ export const RegistroUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="registro-id" label="ID" validate={{ required: true }} /> : null}
+              {/* NO QUEREMOS MOSTRAR EL ID AUTOGENERADO */}
+              {/* {!isNew ? <ValidatedField name="id" required readOnly id="registro-id" label="ID" validate={{ required: true }} /> : null} */}
               <ValidatedField
                 label="Dia Actividad"
                 id="registro-diaActividad"
@@ -109,24 +150,38 @@ export const RegistroUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
-                }}
-              />
+                }}>
+                  {/* {numRutasToArray(numRutas).map(i => (
+                    <option key={i} value={i}>
+                      Ruta {i}
+                    </option>
+                  ))
+                  } */}
+
+                  </ValidatedField>
+                  
+              
               <ValidatedField label="Voluntario" id="registro-voluntario" data-cy="voluntario" type="select" multiple name="voluntarios">
                 <option value="" key="0" />
                 {voluntarios
                   ? voluntarios.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombre} {otherEntity.primerApellido} {otherEntity.segundoApellido}
                       </option>
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="registro-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
-                <option value="" key="0" />
+              <ValidatedField id="registro-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select"  validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                  //onChange={(e) => nucleoRutasSelector(e.target.value)}
+                  //value={idNucleo.current}
+                }}>
+                  
+                <option value="" key="0"/>
                 {nucleos
                   ? nucleos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombre}
                       </option>
                     ))
                   : null}
