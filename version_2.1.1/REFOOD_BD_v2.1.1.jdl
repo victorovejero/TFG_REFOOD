@@ -170,7 +170,7 @@ relationship OneToMany {
     Nucleo to Beneficiario{nucleo}
     Nucleo to Voluntario{nucleo}
     // CAMBIO - QUITAR Nucleo to Socio{nucleo}
-    Nucleo to Registro{nucleo}
+    //Nucleo to Registro{nucleo}
     Tupper to AlimentoDeSalida{tupper}
     Tupper to AlimentoDeEntrada{tupper}
     Beneficiario to AlimentoDeSalida{beneficiario}
@@ -186,7 +186,7 @@ relationship ManyToMany {
     // Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
     Beneficiario{intolerancia} to Intolerancia{beneficiario}
 	PersonaBeneficiario{intolerancia} to Intolerancia{personaBeneficiaria}
-    Registro{voluntario} to Voluntario{registro}
+    //Registro{voluntario} to Voluntario{registro}
     TipoDeAlimento{intolerancia} to Intolerancia{tipoDeAlimento}
     AlimentoDeEntrada{frutaYVerdura} to FrutaYVerdura{alimentoDeEntrada}
     Checkout{alimentoDeSalida} to AlimentoDeSalida{checkout}
