@@ -94,7 +94,8 @@ entity Checkout{
 }
 
 entity FrutaYVerdura{
-nombreAlimento String required, }
+    nombreAlimento String required
+}
 entity TipoDeAlimento{
     nombreAlimento String required,
     descripcion String
