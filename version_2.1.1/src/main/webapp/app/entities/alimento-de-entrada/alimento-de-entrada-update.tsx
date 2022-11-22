@@ -20,7 +20,7 @@ import "./alimento-de-entrada.css"
 export const AlimentoDeEntradaUpdate = () => {
   const [mostrarHoraPrep,setMostrarHoraPrep] = useState<Boolean>(false);
   const [mostrarHoraRecogida, setMostrarHoraRecogida] = useState<Boolean>(false);
-  const today = useRef<String>()
+  const today = useRef<String>("")
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -81,13 +81,14 @@ export const AlimentoDeEntradaUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          fechaYHoraEntrada: displayDefaultDateTime(),
-          fechaYHoraRecogida: displayDefaultDateTime(),
-          fechaYHoraPreparacion: displayDefaultDateTime(),
+        //MOSTRAR SOLO LA HORA DE HOY EN FECHA ENTRADA, EL RESTO DEJARLOS A NULL PARA QUE NO AUTORELLENEN
+          fechaYHoraEntrada: today.current,//displayDefaultDateTime(),
+          fechaYHoraRecogida: null,//displayDefaultDateTime(),
+          fechaYHoraPreparacion: null//displayDefaultDateTime(),
         }
       : {
           ...alimentoDeEntradaEntity,
-          fechaYHoraEntrada: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraEntrada),
+          fechaYHoraEntrada:convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraEntrada),
           fechaYHoraRecogida: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraRecogida),
           fechaYHoraPreparacion: convertDateTimeFromServer(alimentoDeEntradaEntity.fechaYHoraPreparacion),
           tupper: alimentoDeEntradaEntity?.tupper?.id,
@@ -95,30 +96,33 @@ export const AlimentoDeEntradaUpdate = () => {
           tipoDeAlimento: alimentoDeEntradaEntity?.tipoDeAlimento?.id,
         };
         
-        
-          const date = new Date();
-          let hour = date.getHours().toString();
-          if(Number(hour)<10){
-            hour = "0" + hour;
-          }
-          let min = date.getMinutes().toString();
-          if(Number(min)<10) {
-            min = "0" + min;
-          }
-          let day = date.getDate().toString();
-          if(Number(day)<10){
-            day = "0" + day;
-          }
-          let month = (date.getMonth() + 1).toString();
-          if(Number(month)<10){
-            month = "0" + month;
-          }
-          const year = date.getFullYear().toString();
-          today.current = year + "-" + month + "-" + day + "T" + hour + ":" + min;
-          console.log("Today is: " + today.current);
-          
-        
+  const getToday = () =>{
   
+    const date = new Date();
+    let hour = date.getHours().toString();
+    if(Number(hour)<10){
+      hour = "0" + hour;
+    }
+    let min = date.getMinutes().toString();
+    if(Number(min)<10) {
+      min = "0" + min;
+    }
+    let day = date.getDate().toString();
+    if(Number(day)<10){
+      day = "0" + day;
+    }
+    let month = (date.getMonth() + 1).toString();
+    if(Number(month)<10){
+      month = "0" + month;
+    }
+    const year = date.getFullYear().toString();
+    return year + "-" + month + "-" + day + "T" + hour + ":" + min;
+    
+  }
+  useEffect(() => {
+    today.current = getToday();
+  })
+
   
   return (
     <div>
@@ -162,32 +166,40 @@ export const AlimentoDeEntradaUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <Row>
-                <Col className="option-button-col" md="6">
+              {isNew ? <Row>
+                {!mostrarHoraRecogida ? <Col className="option-button-col" md="6">
                   <button type="button" className="option-button" onClick={() => setMostrarHoraRecogida(!mostrarHoraRecogida)}>Insertar hora de Recogida</button> 
-                </Col>
-                <Col className="option-button-col" md="6">
+                </Col> : null}
+                {!mostrarHoraPrep ? <Col className="option-button-col" md="6">
                 <button type="button" className="option-button" onClick={() => setMostrarHoraPrep(!mostrarHoraPrep)}>Insertar hora de Preparación</button> 
-                </Col>
-              </Row>
-              {mostrarHoraRecogida ? 
-              <ValidatedField
-                label="Fecha Y Hora Recogida"
+                </Col> : null}
+              </Row>:null}
+              {(mostrarHoraRecogida || !isNew)? 
+              <div className={isNew ? "campo-opcional-div":null}>
+                <ValidatedField
+                className={isNew ? "campo-opcional":null}
+                label={"Fecha Y Hora Recogida (Opcional)"}
                 id="alimento-de-entrada-fechaYHoraRecogida"
                 name="fechaYHoraRecogida"
                 data-cy="fechaYHoraRecogida"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
-              />:null}
-              {mostrarHoraPrep ? 
-              <ValidatedField
-                label="Fecha Y Hora Preparacion"
+              />
+              </div>
+              :null}
+              {(mostrarHoraPrep || !isNew) ? 
+              <div className={isNew ? "campo-opcional-div":null}>
+                <ValidatedField
+                className={isNew ? "campo-opcional":null}
+                label="Fecha Y Hora Preparacion (Opcional)"
                 id="alimento-de-entrada-fechaYHoraPreparacion"
                 name="fechaYHoraPreparacion"
                 data-cy="fechaYHoraPreparacion"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
-              /> :null}
+              />
+              </div>
+               :null}
               
               
               <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" validate={{required: { value: true, message: 'Este campo es obligatorio.' }}}>
