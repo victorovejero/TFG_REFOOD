@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Beneficiario.
+    -->
+    <changeSet id="20221022172017-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="beneficiario_id"
+                                 baseTableName="rel_beneficiario__intolerancia"
+                                 constraintName="fk_rel_beneficiario__intolerancia__beneficiario_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="beneficiario"/>
+
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id"
+                                 baseTableName="rel_beneficiario__intolerancia"
+                                 constraintName="fk_rel_beneficiario__intolerancia__intolerancia_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intolerancia"/>
+
+        <addForeignKeyConstraint baseColumnNames="nucleo_id"
+                                 baseTableName="beneficiario"
+                                 constraintName="fk_beneficiario__nucleo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nucleo"/>
+    </changeSet>
+</databaseChangeLog>

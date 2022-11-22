@@ -1,0 +1,227 @@
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Button, Row, Col, FormText } from 'reactstrap';
+import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
+import { mapIdList } from 'app/shared/util/entity-utils';
+import { useAppDispatch, useAppSelector } from 'app/config/store';
+
+import { INucleo } from 'app/shared/model/nucleo.model';
+import { getEntities as getNucleos } from 'app/entities/nucleo/nucleo.reducer';
+import { IDonante } from 'app/shared/model/donante.model';
+import { getEntity, updateEntity, createEntity, reset } from './donante.reducer';
+
+export const DonanteUpdate = () => {
+  const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+
+  const { id } = useParams<'id'>();
+  const isNew = id === undefined;
+
+  const nucleos = useAppSelector(state => state.nucleo.entities);
+  const donanteEntity = useAppSelector(state => state.donante.entity);
+  const loading = useAppSelector(state => state.donante.loading);
+  const updating = useAppSelector(state => state.donante.updating);
+  const updateSuccess = useAppSelector(state => state.donante.updateSuccess);
+
+  const handleClose = () => {
+    navigate('/donante' + location.search);
+  };
+
+  useEffect(() => {
+    if (isNew) {
+      dispatch(reset());
+    } else {
+      dispatch(getEntity(id));
+    }
+
+    dispatch(getNucleos({}));
+  }, []);
+
+  useEffect(() => {
+    if (updateSuccess) {
+      handleClose();
+    }
+  }, [updateSuccess]);
+
+  const saveEntity = values => {
+    const entity = {
+      ...donanteEntity,
+      ...values,
+      nucleo: nucleos.find(it => it.id.toString() === values.nucleo.toString()),
+    };
+
+    if (isNew) {
+      dispatch(createEntity(entity));
+    } else {
+      dispatch(updateEntity(entity));
+    }
+  };
+
+  const defaultValues = () =>
+    isNew
+      ? {}
+      : {
+          ...donanteEntity,
+          nucleo: donanteEntity?.nucleo?.id,
+        };
+
+  return (
+    <div>
+      <Row className="justify-content-center">
+        <Col md="8">
+          <h2 id="refoodTrazabilidadApp.donante.home.createOrEditLabel" data-cy="DonanteCreateUpdateHeading">
+            Crear o editar Donante
+          </h2>
+        </Col>
+      </Row>
+      <Row className="justify-content-center">
+        <Col md="8">
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
+              {/* Quitamos el id autogenerado para que no se vea */}
+              {/* {!isNew ? <ValidatedField name="id" required readOnly id="donante-id" label="ID" validate={{ required: true }} /> : null} */}
+              <ValidatedField
+                label="Id Donante"
+                id="donante-idDonante"
+                name="idDonante"
+                data-cy="idDonante"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+                defaultValue="D-"
+                pattern="D-+[0-9]{2,5}"
+                title="Tiene que ser del tipo: D-XXXX"
+              />
+              <ValidatedField
+                label="Nombre"
+                id="donante-nombre"
+                name="nombre"
+                data-cy="nombre"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              {/* Creamos un select para el tipo de donante, para que no hay lugar a interpretación. */}
+              <ValidatedField
+                label="Tipo"
+                id="donante-tipo"
+                name="tipo"
+                data-cy="tipo"
+                type="select"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}>
+                <option>Catering</option>
+                <option>Colegio Mayor</option>
+                <option>Frutería</option>
+                <option>Panadería</option>
+                <option>Restaurante</option>
+              </ValidatedField>
+              
+              <ValidatedField
+                label="Ruta"
+                id="donante-ruta"
+                name="ruta"
+                data-cy="ruta"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                  validate: v => isNumber(v) || 'Este campo debe ser un número.',
+                }}
+              />
+              <ValidatedField
+                label="Direccion"
+                id="donante-direccion"
+                name="direccion"
+                data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Telefono"
+                id="donante-telefono"
+                name="telefono"
+                data-cy="telefono"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+                defaultValue=""
+                pattern="[0-9]{9}"
+                title="El número tiene que tener 9 cifras."
+              />
+              <ValidatedField
+                label="Email"
+                id="donante-email"
+                name="email"
+                data-cy="email"
+                type="email"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+                placeholder="ejemplo@gmail.com"
+              />
+              <ValidatedField
+                label="Responsable"
+                id="donante-responsable"
+                name="responsable"
+                data-cy="responsable"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Fecha Alta"
+                id="donante-fechaAlta"
+                name="fechaAlta"
+                data-cy="fechaAlta"
+                type="date"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              {!isNew ? <ValidatedField label="Fecha Baja" id="donante-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" /> : null}
+              <ValidatedField label="Comentarios" id="donante-comentarios" name="comentarios" data-cy="comentarios" type="text" />
+              <ValidatedField label="Activo" id="donante-activo" name="activo" data-cy="activo" check type="checkbox" />
+              <ValidatedField id="donante-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select" validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}>
+                <option value="" key="0" />
+                {nucleos
+                  ? nucleos.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.nombre}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/donante" replace color="info">
+                <FontAwesomeIcon icon="arrow-left" />
+                &nbsp;
+                <span className="d-none d-md-inline">Volver</span>
+              </Button>
+              &nbsp;
+              <Button color="primary" id="save-entity" data-cy="entityCreateSaveButton" type="submit" disabled={updating}>
+                <FontAwesomeIcon icon="save" />
+                &nbsp; Guardar
+              </Button>
+            </ValidatedForm>
+          )}
+        </Col>
+      </Row>
+    </div>
+  );
+};
+
+export default DonanteUpdate;

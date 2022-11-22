@@ -1,0 +1,91 @@
+/* ==========================================================================
+Main page styles
+========================================================================== */
+
+
+
+// SIGNED HOME PAGE STYLING
+
+.hipster{
+  display: inline-block;
+  width: 100%;
+  height: 500px;
+  background: url('../../../content/images/Logo_Refood.jpg') no-repeat center top;
+  background-size: contain;
+  margin-bottom:0;
+}
+.logo.signed{
+  display: inline-block;
+  width: 100%;
+  height:100%;
+}
+
+.home-col{
+  padding-top:5%;
+  padding-bottom:5%;
+  text-align: center;
+}
+
+.home-button{
+  position:relative;
+  top:40%;
+  background-color:#f9b718;
+  color:black;
+  font-size:25px;
+
+}
+
+.registro-col{
+  text-align:right;
+  padding-bottom:5%;
+}
+.registro-text{
+  padding-bottom:5%;
+  padding-top:3%
+  
+}
+// UNSIGNED HOME PAGE STYLING
+
+// *{
+//   box-sizing:border-box;
+// }
+
+.hipster.unsigned{
+  display: inline-block;
+  width: 100%;
+  height: 150%;
+  background: url('../../../content/images/Logo_Refood.jpg') no-repeat center top;
+  background-size: contain;
+}
+
+#home-title{
+  text-align:center; 
+}
+
+.home-text{
+  vertical-align: middle;
+}
+
+.logo.unsigned{
+  padding-left:5%;
+}
+.text-col.unsigned{
+  padding-left:6%;
+  padding-right:6%;
+}
+.home-col.unsigned{
+  padding-top:5%;
+  text-align: center;
+}
+
+
+
+.footer.unsigned{
+  padding-top:5%;
+  text-align:center;
+}
+
+.footer-title{
+  font-weight: bold;
+}
+

@@ -1,0 +1,155 @@
+
+entity Nucleo {
+    // @Id idNucleo Integer required,
+    nombre String required,
+    direccion String required,
+    provincia String required,
+    responsable String required,
+    telefono String required,
+    email String required,
+    numeroRutas Integer required,
+    activo Boolean required
+}
+entity Donante {
+    // @Id idDonante Integer required,
+    idDonante String required,
+    nombre String required,
+    //idNucleo Integer required, //1 to many with NUCLEOS
+    tipo String required,
+    ruta Integer required,
+    direccion String required,
+    telefono String required,
+    email String required,
+    responsable String required,
+    fechaAlta LocalDate required,
+    fechaBaja LocalDate,
+    comentarios String,
+    activo Boolean required
+}
+entity Beneficiario {
+// @Id idBeneficiario Integer required,
+    idBeneficiario String required,
+    nombre String required,
+    numeroPersonas Integer required,
+    //idNucleo Integer required, //1 to many rel. with NUCLEOS
+    numeroNinios Integer required,
+    idDual String, // ACLARAR QUE TIPO Y QUE ES
+// intolerancias String
+    activo Boolean required
+}
+entity AlimentoDeEntrada {
+    // @Id idRegistroEntrada Integer required,
+    // tipoAlimento String required, ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ON TO MANY
+    // descripcionAlimento String required, LO MISMO AQUI
+    // idDonante Integer required, // 1 to many rel. with DONANTE
+    peso Double required,
+    fechaYHoraEntrada ZonedDateTime required,
+    fechaYHoraRecogida ZonedDateTime,
+    fechaYHoraPreparacion ZonedDateTime
+}
+entity AlimentoDeSalida {
+// @Id idRegistroSalida Integer required,
+// tipoAlimento String required, // ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ONE TO MANY
+// decripcionAlimento String required, // LO MISMO AQUI
+peso Double required,
+    fechaSalida LocalDate required, // fechaYHoraEntrada ZonedDateTime required, MEDIANTE LA RELACION CON ALIMENTO DE ENTRADA
+}
+
+entity TipoDeAlimento{
+    nombreAlimento String required
+    //intolerancias String
+}
+
+entity Tupper{
+    peso Double required,
+    productor String required,
+    modelo String required,
+    precio Double required,
+    descripcion String
+}
+entity Intolerancia {
+    nombre String required,
+    descripcion String
+}
+entity Voluntario {
+    nombre String required,
+    primerApellido String required,
+    segundoApellido String,
+    email String required,
+    telefonoContacto String required,
+    dni String,
+    fechaNacimiento LocalDate required,
+    //idNucleo Integer required,
+    sexo String required,
+    fechaAlta LocalDate required,
+    fechaBaja LocalDate,
+    tipo String required,
+    tipoTurno String,
+    responsableDia Boolean,
+    origen String,
+    manipuladorAlimentos Boolean required,
+    codigoPostal String required,
+    activo Boolean required
+}
+entity Socio{
+    nombre String required,
+    primerApellido String required,
+    segundoApellido String,
+    email String required,
+    telefonoContacto String required,
+    dni String required,
+    fechaNacimiento LocalDate required,
+    sexo String required,
+    fechaAlta LocalDate required,
+    fechaBaja LocalDate,
+    contribucionMensual Double required,
+    periodoPago String required,
+    activo Boolean required
+}
+entity Registro {
+diaActividad LocalDate required,
+    //voluntario String required (1 to many)
+    //nucleo String required ?? (1 to many)
+    ruta String required, // responsableTrazabilidad
+}
+
+
+
+// relationship OneToOne {
+// //     AlimentoDeEntrada {tipoDeAlimento
+// // }
+// // to TipoDeAlimento
+// }
+relationship OneToMany {
+    Nucleo to Donante{nucleo}
+    Nucleo to Beneficiario{nucleo}
+    Nucleo to Voluntario{nucleo}
+    Nucleo to Socio{nucleo}
+    Nucleo to Registro{nucleo}
+    Tupper to AlimentoDeSalida{tupper}
+    Tupper to AlimentoDeEntrada{tupper}
+    Beneficiario to AlimentoDeSalida{beneficiario}
+    Donante to AlimentoDeEntrada{donante}
+    AlimentoDeEntrada to AlimentoDeSalida{alimentoDeEntrada}
+// TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
+// TipoDeAlimento to AlimentoDeSalida{tipoDeAlimento}
+    TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
+    
+}
+
+
+relationship ManyToMany {
+    // Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
+    Beneficiario{intolerancia} to Intolerancia{beneficiario}
+    Registro{voluntario} to Voluntario{registro}
+    TipoDeAlimento{intolerancia} to Intolerancia{tipoDeAlimento}
+}
+paginate Intolerancia, Nucleo, Tupper, Socio, TipoDeAlimento with infinite-scroll
+paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Registro, Voluntario with pagination
+service all with serviceImpl
+// Use Data Transfer Objects (DTO)
+dto * with mapstruct
+// Set service options to all except few
+// Set an angular suffix
+// angularSuffix * with mySuffix
+
