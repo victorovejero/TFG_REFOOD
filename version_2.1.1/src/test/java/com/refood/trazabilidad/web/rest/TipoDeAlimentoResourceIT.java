@@ -44,6 +44,9 @@ class TipoDeAlimentoResourceIT {
     private static final String DEFAULT_NOMBRE_ALIMENTO = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE_ALIMENTO = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPCION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPCION = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/tipo-de-alimentos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -77,7 +80,7 @@ class TipoDeAlimentoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TipoDeAlimento createEntity(EntityManager em) {
-        TipoDeAlimento tipoDeAlimento = new TipoDeAlimento().nombreAlimento(DEFAULT_NOMBRE_ALIMENTO);
+        TipoDeAlimento tipoDeAlimento = new TipoDeAlimento().nombreAlimento(DEFAULT_NOMBRE_ALIMENTO).descripcion(DEFAULT_DESCRIPCION);
         return tipoDeAlimento;
     }
 
@@ -88,7 +91,7 @@ class TipoDeAlimentoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static TipoDeAlimento createUpdatedEntity(EntityManager em) {
-        TipoDeAlimento tipoDeAlimento = new TipoDeAlimento().nombreAlimento(UPDATED_NOMBRE_ALIMENTO);
+        TipoDeAlimento tipoDeAlimento = new TipoDeAlimento().nombreAlimento(UPDATED_NOMBRE_ALIMENTO).descripcion(UPDATED_DESCRIPCION);
         return tipoDeAlimento;
     }
 
@@ -114,6 +117,7 @@ class TipoDeAlimentoResourceIT {
         assertThat(tipoDeAlimentoList).hasSize(databaseSizeBeforeCreate + 1);
         TipoDeAlimento testTipoDeAlimento = tipoDeAlimentoList.get(tipoDeAlimentoList.size() - 1);
         assertThat(testTipoDeAlimento.getNombreAlimento()).isEqualTo(DEFAULT_NOMBRE_ALIMENTO);
+        assertThat(testTipoDeAlimento.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -169,7 +173,8 @@ class TipoDeAlimentoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(tipoDeAlimento.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nombreAlimento").value(hasItem(DEFAULT_NOMBRE_ALIMENTO)));
+            .andExpect(jsonPath("$.[*].nombreAlimento").value(hasItem(DEFAULT_NOMBRE_ALIMENTO)))
+            .andExpect(jsonPath("$.[*].descripcion").value(hasItem(DEFAULT_DESCRIPCION)));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -201,7 +206,8 @@ class TipoDeAlimentoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(tipoDeAlimento.getId().intValue()))
-            .andExpect(jsonPath("$.nombreAlimento").value(DEFAULT_NOMBRE_ALIMENTO));
+            .andExpect(jsonPath("$.nombreAlimento").value(DEFAULT_NOMBRE_ALIMENTO))
+            .andExpect(jsonPath("$.descripcion").value(DEFAULT_DESCRIPCION));
     }
 
     @Test
@@ -223,7 +229,7 @@ class TipoDeAlimentoResourceIT {
         TipoDeAlimento updatedTipoDeAlimento = tipoDeAlimentoRepository.findById(tipoDeAlimento.getId()).get();
         // Disconnect from session so that the updates on updatedTipoDeAlimento are not directly saved in db
         em.detach(updatedTipoDeAlimento);
-        updatedTipoDeAlimento.nombreAlimento(UPDATED_NOMBRE_ALIMENTO);
+        updatedTipoDeAlimento.nombreAlimento(UPDATED_NOMBRE_ALIMENTO).descripcion(UPDATED_DESCRIPCION);
         TipoDeAlimentoDTO tipoDeAlimentoDTO = tipoDeAlimentoMapper.toDto(updatedTipoDeAlimento);
 
         restTipoDeAlimentoMockMvc
@@ -239,6 +245,7 @@ class TipoDeAlimentoResourceIT {
         assertThat(tipoDeAlimentoList).hasSize(databaseSizeBeforeUpdate);
         TipoDeAlimento testTipoDeAlimento = tipoDeAlimentoList.get(tipoDeAlimentoList.size() - 1);
         assertThat(testTipoDeAlimento.getNombreAlimento()).isEqualTo(UPDATED_NOMBRE_ALIMENTO);
+        assertThat(testTipoDeAlimento.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test
@@ -335,6 +342,7 @@ class TipoDeAlimentoResourceIT {
         assertThat(tipoDeAlimentoList).hasSize(databaseSizeBeforeUpdate);
         TipoDeAlimento testTipoDeAlimento = tipoDeAlimentoList.get(tipoDeAlimentoList.size() - 1);
         assertThat(testTipoDeAlimento.getNombreAlimento()).isEqualTo(UPDATED_NOMBRE_ALIMENTO);
+        assertThat(testTipoDeAlimento.getDescripcion()).isEqualTo(DEFAULT_DESCRIPCION);
     }
 
     @Test
@@ -349,7 +357,7 @@ class TipoDeAlimentoResourceIT {
         TipoDeAlimento partialUpdatedTipoDeAlimento = new TipoDeAlimento();
         partialUpdatedTipoDeAlimento.setId(tipoDeAlimento.getId());
 
-        partialUpdatedTipoDeAlimento.nombreAlimento(UPDATED_NOMBRE_ALIMENTO);
+        partialUpdatedTipoDeAlimento.nombreAlimento(UPDATED_NOMBRE_ALIMENTO).descripcion(UPDATED_DESCRIPCION);
 
         restTipoDeAlimentoMockMvc
             .perform(
@@ -364,6 +372,7 @@ class TipoDeAlimentoResourceIT {
         assertThat(tipoDeAlimentoList).hasSize(databaseSizeBeforeUpdate);
         TipoDeAlimento testTipoDeAlimento = tipoDeAlimentoList.get(tipoDeAlimentoList.size() - 1);
         assertThat(testTipoDeAlimento.getNombreAlimento()).isEqualTo(UPDATED_NOMBRE_ALIMENTO);
+        assertThat(testTipoDeAlimento.getDescripcion()).isEqualTo(UPDATED_DESCRIPCION);
     }
 
     @Test

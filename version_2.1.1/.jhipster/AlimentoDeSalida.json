@@ -6,11 +6,6 @@
   "entityTableName": "alimento_de_salida",
   "fields": [
     {
-      "fieldName": "peso",
-      "fieldType": "Double",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "fechaSalida",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
@@ -39,6 +34,13 @@
       "otherEntityRelationshipName": "alimentoDeSalida",
       "relationshipName": "alimentoDeEntrada",
       "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "ownerSide": false,
+      "relationshipName": "checkout",
+      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

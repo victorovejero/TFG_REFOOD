@@ -1,6 +1,5 @@
 package com.refood.trazabilidad.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
 import javax.persistence.*;
@@ -74,9 +73,26 @@ public class Socio implements Serializable {
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
-    @ManyToOne
-    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
-    private Nucleo nucleo;
+    @Column(name = "nucleo_asociado")
+    private String nucleoAsociado;
+
+    @NotNull
+    @Column(name = "comunicacion", nullable = false)
+    private Boolean comunicacion;
+
+    @NotNull
+    @Column(name = "direccion", nullable = false)
+    private String direccion;
+
+    @NotNull
+    @Column(name = "codigo_postal", nullable = false)
+    private String codigoPostal;
+
+    @Column(name = "provincia")
+    private String provincia;
+
+    @Column(name = "pais")
+    private String pais;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -262,17 +278,82 @@ public class Socio implements Serializable {
         this.activo = activo;
     }
 
-    public Nucleo getNucleo() {
-        return this.nucleo;
+    public String getNucleoAsociado() {
+        return this.nucleoAsociado;
     }
 
-    public void setNucleo(Nucleo nucleo) {
-        this.nucleo = nucleo;
-    }
-
-    public Socio nucleo(Nucleo nucleo) {
-        this.setNucleo(nucleo);
+    public Socio nucleoAsociado(String nucleoAsociado) {
+        this.setNucleoAsociado(nucleoAsociado);
         return this;
+    }
+
+    public void setNucleoAsociado(String nucleoAsociado) {
+        this.nucleoAsociado = nucleoAsociado;
+    }
+
+    public Boolean getComunicacion() {
+        return this.comunicacion;
+    }
+
+    public Socio comunicacion(Boolean comunicacion) {
+        this.setComunicacion(comunicacion);
+        return this;
+    }
+
+    public void setComunicacion(Boolean comunicacion) {
+        this.comunicacion = comunicacion;
+    }
+
+    public String getDireccion() {
+        return this.direccion;
+    }
+
+    public Socio direccion(String direccion) {
+        this.setDireccion(direccion);
+        return this;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return this.codigoPostal;
+    }
+
+    public Socio codigoPostal(String codigoPostal) {
+        this.setCodigoPostal(codigoPostal);
+        return this;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getProvincia() {
+        return this.provincia;
+    }
+
+    public Socio provincia(String provincia) {
+        this.setProvincia(provincia);
+        return this;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getPais() {
+        return this.pais;
+    }
+
+    public Socio pais(String pais) {
+        this.setPais(pais);
+        return this;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -312,6 +393,12 @@ public class Socio implements Serializable {
             ", contribucionMensual=" + getContribucionMensual() +
             ", periodoPago='" + getPeriodoPago() + "'" +
             ", activo='" + getActivo() + "'" +
+            ", nucleoAsociado='" + getNucleoAsociado() + "'" +
+            ", comunicacion='" + getComunicacion() + "'" +
+            ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", provincia='" + getProvincia() + "'" +
+            ", pais='" + getPais() + "'" +
             "}";
     }
 }

@@ -11,6 +11,11 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "frutaYVerdura",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "fechaYHoraEntrada",
       "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
@@ -35,6 +40,13 @@
       "otherEntityRelationshipName": "alimentoDeEntrada",
       "relationshipName": "alimentoDeSalida",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "frutaYVerdura",
+      "otherEntityRelationshipName": "alimentoDeEntrada",
+      "ownerSide": true,
+      "relationshipName": "frutaYVerdura",
+      "relationshipType": "many-to-many"
     },
     {
       "otherEntityName": "tupper",

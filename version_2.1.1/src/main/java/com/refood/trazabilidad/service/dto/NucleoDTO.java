@@ -13,10 +13,16 @@ public class NucleoDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String idNucleo;
+
+    @NotNull
     private String nombre;
 
     @NotNull
     private String direccion;
+
+    @NotNull
+    private String codigoPostal;
 
     @NotNull
     private String provincia;
@@ -31,9 +37,6 @@ public class NucleoDTO implements Serializable {
     private String email;
 
     @NotNull
-    private Integer numeroRutas;
-
-    @NotNull
     private Boolean activo;
 
     public Long getId() {
@@ -42,6 +45,14 @@ public class NucleoDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdNucleo() {
+        return idNucleo;
+    }
+
+    public void setIdNucleo(String idNucleo) {
+        this.idNucleo = idNucleo;
     }
 
     public String getNombre() {
@@ -58,6 +69,14 @@ public class NucleoDTO implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
     public String getProvincia() {
@@ -90,14 +109,6 @@ public class NucleoDTO implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getNumeroRutas() {
-        return numeroRutas;
-    }
-
-    public void setNumeroRutas(Integer numeroRutas) {
-        this.numeroRutas = numeroRutas;
     }
 
     public Boolean getActivo() {
@@ -134,13 +145,14 @@ public class NucleoDTO implements Serializable {
     public String toString() {
         return "NucleoDTO{" +
             "id=" + getId() +
+            ", idNucleo='" + getIdNucleo() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
             ", provincia='" + getProvincia() + "'" +
             ", responsable='" + getResponsable() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
-            ", numeroRutas=" + getNumeroRutas() +
             ", activo='" + getActivo() + "'" +
             "}";
     }

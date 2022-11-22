@@ -20,13 +20,16 @@
             <column name="nombre" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="tipo" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="ruta" type="integer">
+            <column name="categoria" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="direccion" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="provincia" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="telefono" type="varchar(255)">
@@ -76,9 +79,10 @@
             <column name="id" type="numeric"/>
             <column name="id_donante" type="string"/>
             <column name="nombre" type="string"/>
-            <column name="tipo" type="string"/>
-            <column name="ruta" type="numeric"/>
+            <column name="categoria" type="string"/>
             <column name="direccion" type="string"/>
+            <column name="codigo_postal" type="string"/>
+            <column name="provincia" type="string"/>
             <column name="telefono" type="string"/>
             <column name="email" type="string"/>
             <column name="responsable" type="string"/>

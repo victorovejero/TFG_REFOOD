@@ -180,20 +180,20 @@ relationship OneToMany {
 // TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
 // TipoDeAlimento to AlimentoDeSalida{tipoDeAlimento}
     TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
-    Beneficiario to PersonasBeneficiarias{beneficiario}
+    Beneficiario to PersonaBeneficiaria{beneficiario}
     Beneficiario to Checkout{beneficiario}
 }
 relationship ManyToMany {
     // Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
     Beneficiario{intolerancia} to Intolerancia{beneficiario}
-	PersonaBeneficiario{intolerancia} to Intolerancia{personaBeneficiaria}
+	PersonaBeneficiaria{intolerancia} to Intolerancia{personaBeneficiaria}
    // Registro{voluntario} to Voluntario{registro}
     TipoDeAlimento{intolerancia} to Intolerancia{tipoDeAlimento}
     AlimentoDeEntrada{frutaYVerdura} to FrutaYVerdura{alimentoDeEntrada}
     Checkout{alimentoDeSalida} to AlimentoDeSalida{checkout}
 }
 paginate Intolerancia, Nucleo, Tupper, Socio, TipoDeAlimento, FrutaYVerdura with infinite-scroll
-paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Registro, Voluntario, Checkout with pagination
+paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Voluntario, Checkout with pagination
 service all with serviceImpl
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

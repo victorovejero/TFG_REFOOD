@@ -12,6 +12,8 @@ import com.refood.trazabilidad.repository.BeneficiarioRepository;
 import com.refood.trazabilidad.service.BeneficiarioService;
 import com.refood.trazabilidad.service.dto.BeneficiarioDTO;
 import com.refood.trazabilidad.service.mapper.BeneficiarioMapper;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -44,11 +46,38 @@ class BeneficiarioResourceIT {
     private static final String DEFAULT_ID_BENEFICIARIO = "AAAAAAAAAA";
     private static final String UPDATED_ID_BENEFICIARIO = "BBBBBBBBBB";
 
-    private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
-    private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
+    private static final String DEFAULT_NOMBRE_REPRESENTANTE = "AAAAAAAAAA";
+    private static final String UPDATED_NOMBRE_REPRESENTANTE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PRIMER_APELLIDO_REPRESENTANTE = "AAAAAAAAAA";
+    private static final String UPDATED_PRIMER_APELLIDO_REPRESENTANTE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_SEGUNDO_APELLIDO_REPRESENTANTE = "AAAAAAAAAA";
+    private static final String UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE = "BBBBBBBBBB";
 
     private static final Integer DEFAULT_NUMERO_PERSONAS = 1;
     private static final Integer UPDATED_NUMERO_PERSONAS = 2;
+
+    private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
+    private static final String UPDATED_EMAIL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TELEFONO = "AAAAAAAAAA";
+    private static final String UPDATED_TELEFONO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_TELEFONO_SECUNDARIO = "AAAAAAAAAA";
+    private static final String UPDATED_TELEFONO_SECUNDARIO = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DIRECCION = "AAAAAAAAAA";
+    private static final String UPDATED_DIRECCION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
+
+    private static final LocalDate DEFAULT_FECHA_ALTA = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_FECHA_ALTA = LocalDate.now(ZoneId.systemDefault());
+
+    private static final LocalDate DEFAULT_FECHA_BAJA = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_FECHA_BAJA = LocalDate.now(ZoneId.systemDefault());
 
     private static final Integer DEFAULT_NUMERO_NINIOS = 1;
     private static final Integer UPDATED_NUMERO_NINIOS = 2;
@@ -94,8 +123,17 @@ class BeneficiarioResourceIT {
     public static Beneficiario createEntity(EntityManager em) {
         Beneficiario beneficiario = new Beneficiario()
             .idBeneficiario(DEFAULT_ID_BENEFICIARIO)
-            .nombre(DEFAULT_NOMBRE)
+            .nombreRepresentante(DEFAULT_NOMBRE_REPRESENTANTE)
+            .primerApellidoRepresentante(DEFAULT_PRIMER_APELLIDO_REPRESENTANTE)
+            .segundoApellidoRepresentante(DEFAULT_SEGUNDO_APELLIDO_REPRESENTANTE)
             .numeroPersonas(DEFAULT_NUMERO_PERSONAS)
+            .email(DEFAULT_EMAIL)
+            .telefono(DEFAULT_TELEFONO)
+            .telefonoSecundario(DEFAULT_TELEFONO_SECUNDARIO)
+            .direccion(DEFAULT_DIRECCION)
+            .codigoPostal(DEFAULT_CODIGO_POSTAL)
+            .fechaAlta(DEFAULT_FECHA_ALTA)
+            .fechaBaja(DEFAULT_FECHA_BAJA)
             .numeroNinios(DEFAULT_NUMERO_NINIOS)
             .idDual(DEFAULT_ID_DUAL)
             .activo(DEFAULT_ACTIVO);
@@ -111,8 +149,17 @@ class BeneficiarioResourceIT {
     public static Beneficiario createUpdatedEntity(EntityManager em) {
         Beneficiario beneficiario = new Beneficiario()
             .idBeneficiario(UPDATED_ID_BENEFICIARIO)
-            .nombre(UPDATED_NOMBRE)
+            .nombreRepresentante(UPDATED_NOMBRE_REPRESENTANTE)
+            .primerApellidoRepresentante(UPDATED_PRIMER_APELLIDO_REPRESENTANTE)
+            .segundoApellidoRepresentante(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
+            .email(UPDATED_EMAIL)
+            .telefono(UPDATED_TELEFONO)
+            .telefonoSecundario(UPDATED_TELEFONO_SECUNDARIO)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
             .idDual(UPDATED_ID_DUAL)
             .activo(UPDATED_ACTIVO);
@@ -141,8 +188,17 @@ class BeneficiarioResourceIT {
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeCreate + 1);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
         assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(DEFAULT_ID_BENEFICIARIO);
-        assertThat(testBeneficiario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testBeneficiario.getNombreRepresentante()).isEqualTo(DEFAULT_NOMBRE_REPRESENTANTE);
+        assertThat(testBeneficiario.getPrimerApellidoRepresentante()).isEqualTo(DEFAULT_PRIMER_APELLIDO_REPRESENTANTE);
+        assertThat(testBeneficiario.getSegundoApellidoRepresentante()).isEqualTo(DEFAULT_SEGUNDO_APELLIDO_REPRESENTANTE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(DEFAULT_NUMERO_PERSONAS);
+        assertThat(testBeneficiario.getEmail()).isEqualTo(DEFAULT_EMAIL);
+        assertThat(testBeneficiario.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
+        assertThat(testBeneficiario.getTelefonoSecundario()).isEqualTo(DEFAULT_TELEFONO_SECUNDARIO);
+        assertThat(testBeneficiario.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testBeneficiario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testBeneficiario.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
+        assertThat(testBeneficiario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(DEFAULT_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(DEFAULT_ID_DUAL);
         assertThat(testBeneficiario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
@@ -191,10 +247,30 @@ class BeneficiarioResourceIT {
 
     @Test
     @Transactional
-    void checkNombreIsRequired() throws Exception {
+    void checkNombreRepresentanteIsRequired() throws Exception {
         int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
         // set the field null
-        beneficiario.setNombre(null);
+        beneficiario.setNombreRepresentante(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPrimerApellidoRepresentanteIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setPrimerApellidoRepresentante(null);
 
         // Create the Beneficiario, which fails.
         BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
@@ -215,6 +291,126 @@ class BeneficiarioResourceIT {
         int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
         // set the field null
         beneficiario.setNumeroPersonas(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setEmail(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTelefonoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setTelefono(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkTelefonoSecundarioIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setTelefonoSecundario(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDireccionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setDireccion(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCodigoPostalIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setCodigoPostal(null);
+
+        // Create the Beneficiario, which fails.
+        BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
+
+        restBeneficiarioMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(beneficiarioDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Beneficiario> beneficiarioList = beneficiarioRepository.findAll();
+        assertThat(beneficiarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkFechaAltaIsRequired() throws Exception {
+        int databaseSizeBeforeTest = beneficiarioRepository.findAll().size();
+        // set the field null
+        beneficiario.setFechaAlta(null);
 
         // Create the Beneficiario, which fails.
         BeneficiarioDTO beneficiarioDTO = beneficiarioMapper.toDto(beneficiario);
@@ -282,8 +478,17 @@ class BeneficiarioResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(beneficiario.getId().intValue())))
             .andExpect(jsonPath("$.[*].idBeneficiario").value(hasItem(DEFAULT_ID_BENEFICIARIO)))
-            .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
+            .andExpect(jsonPath("$.[*].nombreRepresentante").value(hasItem(DEFAULT_NOMBRE_REPRESENTANTE)))
+            .andExpect(jsonPath("$.[*].primerApellidoRepresentante").value(hasItem(DEFAULT_PRIMER_APELLIDO_REPRESENTANTE)))
+            .andExpect(jsonPath("$.[*].segundoApellidoRepresentante").value(hasItem(DEFAULT_SEGUNDO_APELLIDO_REPRESENTANTE)))
             .andExpect(jsonPath("$.[*].numeroPersonas").value(hasItem(DEFAULT_NUMERO_PERSONAS)))
+            .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
+            .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
+            .andExpect(jsonPath("$.[*].telefonoSecundario").value(hasItem(DEFAULT_TELEFONO_SECUNDARIO)))
+            .andExpect(jsonPath("$.[*].direccion").value(hasItem(DEFAULT_DIRECCION)))
+            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
+            .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(DEFAULT_FECHA_ALTA.toString())))
+            .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
             .andExpect(jsonPath("$.[*].numeroNinios").value(hasItem(DEFAULT_NUMERO_NINIOS)))
             .andExpect(jsonPath("$.[*].idDual").value(hasItem(DEFAULT_ID_DUAL)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
@@ -319,8 +524,17 @@ class BeneficiarioResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(beneficiario.getId().intValue()))
             .andExpect(jsonPath("$.idBeneficiario").value(DEFAULT_ID_BENEFICIARIO))
-            .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
+            .andExpect(jsonPath("$.nombreRepresentante").value(DEFAULT_NOMBRE_REPRESENTANTE))
+            .andExpect(jsonPath("$.primerApellidoRepresentante").value(DEFAULT_PRIMER_APELLIDO_REPRESENTANTE))
+            .andExpect(jsonPath("$.segundoApellidoRepresentante").value(DEFAULT_SEGUNDO_APELLIDO_REPRESENTANTE))
             .andExpect(jsonPath("$.numeroPersonas").value(DEFAULT_NUMERO_PERSONAS))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
+            .andExpect(jsonPath("$.telefonoSecundario").value(DEFAULT_TELEFONO_SECUNDARIO))
+            .andExpect(jsonPath("$.direccion").value(DEFAULT_DIRECCION))
+            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
+            .andExpect(jsonPath("$.fechaAlta").value(DEFAULT_FECHA_ALTA.toString()))
+            .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
             .andExpect(jsonPath("$.numeroNinios").value(DEFAULT_NUMERO_NINIOS))
             .andExpect(jsonPath("$.idDual").value(DEFAULT_ID_DUAL))
             .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
@@ -347,8 +561,17 @@ class BeneficiarioResourceIT {
         em.detach(updatedBeneficiario);
         updatedBeneficiario
             .idBeneficiario(UPDATED_ID_BENEFICIARIO)
-            .nombre(UPDATED_NOMBRE)
+            .nombreRepresentante(UPDATED_NOMBRE_REPRESENTANTE)
+            .primerApellidoRepresentante(UPDATED_PRIMER_APELLIDO_REPRESENTANTE)
+            .segundoApellidoRepresentante(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
+            .email(UPDATED_EMAIL)
+            .telefono(UPDATED_TELEFONO)
+            .telefonoSecundario(UPDATED_TELEFONO_SECUNDARIO)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
             .idDual(UPDATED_ID_DUAL)
             .activo(UPDATED_ACTIVO);
@@ -367,8 +590,17 @@ class BeneficiarioResourceIT {
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
         assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
-        assertThat(testBeneficiario.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testBeneficiario.getNombreRepresentante()).isEqualTo(UPDATED_NOMBRE_REPRESENTANTE);
+        assertThat(testBeneficiario.getPrimerApellidoRepresentante()).isEqualTo(UPDATED_PRIMER_APELLIDO_REPRESENTANTE);
+        assertThat(testBeneficiario.getSegundoApellidoRepresentante()).isEqualTo(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(UPDATED_NUMERO_PERSONAS);
+        assertThat(testBeneficiario.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testBeneficiario.getTelefono()).isEqualTo(UPDATED_TELEFONO);
+        assertThat(testBeneficiario.getTelefonoSecundario()).isEqualTo(UPDATED_TELEFONO_SECUNDARIO);
+        assertThat(testBeneficiario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testBeneficiario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testBeneficiario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testBeneficiario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
         assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);
@@ -455,9 +687,13 @@ class BeneficiarioResourceIT {
 
         partialUpdatedBeneficiario
             .idBeneficiario(UPDATED_ID_BENEFICIARIO)
-            .numeroNinios(UPDATED_NUMERO_NINIOS)
-            .idDual(UPDATED_ID_DUAL)
-            .activo(UPDATED_ACTIVO);
+            .segundoApellidoRepresentante(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE)
+            .numeroPersonas(UPDATED_NUMERO_PERSONAS)
+            .email(UPDATED_EMAIL)
+            .telefono(UPDATED_TELEFONO)
+            .telefonoSecundario(UPDATED_TELEFONO_SECUNDARIO)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .fechaAlta(UPDATED_FECHA_ALTA);
 
         restBeneficiarioMockMvc
             .perform(
@@ -472,11 +708,20 @@ class BeneficiarioResourceIT {
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
         assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
-        assertThat(testBeneficiario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
-        assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(DEFAULT_NUMERO_PERSONAS);
-        assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
-        assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
-        assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);
+        assertThat(testBeneficiario.getNombreRepresentante()).isEqualTo(DEFAULT_NOMBRE_REPRESENTANTE);
+        assertThat(testBeneficiario.getPrimerApellidoRepresentante()).isEqualTo(DEFAULT_PRIMER_APELLIDO_REPRESENTANTE);
+        assertThat(testBeneficiario.getSegundoApellidoRepresentante()).isEqualTo(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE);
+        assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(UPDATED_NUMERO_PERSONAS);
+        assertThat(testBeneficiario.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testBeneficiario.getTelefono()).isEqualTo(UPDATED_TELEFONO);
+        assertThat(testBeneficiario.getTelefonoSecundario()).isEqualTo(UPDATED_TELEFONO_SECUNDARIO);
+        assertThat(testBeneficiario.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testBeneficiario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testBeneficiario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testBeneficiario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
+        assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(DEFAULT_NUMERO_NINIOS);
+        assertThat(testBeneficiario.getIdDual()).isEqualTo(DEFAULT_ID_DUAL);
+        assertThat(testBeneficiario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -493,8 +738,17 @@ class BeneficiarioResourceIT {
 
         partialUpdatedBeneficiario
             .idBeneficiario(UPDATED_ID_BENEFICIARIO)
-            .nombre(UPDATED_NOMBRE)
+            .nombreRepresentante(UPDATED_NOMBRE_REPRESENTANTE)
+            .primerApellidoRepresentante(UPDATED_PRIMER_APELLIDO_REPRESENTANTE)
+            .segundoApellidoRepresentante(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE)
             .numeroPersonas(UPDATED_NUMERO_PERSONAS)
+            .email(UPDATED_EMAIL)
+            .telefono(UPDATED_TELEFONO)
+            .telefonoSecundario(UPDATED_TELEFONO_SECUNDARIO)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .fechaAlta(UPDATED_FECHA_ALTA)
+            .fechaBaja(UPDATED_FECHA_BAJA)
             .numeroNinios(UPDATED_NUMERO_NINIOS)
             .idDual(UPDATED_ID_DUAL)
             .activo(UPDATED_ACTIVO);
@@ -512,8 +766,17 @@ class BeneficiarioResourceIT {
         assertThat(beneficiarioList).hasSize(databaseSizeBeforeUpdate);
         Beneficiario testBeneficiario = beneficiarioList.get(beneficiarioList.size() - 1);
         assertThat(testBeneficiario.getIdBeneficiario()).isEqualTo(UPDATED_ID_BENEFICIARIO);
-        assertThat(testBeneficiario.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testBeneficiario.getNombreRepresentante()).isEqualTo(UPDATED_NOMBRE_REPRESENTANTE);
+        assertThat(testBeneficiario.getPrimerApellidoRepresentante()).isEqualTo(UPDATED_PRIMER_APELLIDO_REPRESENTANTE);
+        assertThat(testBeneficiario.getSegundoApellidoRepresentante()).isEqualTo(UPDATED_SEGUNDO_APELLIDO_REPRESENTANTE);
         assertThat(testBeneficiario.getNumeroPersonas()).isEqualTo(UPDATED_NUMERO_PERSONAS);
+        assertThat(testBeneficiario.getEmail()).isEqualTo(UPDATED_EMAIL);
+        assertThat(testBeneficiario.getTelefono()).isEqualTo(UPDATED_TELEFONO);
+        assertThat(testBeneficiario.getTelefonoSecundario()).isEqualTo(UPDATED_TELEFONO_SECUNDARIO);
+        assertThat(testBeneficiario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testBeneficiario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testBeneficiario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testBeneficiario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
         assertThat(testBeneficiario.getNumeroNinios()).isEqualTo(UPDATED_NUMERO_NINIOS);
         assertThat(testBeneficiario.getIdDual()).isEqualTo(UPDATED_ID_DUAL);
         assertThat(testBeneficiario.getActivo()).isEqualTo(UPDATED_ACTIVO);

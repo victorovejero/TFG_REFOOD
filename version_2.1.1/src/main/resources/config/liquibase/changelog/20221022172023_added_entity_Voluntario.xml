@@ -44,19 +44,19 @@
             <column name="fecha_baja" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="tipo" type="varchar(255)">
+            <column name="perfil" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="tipo_turno" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="responsable_dia" type="boolean">
-                <constraints nullable="true" />
+            <column name="dia_refood" type="varchar(255)">
+                <constraints nullable="false" />
             </column>
             <column name="origen" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <column name="manipulador_alimentos" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="direccion" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="codigo_postal" type="varchar(255)">
@@ -99,11 +99,11 @@
             <column name="sexo" type="string"/>
             <column name="fecha_alta" type="date"/>
             <column name="fecha_baja" type="date"/>
-            <column name="tipo" type="string"/>
-            <column name="tipo_turno" type="string"/>
-            <column name="responsable_dia" type="boolean"/>
+            <column name="perfil" type="string"/>
+            <column name="dia_refood" type="string"/>
             <column name="origen" type="string"/>
             <column name="manipulador_alimentos" type="boolean"/>
+            <column name="direccion" type="string"/>
             <column name="codigo_postal" type="string"/>
             <column name="activo" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

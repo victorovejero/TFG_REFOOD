@@ -11,14 +11,57 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "nombre",
+      "fieldName": "nombreRepresentante",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerApellidoRepresentante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellidoRepresentante",
+      "fieldType": "String"
     },
     {
       "fieldName": "numeroPersonas",
       "fieldType": "Integer",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefono",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonoSecundario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaBaja",
+      "fieldType": "LocalDate"
     },
     {
       "fieldName": "numeroNinios",
@@ -45,6 +88,18 @@
       "otherEntityName": "alimentoDeSalida",
       "otherEntityRelationshipName": "beneficiario",
       "relationshipName": "alimentoDeSalida",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "personaBeneficiaria",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "personaBeneficiaria",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "checkout",
       "relationshipType": "one-to-many"
     },
     {

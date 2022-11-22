@@ -67,6 +67,33 @@
       "fieldName": "activo",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nucleoAsociado",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "comunicacion",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "provincia",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "pais",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,
@@ -74,13 +101,6 @@
   "name": "Socio",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityName": "nucleo",
-      "otherEntityRelationshipName": "socio",
-      "relationshipName": "nucleo",
-      "relationshipType": "many-to-one"
-    }
-  ],
+  "relationships": [],
   "service": "serviceImpl"
 }

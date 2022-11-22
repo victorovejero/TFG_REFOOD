@@ -37,17 +37,21 @@ export const DonanteDetail = () => {
           </dt>
           <dd>{donanteEntity.nombre}</dd>
           <dt>
-            <span id="tipo">Tipo</span>
+            <span id="categoria">Categoria</span>
           </dt>
-          <dd>{donanteEntity.tipo}</dd>
-          <dt>
-            <span id="ruta">Ruta</span>
-          </dt>
-          <dd>{donanteEntity.ruta}</dd>
+          <dd>{donanteEntity.categoria}</dd>
           <dt>
             <span id="direccion">Direccion</span>
           </dt>
           <dd>{donanteEntity.direccion}</dd>
+          <dt>
+            <span id="codigoPostal">Codigo Postal</span>
+          </dt>
+          <dd>{donanteEntity.codigoPostal}</dd>
+          <dt>
+            <span id="provincia">Provincia</span>
+          </dt>
+          <dd>{donanteEntity.provincia}</dd>
           <dt>
             <span id="telefono">Telefono</span>
           </dt>

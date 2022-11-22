@@ -41,16 +41,18 @@ public class VoluntarioDTO implements Serializable {
     private LocalDate fechaBaja;
 
     @NotNull
-    private String tipo;
+    private String perfil;
 
-    private String tipoTurno;
-
-    private Boolean responsableDia;
+    @NotNull
+    private String diaRefood;
 
     private String origen;
 
     @NotNull
     private Boolean manipuladorAlimentos;
+
+    @NotNull
+    private String direccion;
 
     @NotNull
     private String codigoPostal;
@@ -148,28 +150,20 @@ public class VoluntarioDTO implements Serializable {
         this.fechaBaja = fechaBaja;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getPerfil() {
+        return perfil;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
-    public String getTipoTurno() {
-        return tipoTurno;
+    public String getDiaRefood() {
+        return diaRefood;
     }
 
-    public void setTipoTurno(String tipoTurno) {
-        this.tipoTurno = tipoTurno;
-    }
-
-    public Boolean getResponsableDia() {
-        return responsableDia;
-    }
-
-    public void setResponsableDia(Boolean responsableDia) {
-        this.responsableDia = responsableDia;
+    public void setDiaRefood(String diaRefood) {
+        this.diaRefood = diaRefood;
     }
 
     public String getOrigen() {
@@ -186,6 +180,14 @@ public class VoluntarioDTO implements Serializable {
 
     public void setManipuladorAlimentos(Boolean manipuladorAlimentos) {
         this.manipuladorAlimentos = manipuladorAlimentos;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCodigoPostal() {
@@ -248,11 +250,11 @@ public class VoluntarioDTO implements Serializable {
             ", sexo='" + getSexo() + "'" +
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
-            ", tipo='" + getTipo() + "'" +
-            ", tipoTurno='" + getTipoTurno() + "'" +
-            ", responsableDia='" + getResponsableDia() + "'" +
+            ", perfil='" + getPerfil() + "'" +
+            ", diaRefood='" + getDiaRefood() + "'" +
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +
+            ", direccion='" + getDireccion() + "'" +
             ", codigoPostal='" + getCodigoPostal() + "'" +
             ", activo='" + getActivo() + "'" +
             ", nucleo=" + getNucleo() +

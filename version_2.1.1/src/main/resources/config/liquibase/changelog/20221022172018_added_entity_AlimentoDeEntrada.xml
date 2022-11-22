@@ -17,6 +17,9 @@
             <column name="peso" type="double">
                 <constraints nullable="false" />
             </column>
+            <column name="fruta_y_verdura" type="boolean">
+                <constraints nullable="false" />
+            </column>
             <column name="fecha_y_hora_entrada" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
@@ -42,6 +45,20 @@
         <dropDefaultValue tableName="alimento_de_entrada" columnName="fecha_y_hora_preparacion" columnDataType="${datetimeType}"/>
     </changeSet>
 
+    <changeSet id="20221022172018-1-relations" author="jhipster">
+
+        <createTable tableName="rel_alimento_de_entrada__frutayverdura">
+            <column name="frutayverdura_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="alimento_de_entrada_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="alimento_de_entrada_id, frutayverdura_id" tableName="rel_alimento_de_entrada__frutayverdura"/>
+    </changeSet>
+
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
 
     <!--
@@ -60,6 +77,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="peso" type="numeric"/>
+            <column name="fruta_y_verdura" type="boolean"/>
             <column name="fecha_y_hora_entrada" type="date"/>
             <column name="fecha_y_hora_recogida" type="date"/>
             <column name="fecha_y_hora_preparacion" type="date"/>

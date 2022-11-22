@@ -72,6 +72,24 @@ class SocioResourceIT {
     private static final Boolean DEFAULT_ACTIVO = false;
     private static final Boolean UPDATED_ACTIVO = true;
 
+    private static final String DEFAULT_NUCLEO_ASOCIADO = "AAAAAAAAAA";
+    private static final String UPDATED_NUCLEO_ASOCIADO = "BBBBBBBBBB";
+
+    private static final Boolean DEFAULT_COMUNICACION = false;
+    private static final Boolean UPDATED_COMUNICACION = true;
+
+    private static final String DEFAULT_DIRECCION = "AAAAAAAAAA";
+    private static final String UPDATED_DIRECCION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PROVINCIA = "AAAAAAAAAA";
+    private static final String UPDATED_PROVINCIA = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PAIS = "AAAAAAAAAA";
+    private static final String UPDATED_PAIS = "BBBBBBBBBB";
+
     private static final String ENTITY_API_URL = "/api/socios";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -112,7 +130,13 @@ class SocioResourceIT {
             .fechaBaja(DEFAULT_FECHA_BAJA)
             .contribucionMensual(DEFAULT_CONTRIBUCION_MENSUAL)
             .periodoPago(DEFAULT_PERIODO_PAGO)
-            .activo(DEFAULT_ACTIVO);
+            .activo(DEFAULT_ACTIVO)
+            .nucleoAsociado(DEFAULT_NUCLEO_ASOCIADO)
+            .comunicacion(DEFAULT_COMUNICACION)
+            .direccion(DEFAULT_DIRECCION)
+            .codigoPostal(DEFAULT_CODIGO_POSTAL)
+            .provincia(DEFAULT_PROVINCIA)
+            .pais(DEFAULT_PAIS);
         return socio;
     }
 
@@ -136,7 +160,13 @@ class SocioResourceIT {
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
             .periodoPago(UPDATED_PERIODO_PAGO)
-            .activo(UPDATED_ACTIVO);
+            .activo(UPDATED_ACTIVO)
+            .nucleoAsociado(UPDATED_NUCLEO_ASOCIADO)
+            .comunicacion(UPDATED_COMUNICACION)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
+            .pais(UPDATED_PAIS);
         return socio;
     }
 
@@ -172,6 +202,12 @@ class SocioResourceIT {
         assertThat(testSocio.getContribucionMensual()).isEqualTo(DEFAULT_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(DEFAULT_PERIODO_PAGO);
         assertThat(testSocio.getActivo()).isEqualTo(DEFAULT_ACTIVO);
+        assertThat(testSocio.getNucleoAsociado()).isEqualTo(DEFAULT_NUCLEO_ASOCIADO);
+        assertThat(testSocio.getComunicacion()).isEqualTo(DEFAULT_COMUNICACION);
+        assertThat(testSocio.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testSocio.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testSocio.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
+        assertThat(testSocio.getPais()).isEqualTo(DEFAULT_PAIS);
     }
 
     @Test
@@ -393,6 +429,60 @@ class SocioResourceIT {
 
     @Test
     @Transactional
+    void checkComunicacionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = socioRepository.findAll().size();
+        // set the field null
+        socio.setComunicacion(null);
+
+        // Create the Socio, which fails.
+        SocioDTO socioDTO = socioMapper.toDto(socio);
+
+        restSocioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(socioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Socio> socioList = socioRepository.findAll();
+        assertThat(socioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDireccionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = socioRepository.findAll().size();
+        // set the field null
+        socio.setDireccion(null);
+
+        // Create the Socio, which fails.
+        SocioDTO socioDTO = socioMapper.toDto(socio);
+
+        restSocioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(socioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Socio> socioList = socioRepository.findAll();
+        assertThat(socioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCodigoPostalIsRequired() throws Exception {
+        int databaseSizeBeforeTest = socioRepository.findAll().size();
+        // set the field null
+        socio.setCodigoPostal(null);
+
+        // Create the Socio, which fails.
+        SocioDTO socioDTO = socioMapper.toDto(socio);
+
+        restSocioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(socioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Socio> socioList = socioRepository.findAll();
+        assertThat(socioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllSocios() throws Exception {
         // Initialize the database
         socioRepository.saveAndFlush(socio);
@@ -415,7 +505,13 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
             .andExpect(jsonPath("$.[*].contribucionMensual").value(hasItem(DEFAULT_CONTRIBUCION_MENSUAL.doubleValue())))
             .andExpect(jsonPath("$.[*].periodoPago").value(hasItem(DEFAULT_PERIODO_PAGO)))
-            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
+            .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())))
+            .andExpect(jsonPath("$.[*].nucleoAsociado").value(hasItem(DEFAULT_NUCLEO_ASOCIADO)))
+            .andExpect(jsonPath("$.[*].comunicacion").value(hasItem(DEFAULT_COMUNICACION.booleanValue())))
+            .andExpect(jsonPath("$.[*].direccion").value(hasItem(DEFAULT_DIRECCION)))
+            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
+            .andExpect(jsonPath("$.[*].provincia").value(hasItem(DEFAULT_PROVINCIA)))
+            .andExpect(jsonPath("$.[*].pais").value(hasItem(DEFAULT_PAIS)));
     }
 
     @Test
@@ -442,7 +538,13 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
             .andExpect(jsonPath("$.contribucionMensual").value(DEFAULT_CONTRIBUCION_MENSUAL.doubleValue()))
             .andExpect(jsonPath("$.periodoPago").value(DEFAULT_PERIODO_PAGO))
-            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
+            .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()))
+            .andExpect(jsonPath("$.nucleoAsociado").value(DEFAULT_NUCLEO_ASOCIADO))
+            .andExpect(jsonPath("$.comunicacion").value(DEFAULT_COMUNICACION.booleanValue()))
+            .andExpect(jsonPath("$.direccion").value(DEFAULT_DIRECCION))
+            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
+            .andExpect(jsonPath("$.provincia").value(DEFAULT_PROVINCIA))
+            .andExpect(jsonPath("$.pais").value(DEFAULT_PAIS));
     }
 
     @Test
@@ -477,7 +579,13 @@ class SocioResourceIT {
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
             .periodoPago(UPDATED_PERIODO_PAGO)
-            .activo(UPDATED_ACTIVO);
+            .activo(UPDATED_ACTIVO)
+            .nucleoAsociado(UPDATED_NUCLEO_ASOCIADO)
+            .comunicacion(UPDATED_COMUNICACION)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
+            .pais(UPDATED_PAIS);
         SocioDTO socioDTO = socioMapper.toDto(updatedSocio);
 
         restSocioMockMvc
@@ -505,6 +613,12 @@ class SocioResourceIT {
         assertThat(testSocio.getContribucionMensual()).isEqualTo(UPDATED_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
         assertThat(testSocio.getActivo()).isEqualTo(UPDATED_ACTIVO);
+        assertThat(testSocio.getNucleoAsociado()).isEqualTo(UPDATED_NUCLEO_ASOCIADO);
+        assertThat(testSocio.getComunicacion()).isEqualTo(UPDATED_COMUNICACION);
+        assertThat(testSocio.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testSocio.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testSocio.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
+        assertThat(testSocio.getPais()).isEqualTo(UPDATED_PAIS);
     }
 
     @Test
@@ -591,7 +705,9 @@ class SocioResourceIT {
             .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
             .fechaAlta(UPDATED_FECHA_ALTA)
-            .periodoPago(UPDATED_PERIODO_PAGO);
+            .periodoPago(UPDATED_PERIODO_PAGO)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL);
 
         restSocioMockMvc
             .perform(
@@ -618,6 +734,12 @@ class SocioResourceIT {
         assertThat(testSocio.getContribucionMensual()).isEqualTo(DEFAULT_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
         assertThat(testSocio.getActivo()).isEqualTo(DEFAULT_ACTIVO);
+        assertThat(testSocio.getNucleoAsociado()).isEqualTo(DEFAULT_NUCLEO_ASOCIADO);
+        assertThat(testSocio.getComunicacion()).isEqualTo(DEFAULT_COMUNICACION);
+        assertThat(testSocio.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testSocio.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testSocio.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
+        assertThat(testSocio.getPais()).isEqualTo(DEFAULT_PAIS);
     }
 
     @Test
@@ -645,7 +767,13 @@ class SocioResourceIT {
             .fechaBaja(UPDATED_FECHA_BAJA)
             .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
             .periodoPago(UPDATED_PERIODO_PAGO)
-            .activo(UPDATED_ACTIVO);
+            .activo(UPDATED_ACTIVO)
+            .nucleoAsociado(UPDATED_NUCLEO_ASOCIADO)
+            .comunicacion(UPDATED_COMUNICACION)
+            .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
+            .pais(UPDATED_PAIS);
 
         restSocioMockMvc
             .perform(
@@ -672,6 +800,12 @@ class SocioResourceIT {
         assertThat(testSocio.getContribucionMensual()).isEqualTo(UPDATED_CONTRIBUCION_MENSUAL);
         assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
         assertThat(testSocio.getActivo()).isEqualTo(UPDATED_ACTIVO);
+        assertThat(testSocio.getNucleoAsociado()).isEqualTo(UPDATED_NUCLEO_ASOCIADO);
+        assertThat(testSocio.getComunicacion()).isEqualTo(UPDATED_COMUNICACION);
+        assertThat(testSocio.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testSocio.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testSocio.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
+        assertThat(testSocio.getPais()).isEqualTo(UPDATED_PAIS);
     }
 
     @Test

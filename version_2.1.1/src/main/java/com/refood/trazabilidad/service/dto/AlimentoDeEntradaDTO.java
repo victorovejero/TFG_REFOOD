@@ -2,7 +2,9 @@ package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -17,11 +19,16 @@ public class AlimentoDeEntradaDTO implements Serializable {
     private Double peso;
 
     @NotNull
+    private Boolean frutaYVerdura;
+
+    @NotNull
     private ZonedDateTime fechaYHoraEntrada;
 
     private ZonedDateTime fechaYHoraRecogida;
 
     private ZonedDateTime fechaYHoraPreparacion;
+
+    private Set<FrutaYVerduraDTO> frutaYVerduras = new HashSet<>();
 
     private TupperDTO tupper;
 
@@ -43,6 +50,14 @@ public class AlimentoDeEntradaDTO implements Serializable {
 
     public void setPeso(Double peso) {
         this.peso = peso;
+    }
+
+    public Boolean getFrutaYVerdura() {
+        return frutaYVerdura;
+    }
+
+    public void setFrutaYVerdura(Boolean frutaYVerdura) {
+        this.frutaYVerdura = frutaYVerdura;
     }
 
     public ZonedDateTime getFechaYHoraEntrada() {
@@ -67,6 +82,14 @@ public class AlimentoDeEntradaDTO implements Serializable {
 
     public void setFechaYHoraPreparacion(ZonedDateTime fechaYHoraPreparacion) {
         this.fechaYHoraPreparacion = fechaYHoraPreparacion;
+    }
+
+    public Set<FrutaYVerduraDTO> getFrutaYVerduras() {
+        return frutaYVerduras;
+    }
+
+    public void setFrutaYVerduras(Set<FrutaYVerduraDTO> frutaYVerduras) {
+        this.frutaYVerduras = frutaYVerduras;
     }
 
     public TupperDTO getTupper() {
@@ -120,9 +143,11 @@ public class AlimentoDeEntradaDTO implements Serializable {
         return "AlimentoDeEntradaDTO{" +
             "id=" + getId() +
             ", peso=" + getPeso() +
+            ", frutaYVerdura='" + getFrutaYVerdura() + "'" +
             ", fechaYHoraEntrada='" + getFechaYHoraEntrada() + "'" +
             ", fechaYHoraRecogida='" + getFechaYHoraRecogida() + "'" +
             ", fechaYHoraPreparacion='" + getFechaYHoraPreparacion() + "'" +
+            ", frutaYVerduras=" + getFrutaYVerduras() +
             ", tupper=" + getTupper() +
             ", donante=" + getDonante() +
             ", tipoDeAlimento=" + getTipoDeAlimento() +

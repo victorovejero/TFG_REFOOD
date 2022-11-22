@@ -31,6 +31,10 @@ public class AlimentoDeEntrada implements Serializable {
     private Double peso;
 
     @NotNull
+    @Column(name = "fruta_y_verdura", nullable = false)
+    private Boolean frutaYVerdura;
+
+    @NotNull
     @Column(name = "fecha_y_hora_entrada", nullable = false)
     private ZonedDateTime fechaYHoraEntrada;
 
@@ -42,8 +46,18 @@ public class AlimentoDeEntrada implements Serializable {
 
     @OneToMany(mappedBy = "alimentoDeEntrada")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada", "checkouts" }, allowSetters = true)
     private Set<AlimentoDeSalida> alimentoDeSalidas = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_alimento_de_entrada__frutayverdura",
+        joinColumns = @JoinColumn(name = "alimento_de_entrada_id"),
+        inverseJoinColumns = @JoinColumn(name = "frutayverdura_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "alimentoDeEntradas" }, allowSetters = true)
+    private Set<FrutaYVerdura> frutaYVerduras = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties(value = { "alimentoDeSalidas", "alimentoDeEntradas" }, allowSetters = true)
@@ -83,6 +97,19 @@ public class AlimentoDeEntrada implements Serializable {
 
     public void setPeso(Double peso) {
         this.peso = peso;
+    }
+
+    public Boolean getFrutaYVerdura() {
+        return this.frutaYVerdura;
+    }
+
+    public AlimentoDeEntrada frutaYVerdura(Boolean frutaYVerdura) {
+        this.setFrutaYVerdura(frutaYVerdura);
+        return this;
+    }
+
+    public void setFrutaYVerdura(Boolean frutaYVerdura) {
+        this.frutaYVerdura = frutaYVerdura;
     }
 
     public ZonedDateTime getFechaYHoraEntrada() {
@@ -155,6 +182,31 @@ public class AlimentoDeEntrada implements Serializable {
         return this;
     }
 
+    public Set<FrutaYVerdura> getFrutaYVerduras() {
+        return this.frutaYVerduras;
+    }
+
+    public void setFrutaYVerduras(Set<FrutaYVerdura> frutaYVerduras) {
+        this.frutaYVerduras = frutaYVerduras;
+    }
+
+    public AlimentoDeEntrada frutaYVerduras(Set<FrutaYVerdura> frutaYVerduras) {
+        this.setFrutaYVerduras(frutaYVerduras);
+        return this;
+    }
+
+    public AlimentoDeEntrada addFrutaYVerdura(FrutaYVerdura frutaYVerdura) {
+        this.frutaYVerduras.add(frutaYVerdura);
+        frutaYVerdura.getAlimentoDeEntradas().add(this);
+        return this;
+    }
+
+    public AlimentoDeEntrada removeFrutaYVerdura(FrutaYVerdura frutaYVerdura) {
+        this.frutaYVerduras.remove(frutaYVerdura);
+        frutaYVerdura.getAlimentoDeEntradas().remove(this);
+        return this;
+    }
+
     public Tupper getTupper() {
         return this.tupper;
     }
@@ -219,6 +271,7 @@ public class AlimentoDeEntrada implements Serializable {
         return "AlimentoDeEntrada{" +
             "id=" + getId() +
             ", peso=" + getPeso() +
+            ", frutaYVerdura='" + getFrutaYVerdura() + "'" +
             ", fechaYHoraEntrada='" + getFechaYHoraEntrada() + "'" +
             ", fechaYHoraRecogida='" + getFechaYHoraRecogida() + "'" +
             ", fechaYHoraPreparacion='" + getFechaYHoraPreparacion() + "'" +

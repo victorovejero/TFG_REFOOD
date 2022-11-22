@@ -29,6 +29,13 @@
       "relationshipType": "many-to-many"
     },
     {
+      "otherEntityName": "personaBeneficiaria",
+      "otherEntityRelationshipName": "intolerancia",
+      "ownerSide": false,
+      "relationshipName": "personaBeneficiaria",
+      "relationshipType": "many-to-many"
+    },
+    {
       "otherEntityName": "tipoDeAlimento",
       "otherEntityRelationshipName": "intolerancia",
       "ownerSide": false,

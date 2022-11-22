@@ -14,10 +14,16 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="id_nucleo" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="nombre" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="direccion" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="codigo_postal" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
             <column name="provincia" type="varchar(255)">
@@ -30,9 +36,6 @@
                 <constraints nullable="false" />
             </column>
             <column name="email" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="numero_rutas" type="integer">
                 <constraints nullable="false" />
             </column>
             <column name="activo" type="boolean">
@@ -59,13 +62,14 @@
                   tableName="nucleo"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="id_nucleo" type="string"/>
             <column name="nombre" type="string"/>
             <column name="direccion" type="string"/>
+            <column name="codigo_postal" type="string"/>
             <column name="provincia" type="string"/>
             <column name="responsable" type="string"/>
             <column name="telefono" type="string"/>
             <column name="email" type="string"/>
-            <column name="numero_rutas" type="numeric"/>
             <column name="activo" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

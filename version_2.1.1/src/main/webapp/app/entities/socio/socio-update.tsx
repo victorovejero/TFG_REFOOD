@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { INucleo } from 'app/shared/model/nucleo.model';
-import { getEntities as getNucleos } from 'app/entities/nucleo/nucleo.reducer';
 import { ISocio } from 'app/shared/model/socio.model';
 import { getEntity, updateEntity, createEntity, reset } from './socio.reducer';
 
@@ -21,7 +19,6 @@ export const SocioUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const nucleos = useAppSelector(state => state.nucleo.entities);
   const socioEntity = useAppSelector(state => state.socio.entity);
   const loading = useAppSelector(state => state.socio.loading);
   const updating = useAppSelector(state => state.socio.updating);
@@ -35,8 +32,6 @@ export const SocioUpdate = () => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
-
-    dispatch(getNucleos({}));
   }, []);
 
   useEffect(() => {
@@ -49,7 +44,6 @@ export const SocioUpdate = () => {
     const entity = {
       ...socioEntity,
       ...values,
-      nucleo: nucleos.find(it => it.id.toString() === values.nucleo.toString()),
     };
 
     if (isNew) {
@@ -64,7 +58,6 @@ export const SocioUpdate = () => {
       ? {}
       : {
           ...socioEntity,
-          nucleo: socioEntity?.nucleo?.id,
         };
 
   return (
@@ -193,16 +186,43 @@ export const SocioUpdate = () => {
                 }}
               />
               <ValidatedField label="Activo" id="socio-activo" name="activo" data-cy="activo" check type="checkbox" />
-              <ValidatedField id="socio-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
-                <option value="" key="0" />
-                {nucleos
-                  ? nucleos.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
+              <ValidatedField
+                label="Nucleo Asociado"
+                id="socio-nucleoAsociado"
+                name="nucleoAsociado"
+                data-cy="nucleoAsociado"
+                type="text"
+              />
+              <ValidatedField
+                label="Comunicacion"
+                id="socio-comunicacion"
+                name="comunicacion"
+                data-cy="comunicacion"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
+                label="Direccion"
+                id="socio-direccion"
+                name="direccion"
+                data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Codigo Postal"
+                id="socio-codigoPostal"
+                name="codigoPostal"
+                data-cy="codigoPostal"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField label="Provincia" id="socio-provincia" name="provincia" data-cy="provincia" type="text" />
+              <ValidatedField label="Pais" id="socio-pais" name="pais" data-cy="pais" type="text" />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/socio" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

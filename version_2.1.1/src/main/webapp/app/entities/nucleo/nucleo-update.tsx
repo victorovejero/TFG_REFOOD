@@ -77,6 +77,16 @@ export const NucleoUpdate = () => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="nucleo-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
+                label="Id Nucleo"
+                id="nucleo-idNucleo"
+                name="idNucleo"
+                data-cy="idNucleo"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
                 label="Nombre"
                 id="nucleo-nombre"
                 name="nombre"
@@ -91,6 +101,16 @@ export const NucleoUpdate = () => {
                 id="nucleo-direccion"
                 name="direccion"
                 data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Codigo Postal"
+                id="nucleo-codigoPostal"
+                name="codigoPostal"
+                data-cy="codigoPostal"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
@@ -134,17 +154,6 @@ export const NucleoUpdate = () => {
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
-                }}
-              />
-              <ValidatedField
-                label="Numero Rutas"
-                id="nucleo-numeroRutas"
-                name="numeroRutas"
-                data-cy="numeroRutas"
-                type="text"
-                validate={{
-                  required: { value: true, message: 'Este campo es obligatorio.' },
-                  validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
               <ValidatedField label="Activo" id="nucleo-activo" name="activo" data-cy="activo" check type="checkbox" />

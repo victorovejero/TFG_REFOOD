@@ -33,6 +33,10 @@ export const AlimentoDeEntradaDetail = () => {
           </dt>
           <dd>{alimentoDeEntradaEntity.peso}</dd>
           <dt>
+            <span id="frutaYVerdura">Fruta Y Verdura</span>
+          </dt>
+          <dd>{alimentoDeEntradaEntity.frutaYVerdura ? 'true' : 'false'}</dd>
+          <dt>
             <span id="fechaYHoraEntrada">Fecha Y Hora Entrada</span>
           </dt>
           <dd>
@@ -55,6 +59,17 @@ export const AlimentoDeEntradaDetail = () => {
             {alimentoDeEntradaEntity.fechaYHoraPreparacion ? (
               <TextFormat value={alimentoDeEntradaEntity.fechaYHoraPreparacion} type="date" format={APP_DATE_FORMAT} />
             ) : null}
+          </dd>
+          <dt>Fruta Y Verdura</dt>
+          <dd>
+            {alimentoDeEntradaEntity.frutaYVerduras
+              ? alimentoDeEntradaEntity.frutaYVerduras.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {alimentoDeEntradaEntity.frutaYVerduras && i === alimentoDeEntradaEntity.frutaYVerduras.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
           </dd>
           <dt>Tupper</dt>
           <dd>{alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.id : ''}</dd>

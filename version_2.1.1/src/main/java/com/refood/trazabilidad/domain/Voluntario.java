@@ -3,8 +3,6 @@ package com.refood.trazabilidad.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -64,14 +62,12 @@ public class Voluntario implements Serializable {
     private LocalDate fechaBaja;
 
     @NotNull
-    @Column(name = "tipo", nullable = false)
-    private String tipo;
+    @Column(name = "perfil", nullable = false)
+    private String perfil;
 
-    @Column(name = "tipo_turno")
-    private String tipoTurno;
-
-    @Column(name = "responsable_dia")
-    private Boolean responsableDia;
+    @NotNull
+    @Column(name = "dia_refood", nullable = false)
+    private String diaRefood;
 
     @Column(name = "origen")
     private String origen;
@@ -79,6 +75,10 @@ public class Voluntario implements Serializable {
     @NotNull
     @Column(name = "manipulador_alimentos", nullable = false)
     private Boolean manipuladorAlimentos;
+
+    @NotNull
+    @Column(name = "direccion", nullable = false)
+    private String direccion;
 
     @NotNull
     @Column(name = "codigo_postal", nullable = false)
@@ -89,13 +89,8 @@ public class Voluntario implements Serializable {
     private Boolean activo;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios" }, allowSetters = true)
     private Nucleo nucleo;
-
-    @ManyToMany(mappedBy = "voluntarios")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "voluntarios", "nucleo" }, allowSetters = true)
-    private Set<Registro> registros = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -242,43 +237,30 @@ public class Voluntario implements Serializable {
         this.fechaBaja = fechaBaja;
     }
 
-    public String getTipo() {
-        return this.tipo;
+    public String getPerfil() {
+        return this.perfil;
     }
 
-    public Voluntario tipo(String tipo) {
-        this.setTipo(tipo);
+    public Voluntario perfil(String perfil) {
+        this.setPerfil(perfil);
         return this;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setPerfil(String perfil) {
+        this.perfil = perfil;
     }
 
-    public String getTipoTurno() {
-        return this.tipoTurno;
+    public String getDiaRefood() {
+        return this.diaRefood;
     }
 
-    public Voluntario tipoTurno(String tipoTurno) {
-        this.setTipoTurno(tipoTurno);
+    public Voluntario diaRefood(String diaRefood) {
+        this.setDiaRefood(diaRefood);
         return this;
     }
 
-    public void setTipoTurno(String tipoTurno) {
-        this.tipoTurno = tipoTurno;
-    }
-
-    public Boolean getResponsableDia() {
-        return this.responsableDia;
-    }
-
-    public Voluntario responsableDia(Boolean responsableDia) {
-        this.setResponsableDia(responsableDia);
-        return this;
-    }
-
-    public void setResponsableDia(Boolean responsableDia) {
-        this.responsableDia = responsableDia;
+    public void setDiaRefood(String diaRefood) {
+        this.diaRefood = diaRefood;
     }
 
     public String getOrigen() {
@@ -305,6 +287,19 @@ public class Voluntario implements Serializable {
 
     public void setManipuladorAlimentos(Boolean manipuladorAlimentos) {
         this.manipuladorAlimentos = manipuladorAlimentos;
+    }
+
+    public String getDireccion() {
+        return this.direccion;
+    }
+
+    public Voluntario direccion(String direccion) {
+        this.setDireccion(direccion);
+        return this;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCodigoPostal() {
@@ -346,37 +341,6 @@ public class Voluntario implements Serializable {
         return this;
     }
 
-    public Set<Registro> getRegistros() {
-        return this.registros;
-    }
-
-    public void setRegistros(Set<Registro> registros) {
-        if (this.registros != null) {
-            this.registros.forEach(i -> i.removeVoluntario(this));
-        }
-        if (registros != null) {
-            registros.forEach(i -> i.addVoluntario(this));
-        }
-        this.registros = registros;
-    }
-
-    public Voluntario registros(Set<Registro> registros) {
-        this.setRegistros(registros);
-        return this;
-    }
-
-    public Voluntario addRegistro(Registro registro) {
-        this.registros.add(registro);
-        registro.getVoluntarios().add(this);
-        return this;
-    }
-
-    public Voluntario removeRegistro(Registro registro) {
-        this.registros.remove(registro);
-        registro.getVoluntarios().remove(this);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -411,11 +375,11 @@ public class Voluntario implements Serializable {
             ", sexo='" + getSexo() + "'" +
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
-            ", tipo='" + getTipo() + "'" +
-            ", tipoTurno='" + getTipoTurno() + "'" +
-            ", responsableDia='" + getResponsableDia() + "'" +
+            ", perfil='" + getPerfil() + "'" +
+            ", diaRefood='" + getDiaRefood() + "'" +
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +
+            ", direccion='" + getDireccion() + "'" +
             ", codigoPostal='" + getCodigoPostal() + "'" +
             ", activo='" + getActivo() + "'" +
             "}";

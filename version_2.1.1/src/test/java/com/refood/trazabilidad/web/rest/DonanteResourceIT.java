@@ -39,14 +39,17 @@ class DonanteResourceIT {
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TIPO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_RUTA = 1;
-    private static final Integer UPDATED_RUTA = 2;
+    private static final String DEFAULT_CATEGORIA = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORIA = "BBBBBBBBBB";
 
     private static final String DEFAULT_DIRECCION = "AAAAAAAAAA";
     private static final String UPDATED_DIRECCION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_PROVINCIA = "AAAAAAAAAA";
+    private static final String UPDATED_PROVINCIA = "BBBBBBBBBB";
 
     private static final String DEFAULT_TELEFONO = "AAAAAAAAAA";
     private static final String UPDATED_TELEFONO = "BBBBBBBBBB";
@@ -99,9 +102,10 @@ class DonanteResourceIT {
         Donante donante = new Donante()
             .idDonante(DEFAULT_ID_DONANTE)
             .nombre(DEFAULT_NOMBRE)
-            .tipo(DEFAULT_TIPO)
-            .ruta(DEFAULT_RUTA)
+            .categoria(DEFAULT_CATEGORIA)
             .direccion(DEFAULT_DIRECCION)
+            .codigoPostal(DEFAULT_CODIGO_POSTAL)
+            .provincia(DEFAULT_PROVINCIA)
             .telefono(DEFAULT_TELEFONO)
             .email(DEFAULT_EMAIL)
             .responsable(DEFAULT_RESPONSABLE)
@@ -122,9 +126,10 @@ class DonanteResourceIT {
         Donante donante = new Donante()
             .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
-            .tipo(UPDATED_TIPO)
-            .ruta(UPDATED_RUTA)
+            .categoria(UPDATED_CATEGORIA)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
             .responsable(UPDATED_RESPONSABLE)
@@ -156,9 +161,10 @@ class DonanteResourceIT {
         Donante testDonante = donanteList.get(donanteList.size() - 1);
         assertThat(testDonante.getIdDonante()).isEqualTo(DEFAULT_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(DEFAULT_NOMBRE);
-        assertThat(testDonante.getTipo()).isEqualTo(DEFAULT_TIPO);
-        assertThat(testDonante.getRuta()).isEqualTo(DEFAULT_RUTA);
+        assertThat(testDonante.getCategoria()).isEqualTo(DEFAULT_CATEGORIA);
         assertThat(testDonante.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testDonante.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testDonante.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
         assertThat(testDonante.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testDonante.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testDonante.getResponsable()).isEqualTo(DEFAULT_RESPONSABLE);
@@ -225,28 +231,10 @@ class DonanteResourceIT {
 
     @Test
     @Transactional
-    void checkTipoIsRequired() throws Exception {
+    void checkCategoriaIsRequired() throws Exception {
         int databaseSizeBeforeTest = donanteRepository.findAll().size();
         // set the field null
-        donante.setTipo(null);
-
-        // Create the Donante, which fails.
-        DonanteDTO donanteDTO = donanteMapper.toDto(donante);
-
-        restDonanteMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(donanteDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Donante> donanteList = donanteRepository.findAll();
-        assertThat(donanteList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkRutaIsRequired() throws Exception {
-        int databaseSizeBeforeTest = donanteRepository.findAll().size();
-        // set the field null
-        donante.setRuta(null);
+        donante.setCategoria(null);
 
         // Create the Donante, which fails.
         DonanteDTO donanteDTO = donanteMapper.toDto(donante);
@@ -265,6 +253,42 @@ class DonanteResourceIT {
         int databaseSizeBeforeTest = donanteRepository.findAll().size();
         // set the field null
         donante.setDireccion(null);
+
+        // Create the Donante, which fails.
+        DonanteDTO donanteDTO = donanteMapper.toDto(donante);
+
+        restDonanteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(donanteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Donante> donanteList = donanteRepository.findAll();
+        assertThat(donanteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCodigoPostalIsRequired() throws Exception {
+        int databaseSizeBeforeTest = donanteRepository.findAll().size();
+        // set the field null
+        donante.setCodigoPostal(null);
+
+        // Create the Donante, which fails.
+        DonanteDTO donanteDTO = donanteMapper.toDto(donante);
+
+        restDonanteMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(donanteDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Donante> donanteList = donanteRepository.findAll();
+        assertThat(donanteList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkProvinciaIsRequired() throws Exception {
+        int databaseSizeBeforeTest = donanteRepository.findAll().size();
+        // set the field null
+        donante.setProvincia(null);
 
         // Create the Donante, which fails.
         DonanteDTO donanteDTO = donanteMapper.toDto(donante);
@@ -381,9 +405,10 @@ class DonanteResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(donante.getId().intValue())))
             .andExpect(jsonPath("$.[*].idDonante").value(hasItem(DEFAULT_ID_DONANTE)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
-            .andExpect(jsonPath("$.[*].ruta").value(hasItem(DEFAULT_RUTA)))
+            .andExpect(jsonPath("$.[*].categoria").value(hasItem(DEFAULT_CATEGORIA)))
             .andExpect(jsonPath("$.[*].direccion").value(hasItem(DEFAULT_DIRECCION)))
+            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
+            .andExpect(jsonPath("$.[*].provincia").value(hasItem(DEFAULT_PROVINCIA)))
             .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].responsable").value(hasItem(DEFAULT_RESPONSABLE)))
@@ -407,9 +432,10 @@ class DonanteResourceIT {
             .andExpect(jsonPath("$.id").value(donante.getId().intValue()))
             .andExpect(jsonPath("$.idDonante").value(DEFAULT_ID_DONANTE))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
-            .andExpect(jsonPath("$.ruta").value(DEFAULT_RUTA))
+            .andExpect(jsonPath("$.categoria").value(DEFAULT_CATEGORIA))
             .andExpect(jsonPath("$.direccion").value(DEFAULT_DIRECCION))
+            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
+            .andExpect(jsonPath("$.provincia").value(DEFAULT_PROVINCIA))
             .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.responsable").value(DEFAULT_RESPONSABLE))
@@ -441,9 +467,10 @@ class DonanteResourceIT {
         updatedDonante
             .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
-            .tipo(UPDATED_TIPO)
-            .ruta(UPDATED_RUTA)
+            .categoria(UPDATED_CATEGORIA)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
             .responsable(UPDATED_RESPONSABLE)
@@ -467,9 +494,10 @@ class DonanteResourceIT {
         Donante testDonante = donanteList.get(donanteList.size() - 1);
         assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
-        assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testDonante.getRuta()).isEqualTo(UPDATED_RUTA);
+        assertThat(testDonante.getCategoria()).isEqualTo(UPDATED_CATEGORIA);
         assertThat(testDonante.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testDonante.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testDonante.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
         assertThat(testDonante.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testDonante.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testDonante.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
@@ -559,9 +587,10 @@ class DonanteResourceIT {
         partialUpdatedDonante
             .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
-            .tipo(UPDATED_TIPO)
+            .categoria(UPDATED_CATEGORIA)
+            .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .responsable(UPDATED_RESPONSABLE);
+            .activo(UPDATED_ACTIVO);
 
         restDonanteMockMvc
             .perform(
@@ -577,16 +606,17 @@ class DonanteResourceIT {
         Donante testDonante = donanteList.get(donanteList.size() - 1);
         assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
-        assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testDonante.getRuta()).isEqualTo(DEFAULT_RUTA);
+        assertThat(testDonante.getCategoria()).isEqualTo(UPDATED_CATEGORIA);
         assertThat(testDonante.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
-        assertThat(testDonante.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
+        assertThat(testDonante.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
+        assertThat(testDonante.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
+        assertThat(testDonante.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testDonante.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testDonante.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
+        assertThat(testDonante.getResponsable()).isEqualTo(DEFAULT_RESPONSABLE);
         assertThat(testDonante.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testDonante.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
         assertThat(testDonante.getComentarios()).isEqualTo(DEFAULT_COMENTARIOS);
-        assertThat(testDonante.getActivo()).isEqualTo(DEFAULT_ACTIVO);
+        assertThat(testDonante.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
     @Test
@@ -604,9 +634,10 @@ class DonanteResourceIT {
         partialUpdatedDonante
             .idDonante(UPDATED_ID_DONANTE)
             .nombre(UPDATED_NOMBRE)
-            .tipo(UPDATED_TIPO)
-            .ruta(UPDATED_RUTA)
+            .categoria(UPDATED_CATEGORIA)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .provincia(UPDATED_PROVINCIA)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
             .responsable(UPDATED_RESPONSABLE)
@@ -629,9 +660,10 @@ class DonanteResourceIT {
         Donante testDonante = donanteList.get(donanteList.size() - 1);
         assertThat(testDonante.getIdDonante()).isEqualTo(UPDATED_ID_DONANTE);
         assertThat(testDonante.getNombre()).isEqualTo(UPDATED_NOMBRE);
-        assertThat(testDonante.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testDonante.getRuta()).isEqualTo(UPDATED_RUTA);
+        assertThat(testDonante.getCategoria()).isEqualTo(UPDATED_CATEGORIA);
         assertThat(testDonante.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testDonante.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testDonante.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
         assertThat(testDonante.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testDonante.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testDonante.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);

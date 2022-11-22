@@ -29,9 +29,12 @@ public class TipoDeAlimento implements Serializable {
     @Column(name = "nombre_alimento", nullable = false)
     private String nombreAlimento;
 
+    @Column(name = "descripcion")
+    private String descripcion;
+
     @OneToMany(mappedBy = "tipoDeAlimento")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "frutaYVerduras", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
     private Set<AlimentoDeEntrada> alimentoDeEntradas = new HashSet<>();
 
     @ManyToMany
@@ -41,7 +44,7 @@ public class TipoDeAlimento implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "intolerancia_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiarios", "tipoDeAlimentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "beneficiarios", "personaBeneficiarias", "tipoDeAlimentos" }, allowSetters = true)
     private Set<Intolerancia> intolerancias = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -70,6 +73,19 @@ public class TipoDeAlimento implements Serializable {
 
     public void setNombreAlimento(String nombreAlimento) {
         this.nombreAlimento = nombreAlimento;
+    }
+
+    public String getDescripcion() {
+        return this.descripcion;
+    }
+
+    public TipoDeAlimento descripcion(String descripcion) {
+        this.setDescripcion(descripcion);
+        return this;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Set<AlimentoDeEntrada> getAlimentoDeEntradas() {
@@ -153,6 +169,7 @@ public class TipoDeAlimento implements Serializable {
         return "TipoDeAlimento{" +
             "id=" + getId() +
             ", nombreAlimento='" + getNombreAlimento() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             "}";
     }
 }

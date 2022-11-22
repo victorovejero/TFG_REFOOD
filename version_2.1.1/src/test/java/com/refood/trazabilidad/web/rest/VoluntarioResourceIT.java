@@ -63,20 +63,20 @@ class VoluntarioResourceIT {
     private static final LocalDate DEFAULT_FECHA_BAJA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_BAJA = LocalDate.now(ZoneId.systemDefault());
 
-    private static final String DEFAULT_TIPO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO = "BBBBBBBBBB";
+    private static final String DEFAULT_PERFIL = "AAAAAAAAAA";
+    private static final String UPDATED_PERFIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_TIPO_TURNO = "AAAAAAAAAA";
-    private static final String UPDATED_TIPO_TURNO = "BBBBBBBBBB";
-
-    private static final Boolean DEFAULT_RESPONSABLE_DIA = false;
-    private static final Boolean UPDATED_RESPONSABLE_DIA = true;
+    private static final String DEFAULT_DIA_REFOOD = "AAAAAAAAAA";
+    private static final String UPDATED_DIA_REFOOD = "BBBBBBBBBB";
 
     private static final String DEFAULT_ORIGEN = "AAAAAAAAAA";
     private static final String UPDATED_ORIGEN = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_MANIPULADOR_ALIMENTOS = false;
     private static final Boolean UPDATED_MANIPULADOR_ALIMENTOS = true;
+
+    private static final String DEFAULT_DIRECCION = "AAAAAAAAAA";
+    private static final String UPDATED_DIRECCION = "BBBBBBBBBB";
 
     private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
     private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
@@ -122,11 +122,11 @@ class VoluntarioResourceIT {
             .sexo(DEFAULT_SEXO)
             .fechaAlta(DEFAULT_FECHA_ALTA)
             .fechaBaja(DEFAULT_FECHA_BAJA)
-            .tipo(DEFAULT_TIPO)
-            .tipoTurno(DEFAULT_TIPO_TURNO)
-            .responsableDia(DEFAULT_RESPONSABLE_DIA)
+            .perfil(DEFAULT_PERFIL)
+            .diaRefood(DEFAULT_DIA_REFOOD)
             .origen(DEFAULT_ORIGEN)
             .manipuladorAlimentos(DEFAULT_MANIPULADOR_ALIMENTOS)
+            .direccion(DEFAULT_DIRECCION)
             .codigoPostal(DEFAULT_CODIGO_POSTAL)
             .activo(DEFAULT_ACTIVO);
         return voluntario;
@@ -150,11 +150,11 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .tipo(UPDATED_TIPO)
-            .tipoTurno(UPDATED_TIPO_TURNO)
-            .responsableDia(UPDATED_RESPONSABLE_DIA)
+            .perfil(UPDATED_PERFIL)
+            .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
+            .direccion(UPDATED_DIRECCION)
             .codigoPostal(UPDATED_CODIGO_POSTAL)
             .activo(UPDATED_ACTIVO);
         return voluntario;
@@ -189,11 +189,11 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(DEFAULT_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
-        assertThat(testVoluntario.getTipo()).isEqualTo(DEFAULT_TIPO);
-        assertThat(testVoluntario.getTipoTurno()).isEqualTo(DEFAULT_TIPO_TURNO);
-        assertThat(testVoluntario.getResponsableDia()).isEqualTo(DEFAULT_RESPONSABLE_DIA);
+        assertThat(testVoluntario.getPerfil()).isEqualTo(DEFAULT_PERFIL);
+        assertThat(testVoluntario.getDiaRefood()).isEqualTo(DEFAULT_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(DEFAULT_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(DEFAULT_MANIPULADOR_ALIMENTOS);
+        assertThat(testVoluntario.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
         assertThat(testVoluntario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
@@ -345,10 +345,28 @@ class VoluntarioResourceIT {
 
     @Test
     @Transactional
-    void checkTipoIsRequired() throws Exception {
+    void checkPerfilIsRequired() throws Exception {
         int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
         // set the field null
-        voluntario.setTipo(null);
+        voluntario.setPerfil(null);
+
+        // Create the Voluntario, which fails.
+        VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
+
+        restVoluntarioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(voluntarioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Voluntario> voluntarioList = voluntarioRepository.findAll();
+        assertThat(voluntarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDiaRefoodIsRequired() throws Exception {
+        int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
+        // set the field null
+        voluntario.setDiaRefood(null);
 
         // Create the Voluntario, which fails.
         VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
@@ -367,6 +385,24 @@ class VoluntarioResourceIT {
         int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
         // set the field null
         voluntario.setManipuladorAlimentos(null);
+
+        // Create the Voluntario, which fails.
+        VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
+
+        restVoluntarioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(voluntarioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Voluntario> voluntarioList = voluntarioRepository.findAll();
+        assertThat(voluntarioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDireccionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
+        // set the field null
+        voluntario.setDireccion(null);
 
         // Create the Voluntario, which fails.
         VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
@@ -437,11 +473,11 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.[*].sexo").value(hasItem(DEFAULT_SEXO)))
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(DEFAULT_FECHA_ALTA.toString())))
             .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
-            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO)))
-            .andExpect(jsonPath("$.[*].tipoTurno").value(hasItem(DEFAULT_TIPO_TURNO)))
-            .andExpect(jsonPath("$.[*].responsableDia").value(hasItem(DEFAULT_RESPONSABLE_DIA.booleanValue())))
+            .andExpect(jsonPath("$.[*].perfil").value(hasItem(DEFAULT_PERFIL)))
+            .andExpect(jsonPath("$.[*].diaRefood").value(hasItem(DEFAULT_DIA_REFOOD)))
             .andExpect(jsonPath("$.[*].origen").value(hasItem(DEFAULT_ORIGEN)))
             .andExpect(jsonPath("$.[*].manipuladorAlimentos").value(hasItem(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue())))
+            .andExpect(jsonPath("$.[*].direccion").value(hasItem(DEFAULT_DIRECCION)))
             .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
@@ -468,11 +504,11 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.sexo").value(DEFAULT_SEXO))
             .andExpect(jsonPath("$.fechaAlta").value(DEFAULT_FECHA_ALTA.toString()))
             .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
-            .andExpect(jsonPath("$.tipo").value(DEFAULT_TIPO))
-            .andExpect(jsonPath("$.tipoTurno").value(DEFAULT_TIPO_TURNO))
-            .andExpect(jsonPath("$.responsableDia").value(DEFAULT_RESPONSABLE_DIA.booleanValue()))
+            .andExpect(jsonPath("$.perfil").value(DEFAULT_PERFIL))
+            .andExpect(jsonPath("$.diaRefood").value(DEFAULT_DIA_REFOOD))
             .andExpect(jsonPath("$.origen").value(DEFAULT_ORIGEN))
             .andExpect(jsonPath("$.manipuladorAlimentos").value(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue()))
+            .andExpect(jsonPath("$.direccion").value(DEFAULT_DIRECCION))
             .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
             .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
@@ -507,11 +543,11 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .tipo(UPDATED_TIPO)
-            .tipoTurno(UPDATED_TIPO_TURNO)
-            .responsableDia(UPDATED_RESPONSABLE_DIA)
+            .perfil(UPDATED_PERFIL)
+            .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
+            .direccion(UPDATED_DIRECCION)
             .codigoPostal(UPDATED_CODIGO_POSTAL)
             .activo(UPDATED_ACTIVO);
         VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(updatedVoluntario);
@@ -538,11 +574,11 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(UPDATED_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
-        assertThat(testVoluntario.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testVoluntario.getTipoTurno()).isEqualTo(UPDATED_TIPO_TURNO);
-        assertThat(testVoluntario.getResponsableDia()).isEqualTo(UPDATED_RESPONSABLE_DIA);
+        assertThat(testVoluntario.getPerfil()).isEqualTo(UPDATED_PERFIL);
+        assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
+        assertThat(testVoluntario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
         assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
@@ -629,9 +665,9 @@ class VoluntarioResourceIT {
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
             .dni(UPDATED_DNI)
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
-            .tipoTurno(UPDATED_TIPO_TURNO)
-            .responsableDia(UPDATED_RESPONSABLE_DIA)
-            .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
+            .diaRefood(UPDATED_DIA_REFOOD)
+            .origen(UPDATED_ORIGEN)
+            .direccion(UPDATED_DIRECCION)
             .activo(UPDATED_ACTIVO);
 
         restVoluntarioMockMvc
@@ -656,11 +692,11 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(DEFAULT_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
-        assertThat(testVoluntario.getTipo()).isEqualTo(DEFAULT_TIPO);
-        assertThat(testVoluntario.getTipoTurno()).isEqualTo(UPDATED_TIPO_TURNO);
-        assertThat(testVoluntario.getResponsableDia()).isEqualTo(UPDATED_RESPONSABLE_DIA);
-        assertThat(testVoluntario.getOrigen()).isEqualTo(DEFAULT_ORIGEN);
-        assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
+        assertThat(testVoluntario.getPerfil()).isEqualTo(DEFAULT_PERFIL);
+        assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
+        assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
+        assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(DEFAULT_MANIPULADOR_ALIMENTOS);
+        assertThat(testVoluntario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
         assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
@@ -688,11 +724,11 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .tipo(UPDATED_TIPO)
-            .tipoTurno(UPDATED_TIPO_TURNO)
-            .responsableDia(UPDATED_RESPONSABLE_DIA)
+            .perfil(UPDATED_PERFIL)
+            .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
+            .direccion(UPDATED_DIRECCION)
             .codigoPostal(UPDATED_CODIGO_POSTAL)
             .activo(UPDATED_ACTIVO);
 
@@ -718,11 +754,11 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(UPDATED_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
-        assertThat(testVoluntario.getTipo()).isEqualTo(UPDATED_TIPO);
-        assertThat(testVoluntario.getTipoTurno()).isEqualTo(UPDATED_TIPO_TURNO);
-        assertThat(testVoluntario.getResponsableDia()).isEqualTo(UPDATED_RESPONSABLE_DIA);
+        assertThat(testVoluntario.getPerfil()).isEqualTo(UPDATED_PERFIL);
+        assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
+        assertThat(testVoluntario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
         assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }

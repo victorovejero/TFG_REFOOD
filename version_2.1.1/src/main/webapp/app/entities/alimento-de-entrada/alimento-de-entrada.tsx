@@ -111,6 +111,9 @@ export const AlimentoDeEntrada = () => {
                 <th className="hand" onClick={sort('peso')}>
                   Peso <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('frutaYVerdura')}>
+                  Fruta Y Verdura <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('fechaYHoraEntrada')}>
                   Fecha Y Hora Entrada <FontAwesomeIcon icon="sort" />
                 </th>
@@ -141,6 +144,7 @@ export const AlimentoDeEntrada = () => {
                     </Button>
                   </td>
                   <td>{alimentoDeEntrada.peso}</td>
+                  <td>{alimentoDeEntrada.frutaYVerdura ? 'true' : 'false'}</td>
                   <td>
                     {alimentoDeEntrada.fechaYHoraEntrada ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraEntrada} format={APP_DATE_FORMAT} />

@@ -14,9 +14,6 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="peso" type="double">
-                <constraints nullable="false" />
-            </column>
             <column name="fecha_salida" type="date">
                 <constraints nullable="false" />
             </column>
@@ -50,7 +47,6 @@
                   tableName="alimento_de_salida"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="peso" type="numeric"/>
             <column name="fecha_salida" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

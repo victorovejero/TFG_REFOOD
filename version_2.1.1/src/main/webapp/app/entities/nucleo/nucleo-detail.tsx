@@ -29,6 +29,10 @@ export const NucleoDetail = () => {
           </dt>
           <dd>{nucleoEntity.id}</dd>
           <dt>
+            <span id="idNucleo">Id Nucleo</span>
+          </dt>
+          <dd>{nucleoEntity.idNucleo}</dd>
+          <dt>
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{nucleoEntity.nombre}</dd>
@@ -36,6 +40,10 @@ export const NucleoDetail = () => {
             <span id="direccion">Direccion</span>
           </dt>
           <dd>{nucleoEntity.direccion}</dd>
+          <dt>
+            <span id="codigoPostal">Codigo Postal</span>
+          </dt>
+          <dd>{nucleoEntity.codigoPostal}</dd>
           <dt>
             <span id="provincia">Provincia</span>
           </dt>
@@ -52,10 +60,6 @@ export const NucleoDetail = () => {
             <span id="email">Email</span>
           </dt>
           <dd>{nucleoEntity.email}</dd>
-          <dt>
-            <span id="numeroRutas">Numero Rutas</span>
-          </dt>
-          <dd>{nucleoEntity.numeroRutas}</dd>
           <dt>
             <span id="activo">Activo</span>
           </dt>

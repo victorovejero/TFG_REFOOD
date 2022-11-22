@@ -95,6 +95,7 @@ export const TipoDeAlimentoUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField label="Descripcion" id="tipo-de-alimento-descripcion" name="descripcion" data-cy="descripcion" type="text" />
               <ValidatedField
                 label="Intolerancia"
                 id="tipo-de-alimento-intolerancia"

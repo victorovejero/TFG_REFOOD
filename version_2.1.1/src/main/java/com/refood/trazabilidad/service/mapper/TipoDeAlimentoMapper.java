@@ -19,9 +19,9 @@ public interface TipoDeAlimentoMapper extends EntityMapper<TipoDeAlimentoDTO, Ti
     @Mapping(target = "removeIntolerancia", ignore = true)
     TipoDeAlimento toEntity(TipoDeAlimentoDTO tipoDeAlimentoDTO);
 
-    // @Named("intoleranciaId")
-    // @BeanMapping(ignoreByDefault = true)
-    // @Mapping(target = "id", source = "id")
+    @Named("intoleranciaId")
+    @BeanMapping(ignoreByDefault = true)
+    @Mapping(target = "id", source = "id")
     IntoleranciaDTO toDtoIntoleranciaId(Intolerancia intolerancia);
 
     @Named("intoleranciaIdSet")

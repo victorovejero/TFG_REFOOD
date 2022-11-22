@@ -53,17 +53,14 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "tipo",
+      "fieldName": "perfil",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tipoTurno",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "responsableDia",
-      "fieldType": "Boolean"
+      "fieldName": "diaRefood",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "origen",
@@ -72,6 +69,11 @@
     {
       "fieldName": "manipuladorAlimentos",
       "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
@@ -96,13 +98,6 @@
       "otherEntityRelationshipName": "voluntario",
       "relationshipName": "nucleo",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "registro",
-      "otherEntityRelationshipName": "voluntario",
-      "ownerSide": false,
-      "relationshipName": "registro",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

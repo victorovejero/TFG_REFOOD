@@ -120,11 +120,8 @@ export const Tupper = () => {
             <Table responsive>
               <thead>
                 <tr>
-                  {/* <th className="hand" onClick={sort('id')}>
+                  <th className="hand" onClick={sort('id')}>
                     ID <FontAwesomeIcon icon="sort" />
-                  </th> */}
-                  <th className="hand" onClick={sort('modelo')}>
-                    Modelo <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('peso')}>
                     Peso <FontAwesomeIcon icon="sort" />
@@ -132,28 +129,31 @@ export const Tupper = () => {
                   <th className="hand" onClick={sort('productor')}>
                     Productor <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('modelo')}>
+                    Modelo <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('precio')}>
                     Precio <FontAwesomeIcon icon="sort" />
                   </th>
-                  {/* <th className="hand" onClick={sort('descripcion')}>
+                  <th className="hand" onClick={sort('descripcion')}>
                     Descripcion <FontAwesomeIcon icon="sort" />
-                  </th> */}
+                  </th>
                   <th />
                 </tr>
               </thead>
               <tbody>
                 {tupperList.map((tupper, i) => (
                   <tr key={`entity-${i}`} data-cy="entityTable">
-                    {/* <td>
+                    <td>
                       <Button tag={Link} to={`/tupper/${tupper.id}`} color="link" size="sm">
                         {tupper.id}
                       </Button>
-                    </td> */}
-                    <td>{tupper.modelo}</td>
+                    </td>
                     <td>{tupper.peso}</td>
                     <td>{tupper.productor}</td>
+                    <td>{tupper.modelo}</td>
                     <td>{tupper.precio}</td>
-                    {/* <td>{tupper.descripcion}</td> */}
+                    <td>{tupper.descripcion}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/tupper/${tupper.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -20,13 +20,16 @@ public class DonanteDTO implements Serializable {
     private String nombre;
 
     @NotNull
-    private String tipo;
-
-    @NotNull
-    private Integer ruta;
+    private String categoria;
 
     @NotNull
     private String direccion;
+
+    @NotNull
+    private String codigoPostal;
+
+    @NotNull
+    private String provincia;
 
     @NotNull
     private String telefono;
@@ -73,20 +76,12 @@ public class DonanteDTO implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Integer getRuta() {
-        return ruta;
-    }
-
-    public void setRuta(Integer ruta) {
-        this.ruta = ruta;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getDireccion() {
@@ -95,6 +90,22 @@ public class DonanteDTO implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public String getTelefono() {
@@ -189,9 +200,10 @@ public class DonanteDTO implements Serializable {
             "id=" + getId() +
             ", idDonante='" + getIdDonante() + "'" +
             ", nombre='" + getNombre() + "'" +
-            ", tipo='" + getTipo() + "'" +
-            ", ruta=" + getRuta() +
+            ", categoria='" + getCategoria() + "'" +
             ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", provincia='" + getProvincia() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
             ", responsable='" + getResponsable() + "'" +

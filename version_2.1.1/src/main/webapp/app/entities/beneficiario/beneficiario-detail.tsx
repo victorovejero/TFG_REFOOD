@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import {} from 'react-jhipster';
+import { TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -33,13 +33,57 @@ export const BeneficiarioDetail = () => {
           </dt>
           <dd>{beneficiarioEntity.idBeneficiario}</dd>
           <dt>
-            <span id="nombre">Nombre</span>
+            <span id="nombreRepresentante">Nombre Representante</span>
           </dt>
-          <dd>{beneficiarioEntity.nombre}</dd>
+          <dd>{beneficiarioEntity.nombreRepresentante}</dd>
+          <dt>
+            <span id="primerApellidoRepresentante">Primer Apellido Representante</span>
+          </dt>
+          <dd>{beneficiarioEntity.primerApellidoRepresentante}</dd>
+          <dt>
+            <span id="segundoApellidoRepresentante">Segundo Apellido Representante</span>
+          </dt>
+          <dd>{beneficiarioEntity.segundoApellidoRepresentante}</dd>
           <dt>
             <span id="numeroPersonas">Numero Personas</span>
           </dt>
           <dd>{beneficiarioEntity.numeroPersonas}</dd>
+          <dt>
+            <span id="email">Email</span>
+          </dt>
+          <dd>{beneficiarioEntity.email}</dd>
+          <dt>
+            <span id="telefono">Telefono</span>
+          </dt>
+          <dd>{beneficiarioEntity.telefono}</dd>
+          <dt>
+            <span id="telefonoSecundario">Telefono Secundario</span>
+          </dt>
+          <dd>{beneficiarioEntity.telefonoSecundario}</dd>
+          <dt>
+            <span id="direccion">Direccion</span>
+          </dt>
+          <dd>{beneficiarioEntity.direccion}</dd>
+          <dt>
+            <span id="codigoPostal">Codigo Postal</span>
+          </dt>
+          <dd>{beneficiarioEntity.codigoPostal}</dd>
+          <dt>
+            <span id="fechaAlta">Fecha Alta</span>
+          </dt>
+          <dd>
+            {beneficiarioEntity.fechaAlta ? (
+              <TextFormat value={beneficiarioEntity.fechaAlta} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
+          </dd>
+          <dt>
+            <span id="fechaBaja">Fecha Baja</span>
+          </dt>
+          <dd>
+            {beneficiarioEntity.fechaBaja ? (
+              <TextFormat value={beneficiarioEntity.fechaBaja} type="date" format={APP_LOCAL_DATE_FORMAT} />
+            ) : null}
+          </dd>
           <dt>
             <span id="numeroNinios">Numero Ninios</span>
           </dt>

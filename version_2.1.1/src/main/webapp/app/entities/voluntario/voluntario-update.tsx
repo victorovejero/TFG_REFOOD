@@ -10,8 +10,6 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { INucleo } from 'app/shared/model/nucleo.model';
 import { getEntities as getNucleos } from 'app/entities/nucleo/nucleo.reducer';
-import { IRegistro } from 'app/shared/model/registro.model';
-import { getEntities as getRegistros } from 'app/entities/registro/registro.reducer';
 import { IVoluntario } from 'app/shared/model/voluntario.model';
 import { getEntity, updateEntity, createEntity, reset } from './voluntario.reducer';
 
@@ -24,7 +22,6 @@ export const VoluntarioUpdate = () => {
   const isNew = id === undefined;
 
   const nucleos = useAppSelector(state => state.nucleo.entities);
-  const registros = useAppSelector(state => state.registro.entities);
   const voluntarioEntity = useAppSelector(state => state.voluntario.entity);
   const loading = useAppSelector(state => state.voluntario.loading);
   const updating = useAppSelector(state => state.voluntario.updating);
@@ -42,7 +39,6 @@ export const VoluntarioUpdate = () => {
     }
 
     dispatch(getNucleos({}));
-    dispatch(getRegistros({}));
   }, []);
 
   useEffect(() => {
@@ -169,23 +165,24 @@ export const VoluntarioUpdate = () => {
               />
               <ValidatedField label="Fecha Baja" id="voluntario-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" />
               <ValidatedField
-                label="Tipo"
-                id="voluntario-tipo"
-                name="tipo"
-                data-cy="tipo"
+                label="Perfil"
+                id="voluntario-perfil"
+                name="perfil"
+                data-cy="perfil"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <ValidatedField label="Tipo Turno" id="voluntario-tipoTurno" name="tipoTurno" data-cy="tipoTurno" type="text" />
               <ValidatedField
-                label="Responsable Dia"
-                id="voluntario-responsableDia"
-                name="responsableDia"
-                data-cy="responsableDia"
-                check
-                type="checkbox"
+                label="Dia Refood"
+                id="voluntario-diaRefood"
+                name="diaRefood"
+                data-cy="diaRefood"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
               />
               <ValidatedField label="Origen" id="voluntario-origen" name="origen" data-cy="origen" type="text" />
               <ValidatedField
@@ -195,6 +192,16 @@ export const VoluntarioUpdate = () => {
                 data-cy="manipuladorAlimentos"
                 check
                 type="checkbox"
+              />
+              <ValidatedField
+                label="Direccion"
+                id="voluntario-direccion"
+                name="direccion"
+                data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
               />
               <ValidatedField
                 label="Codigo Postal"

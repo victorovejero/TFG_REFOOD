@@ -133,20 +133,20 @@ export const Voluntario = () => {
                 <th className="hand" onClick={sort('fechaBaja')}>
                   Fecha Baja <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('tipo')}>
-                  Tipo <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('perfil')}>
+                  Perfil <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('tipoTurno')}>
-                  Tipo Turno <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('responsableDia')}>
-                  Responsable Dia <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('diaRefood')}>
+                  Dia Refood <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('origen')}>
                   Origen <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('manipuladorAlimentos')}>
                   Manipulador Alimentos <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('direccion')}>
+                  Direccion <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('codigoPostal')}>
                   Codigo Postal <FontAwesomeIcon icon="sort" />
@@ -186,11 +186,11 @@ export const Voluntario = () => {
                   <td>
                     {voluntario.fechaBaja ? <TextFormat type="date" value={voluntario.fechaBaja} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{voluntario.tipo}</td>
-                  <td>{voluntario.tipoTurno}</td>
-                  <td>{voluntario.responsableDia ? 'true' : 'false'}</td>
+                  <td>{voluntario.perfil}</td>
+                  <td>{voluntario.diaRefood}</td>
                   <td>{voluntario.origen}</td>
                   <td>{voluntario.manipuladorAlimentos ? 'true' : 'false'}</td>
+                  <td>{voluntario.direccion}</td>
                   <td>{voluntario.codigoPostal}</td>
                   <td>{voluntario.activo ? 'true' : 'false'}</td>
                   <td>{voluntario.nucleo ? <Link to={`/nucleo/${voluntario.nucleo.id}`}>{voluntario.nucleo.id}</Link> : ''}</td>

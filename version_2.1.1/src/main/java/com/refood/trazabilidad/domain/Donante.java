@@ -35,16 +35,20 @@ public class Donante implements Serializable {
     private String nombre;
 
     @NotNull
-    @Column(name = "tipo", nullable = false)
-    private String tipo;
-
-    @NotNull
-    @Column(name = "ruta", nullable = false)
-    private Integer ruta;
+    @Column(name = "categoria", nullable = false)
+    private String categoria;
 
     @NotNull
     @Column(name = "direccion", nullable = false)
     private String direccion;
+
+    @NotNull
+    @Column(name = "codigo_postal", nullable = false)
+    private String codigoPostal;
+
+    @NotNull
+    @Column(name = "provincia", nullable = false)
+    private String provincia;
 
     @NotNull
     @Column(name = "telefono", nullable = false)
@@ -74,11 +78,11 @@ public class Donante implements Serializable {
 
     @OneToMany(mappedBy = "donante")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "frutaYVerduras", "tupper", "donante", "tipoDeAlimento" }, allowSetters = true)
     private Set<AlimentoDeEntrada> alimentoDeEntradas = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios" }, allowSetters = true)
     private Nucleo nucleo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -122,30 +126,17 @@ public class Donante implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getTipo() {
-        return this.tipo;
+    public String getCategoria() {
+        return this.categoria;
     }
 
-    public Donante tipo(String tipo) {
-        this.setTipo(tipo);
+    public Donante categoria(String categoria) {
+        this.setCategoria(categoria);
         return this;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public Integer getRuta() {
-        return this.ruta;
-    }
-
-    public Donante ruta(Integer ruta) {
-        this.setRuta(ruta);
-        return this;
-    }
-
-    public void setRuta(Integer ruta) {
-        this.ruta = ruta;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getDireccion() {
@@ -159,6 +150,32 @@ public class Donante implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return this.codigoPostal;
+    }
+
+    public Donante codigoPostal(String codigoPostal) {
+        this.setCodigoPostal(codigoPostal);
+        return this;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getProvincia() {
+        return this.provincia;
+    }
+
+    public Donante provincia(String provincia) {
+        this.setProvincia(provincia);
+        return this;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
     }
 
     public String getTelefono() {
@@ -322,9 +339,10 @@ public class Donante implements Serializable {
             "id=" + getId() +
             ", idDonante='" + getIdDonante() + "'" +
             ", nombre='" + getNombre() + "'" +
-            ", tipo='" + getTipo() + "'" +
-            ", ruta=" + getRuta() +
+            ", categoria='" + getCategoria() + "'" +
             ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", provincia='" + getProvincia() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
             ", responsable='" + getResponsable() + "'" +

@@ -8,6 +8,18 @@
     -->
     <changeSet id="20221022172018-2" author="jhipster">
 
+        <addForeignKeyConstraint baseColumnNames="alimento_de_entrada_id"
+                                 baseTableName="rel_alimento_de_entrada__frutayverdura"
+                                 constraintName="fk_rel_alimento_de_entrada__fru__alimento_de_entrada_d2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alimento_de_entrada"/>
+
+        <addForeignKeyConstraint baseColumnNames="frutayverdura_id"
+                                 baseTableName="rel_alimento_de_entrada__frutayverdura"
+                                 constraintName="fk_rel_alimento_de_entrada__frutayverdura__frutayverdura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fruta_y_verdura"/>
+
         <addForeignKeyConstraint baseColumnNames="tupper_id"
                                  baseTableName="alimento_de_entrada"
                                  constraintName="fk_alimento_de_entrada__tupper_id"

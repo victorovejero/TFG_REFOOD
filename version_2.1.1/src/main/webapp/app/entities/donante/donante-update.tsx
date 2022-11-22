@@ -84,8 +84,7 @@ export const DonanteUpdate = () => {
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {/* Quitamos el id autogenerado para que no se vea */}
-              {/* {!isNew ? <ValidatedField name="id" required readOnly id="donante-id" label="ID" validate={{ required: true }} /> : null} */}
+              {!isNew ? <ValidatedField name="id" required readOnly id="donante-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
                 label="Id Donante"
                 id="donante-idDonante"
@@ -95,9 +94,6 @@ export const DonanteUpdate = () => {
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
-                defaultValue="D-"
-                pattern="D-+[0-9]{2,5}"
-                title="Tiene que ser del tipo: D-XXXX"
               />
               <ValidatedField
                 label="Nombre"
@@ -109,32 +105,14 @@ export const DonanteUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              {/* Creamos un select para el tipo de donante, para que no hay lugar a interpretación. */}
               <ValidatedField
-                label="Tipo"
-                id="donante-tipo"
-                name="tipo"
-                data-cy="tipo"
-                type="select"
-                validate={{
-                  required: { value: true, message: 'Este campo es obligatorio.' },
-                }}>
-                <option>Catering</option>
-                <option>Colegio Mayor</option>
-                <option>Frutería</option>
-                <option>Panadería</option>
-                <option>Restaurante</option>
-              </ValidatedField>
-              
-              <ValidatedField
-                label="Ruta"
-                id="donante-ruta"
-                name="ruta"
-                data-cy="ruta"
+                label="Categoria"
+                id="donante-categoria"
+                name="categoria"
+                data-cy="categoria"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
-                  validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
               <ValidatedField
@@ -142,6 +120,26 @@ export const DonanteUpdate = () => {
                 id="donante-direccion"
                 name="direccion"
                 data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Codigo Postal"
+                id="donante-codigoPostal"
+                name="codigoPostal"
+                data-cy="codigoPostal"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Provincia"
+                id="donante-provincia"
+                name="provincia"
+                data-cy="provincia"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
@@ -156,20 +154,16 @@ export const DonanteUpdate = () => {
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
-                defaultValue=""
-                pattern="[0-9]{9}"
-                title="El número tiene que tener 9 cifras."
               />
               <ValidatedField
                 label="Email"
                 id="donante-email"
                 name="email"
                 data-cy="email"
-                type="email"
+                type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
-                placeholder="ejemplo@gmail.com"
               />
               <ValidatedField
                 label="Responsable"
@@ -191,17 +185,15 @@ export const DonanteUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              {!isNew ? <ValidatedField label="Fecha Baja" id="donante-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" /> : null}
+              <ValidatedField label="Fecha Baja" id="donante-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" />
               <ValidatedField label="Comentarios" id="donante-comentarios" name="comentarios" data-cy="comentarios" type="text" />
               <ValidatedField label="Activo" id="donante-activo" name="activo" data-cy="activo" check type="checkbox" />
-              <ValidatedField id="donante-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select" validate={{
-                  required: { value: true, message: 'Este campo es obligatorio.' },
-                }}>
+              <ValidatedField id="donante-nucleo" name="nucleo" data-cy="nucleo" label="Nucleo" type="select">
                 <option value="" key="0" />
                 {nucleos
                   ? nucleos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nombre}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

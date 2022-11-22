@@ -162,8 +162,23 @@ export const Socio = () => {
                   <th className="hand" onClick={sort('activo')}>
                     Activo <FontAwesomeIcon icon="sort" />
                   </th>
-                  <th>
-                    Nucleo <FontAwesomeIcon icon="sort" />
+                  <th className="hand" onClick={sort('nucleoAsociado')}>
+                    Nucleo Asociado <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('comunicacion')}>
+                    Comunicacion <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('direccion')}>
+                    Direccion <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('codigoPostal')}>
+                    Codigo Postal <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('provincia')}>
+                    Provincia <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('pais')}>
+                    Pais <FontAwesomeIcon icon="sort" />
                   </th>
                   <th />
                 </tr>
@@ -193,7 +208,12 @@ export const Socio = () => {
                     <td>{socio.contribucionMensual}</td>
                     <td>{socio.periodoPago}</td>
                     <td>{socio.activo ? 'true' : 'false'}</td>
-                    <td>{socio.nucleo ? <Link to={`/nucleo/${socio.nucleo.id}`}>{socio.nucleo.id}</Link> : ''}</td>
+                    <td>{socio.nucleoAsociado}</td>
+                    <td>{socio.comunicacion ? 'true' : 'false'}</td>
+                    <td>{socio.direccion}</td>
+                    <td>{socio.codigoPostal}</td>
+                    <td>{socio.provincia}</td>
+                    <td>{socio.pais}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/socio/${socio.id}`} color="info" size="sm" data-cy="entityDetailsButton">
