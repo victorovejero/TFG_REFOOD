@@ -19,18 +19,18 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface AlimentoDeEntradaMapper extends EntityMapper<AlimentoDeEntradaDTO, AlimentoDeEntrada> {
-    @Mapping(target = "frutaYVerduras", source = "frutaYVerduras", qualifiedByName = "frutaYVerduraIdSet")
-    @Mapping(target = "tupper", source = "tupper", qualifiedByName = "tupperId")
-    @Mapping(target = "donante", source = "donante", qualifiedByName = "donanteId")
-    @Mapping(target = "tipoDeAlimento", source = "tipoDeAlimento", qualifiedByName = "tipoDeAlimentoId")
+    // @Mapping(target = "frutaYVerduras", source = "frutaYVerduras", qualifiedByName = "frutaYVerduraIdSet")
+    // @Mapping(target = "tupper", source = "tupper", qualifiedByName = "tupperId")
+    // @Mapping(target = "donante", source = "donante", qualifiedByName = "donanteId")
+    // @Mapping(target = "tipoDeAlimento", source = "tipoDeAlimento", qualifiedByName = "tipoDeAlimentoId")
     AlimentoDeEntradaDTO toDto(AlimentoDeEntrada s);
 
     @Mapping(target = "removeFrutaYVerdura", ignore = true)
     AlimentoDeEntrada toEntity(AlimentoDeEntradaDTO alimentoDeEntradaDTO);
 
-    @Named("frutaYVerduraId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("frutaYVerduraId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     FrutaYVerduraDTO toDtoFrutaYVerduraId(FrutaYVerdura frutaYVerdura);
 
     @Named("frutaYVerduraIdSet")
@@ -38,18 +38,18 @@ public interface AlimentoDeEntradaMapper extends EntityMapper<AlimentoDeEntradaD
         return frutaYVerdura.stream().map(this::toDtoFrutaYVerduraId).collect(Collectors.toSet());
     }
 
-    @Named("tupperId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("tupperId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     TupperDTO toDtoTupperId(Tupper tupper);
 
-    @Named("donanteId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("donanteId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     DonanteDTO toDtoDonanteId(Donante donante);
 
-    @Named("tipoDeAlimentoId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("tipoDeAlimentoId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     TipoDeAlimentoDTO toDtoTipoDeAlimentoId(TipoDeAlimento tipoDeAlimento);
 }

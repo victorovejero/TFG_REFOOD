@@ -53,19 +53,20 @@ const EntitiesMenu = ({ Admin }) => {
         </MenuItem>
       ) : null}
       {Admin ? (
-        <MenuItem icon="asterisk" to="/registro">
-          Registro
-        </MenuItem>
-      ) : null}
       <MenuItem icon="asterisk" to="/persona-beneficiaria">
         Persona Beneficiaria
       </MenuItem>
+      ) : null}
       <MenuItem icon="asterisk" to="/checkout">
         Checkout
       </MenuItem>
+      {Admin ? (
       <MenuItem icon="asterisk" to="/fruta-y-verdura">
         Fruta Y Verdura
       </MenuItem>
+      ) : null}
+      
+      
       {/* jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here */}
     </>
   );

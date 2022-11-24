@@ -86,6 +86,16 @@ export const VoluntarioUpdate = () => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="voluntario-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField
+                label="Id Voluntario"
+                id="voluntario-idVoluntario"
+                name="idVoluntario"
+                data-cy="idVoluntario"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
                 label="Nombre"
                 id="voluntario-nombre"
                 name="nombre"
@@ -165,14 +175,21 @@ export const VoluntarioUpdate = () => {
               />
               <ValidatedField label="Fecha Baja" id="voluntario-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" />
               <ValidatedField
-                label="Perfil"
-                id="voluntario-perfil"
-                name="perfil"
-                data-cy="perfil"
+                label="Categoria Perfil"
+                id="voluntario-categoriaPerfil"
+                name="categoriaPerfil"
+                data-cy="categoriaPerfil"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
+              />
+              <ValidatedField
+                label="Descripcion Categoria"
+                id="voluntario-descripcionCategoria"
+                name="descripcionCategoria"
+                data-cy="descripcionCategoria"
+                type="text"
               />
               <ValidatedField
                 label="Dia Refood"

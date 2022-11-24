@@ -49,6 +49,10 @@ export const SocioDetail = () => {
           </dt>
           <dd>{socioEntity.telefonoContacto}</dd>
           <dt>
+            <span id="iBAN">I BAN</span>
+          </dt>
+          <dd>{socioEntity.iBAN}</dd>
+          <dt>
             <span id="dni">Dni</span>
           </dt>
           <dd>{socioEntity.dni}</dd>

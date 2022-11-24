@@ -33,6 +33,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class VoluntarioResourceIT {
 
+    private static final String DEFAULT_ID_VOLUNTARIO = "AAAAAAAAAA";
+    private static final String UPDATED_ID_VOLUNTARIO = "BBBBBBBBBB";
+
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
@@ -63,8 +66,11 @@ class VoluntarioResourceIT {
     private static final LocalDate DEFAULT_FECHA_BAJA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_BAJA = LocalDate.now(ZoneId.systemDefault());
 
-    private static final String DEFAULT_PERFIL = "AAAAAAAAAA";
-    private static final String UPDATED_PERFIL = "BBBBBBBBBB";
+    private static final String DEFAULT_CATEGORIA_PERFIL = "AAAAAAAAAA";
+    private static final String UPDATED_CATEGORIA_PERFIL = "BBBBBBBBBB";
+
+    private static final String DEFAULT_DESCRIPCION_CATEGORIA = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPCION_CATEGORIA = "BBBBBBBBBB";
 
     private static final String DEFAULT_DIA_REFOOD = "AAAAAAAAAA";
     private static final String UPDATED_DIA_REFOOD = "BBBBBBBBBB";
@@ -112,6 +118,7 @@ class VoluntarioResourceIT {
      */
     public static Voluntario createEntity(EntityManager em) {
         Voluntario voluntario = new Voluntario()
+            .idVoluntario(DEFAULT_ID_VOLUNTARIO)
             .nombre(DEFAULT_NOMBRE)
             .primerApellido(DEFAULT_PRIMER_APELLIDO)
             .segundoApellido(DEFAULT_SEGUNDO_APELLIDO)
@@ -122,7 +129,8 @@ class VoluntarioResourceIT {
             .sexo(DEFAULT_SEXO)
             .fechaAlta(DEFAULT_FECHA_ALTA)
             .fechaBaja(DEFAULT_FECHA_BAJA)
-            .perfil(DEFAULT_PERFIL)
+            .categoriaPerfil(DEFAULT_CATEGORIA_PERFIL)
+            .descripcionCategoria(DEFAULT_DESCRIPCION_CATEGORIA)
             .diaRefood(DEFAULT_DIA_REFOOD)
             .origen(DEFAULT_ORIGEN)
             .manipuladorAlimentos(DEFAULT_MANIPULADOR_ALIMENTOS)
@@ -140,6 +148,7 @@ class VoluntarioResourceIT {
      */
     public static Voluntario createUpdatedEntity(EntityManager em) {
         Voluntario voluntario = new Voluntario()
+            .idVoluntario(UPDATED_ID_VOLUNTARIO)
             .nombre(UPDATED_NOMBRE)
             .primerApellido(UPDATED_PRIMER_APELLIDO)
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
@@ -150,7 +159,8 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .perfil(UPDATED_PERFIL)
+            .categoriaPerfil(UPDATED_CATEGORIA_PERFIL)
+            .descripcionCategoria(UPDATED_DESCRIPCION_CATEGORIA)
             .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
@@ -179,6 +189,7 @@ class VoluntarioResourceIT {
         List<Voluntario> voluntarioList = voluntarioRepository.findAll();
         assertThat(voluntarioList).hasSize(databaseSizeBeforeCreate + 1);
         Voluntario testVoluntario = voluntarioList.get(voluntarioList.size() - 1);
+        assertThat(testVoluntario.getIdVoluntario()).isEqualTo(DEFAULT_ID_VOLUNTARIO);
         assertThat(testVoluntario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testVoluntario.getPrimerApellido()).isEqualTo(DEFAULT_PRIMER_APELLIDO);
         assertThat(testVoluntario.getSegundoApellido()).isEqualTo(DEFAULT_SEGUNDO_APELLIDO);
@@ -189,7 +200,8 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(DEFAULT_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
-        assertThat(testVoluntario.getPerfil()).isEqualTo(DEFAULT_PERFIL);
+        assertThat(testVoluntario.getCategoriaPerfil()).isEqualTo(DEFAULT_CATEGORIA_PERFIL);
+        assertThat(testVoluntario.getDescripcionCategoria()).isEqualTo(DEFAULT_DESCRIPCION_CATEGORIA);
         assertThat(testVoluntario.getDiaRefood()).isEqualTo(DEFAULT_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(DEFAULT_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(DEFAULT_MANIPULADOR_ALIMENTOS);
@@ -215,6 +227,24 @@ class VoluntarioResourceIT {
         // Validate the Voluntario in the database
         List<Voluntario> voluntarioList = voluntarioRepository.findAll();
         assertThat(voluntarioList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkIdVoluntarioIsRequired() throws Exception {
+        int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
+        // set the field null
+        voluntario.setIdVoluntario(null);
+
+        // Create the Voluntario, which fails.
+        VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
+
+        restVoluntarioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(voluntarioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Voluntario> voluntarioList = voluntarioRepository.findAll();
+        assertThat(voluntarioList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -345,10 +375,10 @@ class VoluntarioResourceIT {
 
     @Test
     @Transactional
-    void checkPerfilIsRequired() throws Exception {
+    void checkCategoriaPerfilIsRequired() throws Exception {
         int databaseSizeBeforeTest = voluntarioRepository.findAll().size();
         // set the field null
-        voluntario.setPerfil(null);
+        voluntario.setCategoriaPerfil(null);
 
         // Create the Voluntario, which fails.
         VoluntarioDTO voluntarioDTO = voluntarioMapper.toDto(voluntario);
@@ -463,6 +493,7 @@ class VoluntarioResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(voluntario.getId().intValue())))
+            .andExpect(jsonPath("$.[*].idVoluntario").value(hasItem(DEFAULT_ID_VOLUNTARIO)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].primerApellido").value(hasItem(DEFAULT_PRIMER_APELLIDO)))
             .andExpect(jsonPath("$.[*].segundoApellido").value(hasItem(DEFAULT_SEGUNDO_APELLIDO)))
@@ -473,7 +504,8 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.[*].sexo").value(hasItem(DEFAULT_SEXO)))
             .andExpect(jsonPath("$.[*].fechaAlta").value(hasItem(DEFAULT_FECHA_ALTA.toString())))
             .andExpect(jsonPath("$.[*].fechaBaja").value(hasItem(DEFAULT_FECHA_BAJA.toString())))
-            .andExpect(jsonPath("$.[*].perfil").value(hasItem(DEFAULT_PERFIL)))
+            .andExpect(jsonPath("$.[*].categoriaPerfil").value(hasItem(DEFAULT_CATEGORIA_PERFIL)))
+            .andExpect(jsonPath("$.[*].descripcionCategoria").value(hasItem(DEFAULT_DESCRIPCION_CATEGORIA)))
             .andExpect(jsonPath("$.[*].diaRefood").value(hasItem(DEFAULT_DIA_REFOOD)))
             .andExpect(jsonPath("$.[*].origen").value(hasItem(DEFAULT_ORIGEN)))
             .andExpect(jsonPath("$.[*].manipuladorAlimentos").value(hasItem(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue())))
@@ -494,6 +526,7 @@ class VoluntarioResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(voluntario.getId().intValue()))
+            .andExpect(jsonPath("$.idVoluntario").value(DEFAULT_ID_VOLUNTARIO))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.primerApellido").value(DEFAULT_PRIMER_APELLIDO))
             .andExpect(jsonPath("$.segundoApellido").value(DEFAULT_SEGUNDO_APELLIDO))
@@ -504,7 +537,8 @@ class VoluntarioResourceIT {
             .andExpect(jsonPath("$.sexo").value(DEFAULT_SEXO))
             .andExpect(jsonPath("$.fechaAlta").value(DEFAULT_FECHA_ALTA.toString()))
             .andExpect(jsonPath("$.fechaBaja").value(DEFAULT_FECHA_BAJA.toString()))
-            .andExpect(jsonPath("$.perfil").value(DEFAULT_PERFIL))
+            .andExpect(jsonPath("$.categoriaPerfil").value(DEFAULT_CATEGORIA_PERFIL))
+            .andExpect(jsonPath("$.descripcionCategoria").value(DEFAULT_DESCRIPCION_CATEGORIA))
             .andExpect(jsonPath("$.diaRefood").value(DEFAULT_DIA_REFOOD))
             .andExpect(jsonPath("$.origen").value(DEFAULT_ORIGEN))
             .andExpect(jsonPath("$.manipuladorAlimentos").value(DEFAULT_MANIPULADOR_ALIMENTOS.booleanValue()))
@@ -533,6 +567,7 @@ class VoluntarioResourceIT {
         // Disconnect from session so that the updates on updatedVoluntario are not directly saved in db
         em.detach(updatedVoluntario);
         updatedVoluntario
+            .idVoluntario(UPDATED_ID_VOLUNTARIO)
             .nombre(UPDATED_NOMBRE)
             .primerApellido(UPDATED_PRIMER_APELLIDO)
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
@@ -543,7 +578,8 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .perfil(UPDATED_PERFIL)
+            .categoriaPerfil(UPDATED_CATEGORIA_PERFIL)
+            .descripcionCategoria(UPDATED_DESCRIPCION_CATEGORIA)
             .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
@@ -564,6 +600,7 @@ class VoluntarioResourceIT {
         List<Voluntario> voluntarioList = voluntarioRepository.findAll();
         assertThat(voluntarioList).hasSize(databaseSizeBeforeUpdate);
         Voluntario testVoluntario = voluntarioList.get(voluntarioList.size() - 1);
+        assertThat(testVoluntario.getIdVoluntario()).isEqualTo(UPDATED_ID_VOLUNTARIO);
         assertThat(testVoluntario.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testVoluntario.getPrimerApellido()).isEqualTo(UPDATED_PRIMER_APELLIDO);
         assertThat(testVoluntario.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
@@ -574,7 +611,8 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(UPDATED_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
-        assertThat(testVoluntario.getPerfil()).isEqualTo(UPDATED_PERFIL);
+        assertThat(testVoluntario.getCategoriaPerfil()).isEqualTo(UPDATED_CATEGORIA_PERFIL);
+        assertThat(testVoluntario.getDescripcionCategoria()).isEqualTo(UPDATED_DESCRIPCION_CATEGORIA);
         assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);
@@ -661,14 +699,14 @@ class VoluntarioResourceIT {
         partialUpdatedVoluntario.setId(voluntario.getId());
 
         partialUpdatedVoluntario
-            .nombre(UPDATED_NOMBRE)
-            .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
+            .idVoluntario(UPDATED_ID_VOLUNTARIO)
+            .primerApellido(UPDATED_PRIMER_APELLIDO)
+            .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
             .dni(UPDATED_DNI)
-            .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
-            .diaRefood(UPDATED_DIA_REFOOD)
+            .categoriaPerfil(UPDATED_CATEGORIA_PERFIL)
+            .descripcionCategoria(UPDATED_DESCRIPCION_CATEGORIA)
             .origen(UPDATED_ORIGEN)
-            .direccion(UPDATED_DIRECCION)
-            .activo(UPDATED_ACTIVO);
+            .direccion(UPDATED_DIRECCION);
 
         restVoluntarioMockMvc
             .perform(
@@ -682,23 +720,25 @@ class VoluntarioResourceIT {
         List<Voluntario> voluntarioList = voluntarioRepository.findAll();
         assertThat(voluntarioList).hasSize(databaseSizeBeforeUpdate);
         Voluntario testVoluntario = voluntarioList.get(voluntarioList.size() - 1);
-        assertThat(testVoluntario.getNombre()).isEqualTo(UPDATED_NOMBRE);
-        assertThat(testVoluntario.getPrimerApellido()).isEqualTo(DEFAULT_PRIMER_APELLIDO);
-        assertThat(testVoluntario.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
+        assertThat(testVoluntario.getIdVoluntario()).isEqualTo(UPDATED_ID_VOLUNTARIO);
+        assertThat(testVoluntario.getNombre()).isEqualTo(DEFAULT_NOMBRE);
+        assertThat(testVoluntario.getPrimerApellido()).isEqualTo(UPDATED_PRIMER_APELLIDO);
+        assertThat(testVoluntario.getSegundoApellido()).isEqualTo(DEFAULT_SEGUNDO_APELLIDO);
         assertThat(testVoluntario.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testVoluntario.getTelefonoContacto()).isEqualTo(DEFAULT_TELEFONO_CONTACTO);
+        assertThat(testVoluntario.getTelefonoContacto()).isEqualTo(UPDATED_TELEFONO_CONTACTO);
         assertThat(testVoluntario.getDni()).isEqualTo(UPDATED_DNI);
-        assertThat(testVoluntario.getFechaNacimiento()).isEqualTo(UPDATED_FECHA_NACIMIENTO);
+        assertThat(testVoluntario.getFechaNacimiento()).isEqualTo(DEFAULT_FECHA_NACIMIENTO);
         assertThat(testVoluntario.getSexo()).isEqualTo(DEFAULT_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
-        assertThat(testVoluntario.getPerfil()).isEqualTo(DEFAULT_PERFIL);
-        assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
+        assertThat(testVoluntario.getCategoriaPerfil()).isEqualTo(UPDATED_CATEGORIA_PERFIL);
+        assertThat(testVoluntario.getDescripcionCategoria()).isEqualTo(UPDATED_DESCRIPCION_CATEGORIA);
+        assertThat(testVoluntario.getDiaRefood()).isEqualTo(DEFAULT_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(DEFAULT_MANIPULADOR_ALIMENTOS);
         assertThat(testVoluntario.getDireccion()).isEqualTo(UPDATED_DIRECCION);
         assertThat(testVoluntario.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
-        assertThat(testVoluntario.getActivo()).isEqualTo(UPDATED_ACTIVO);
+        assertThat(testVoluntario.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
     @Test
@@ -714,6 +754,7 @@ class VoluntarioResourceIT {
         partialUpdatedVoluntario.setId(voluntario.getId());
 
         partialUpdatedVoluntario
+            .idVoluntario(UPDATED_ID_VOLUNTARIO)
             .nombre(UPDATED_NOMBRE)
             .primerApellido(UPDATED_PRIMER_APELLIDO)
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
@@ -724,7 +765,8 @@ class VoluntarioResourceIT {
             .sexo(UPDATED_SEXO)
             .fechaAlta(UPDATED_FECHA_ALTA)
             .fechaBaja(UPDATED_FECHA_BAJA)
-            .perfil(UPDATED_PERFIL)
+            .categoriaPerfil(UPDATED_CATEGORIA_PERFIL)
+            .descripcionCategoria(UPDATED_DESCRIPCION_CATEGORIA)
             .diaRefood(UPDATED_DIA_REFOOD)
             .origen(UPDATED_ORIGEN)
             .manipuladorAlimentos(UPDATED_MANIPULADOR_ALIMENTOS)
@@ -744,6 +786,7 @@ class VoluntarioResourceIT {
         List<Voluntario> voluntarioList = voluntarioRepository.findAll();
         assertThat(voluntarioList).hasSize(databaseSizeBeforeUpdate);
         Voluntario testVoluntario = voluntarioList.get(voluntarioList.size() - 1);
+        assertThat(testVoluntario.getIdVoluntario()).isEqualTo(UPDATED_ID_VOLUNTARIO);
         assertThat(testVoluntario.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testVoluntario.getPrimerApellido()).isEqualTo(UPDATED_PRIMER_APELLIDO);
         assertThat(testVoluntario.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
@@ -754,7 +797,8 @@ class VoluntarioResourceIT {
         assertThat(testVoluntario.getSexo()).isEqualTo(UPDATED_SEXO);
         assertThat(testVoluntario.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
         assertThat(testVoluntario.getFechaBaja()).isEqualTo(UPDATED_FECHA_BAJA);
-        assertThat(testVoluntario.getPerfil()).isEqualTo(UPDATED_PERFIL);
+        assertThat(testVoluntario.getCategoriaPerfil()).isEqualTo(UPDATED_CATEGORIA_PERFIL);
+        assertThat(testVoluntario.getDescripcionCategoria()).isEqualTo(UPDATED_DESCRIPCION_CATEGORIA);
         assertThat(testVoluntario.getDiaRefood()).isEqualTo(UPDATED_DIA_REFOOD);
         assertThat(testVoluntario.getOrigen()).isEqualTo(UPDATED_ORIGEN);
         assertThat(testVoluntario.getManipuladorAlimentos()).isEqualTo(UPDATED_MANIPULADOR_ALIMENTOS);

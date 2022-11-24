@@ -7,6 +7,7 @@ export interface ISocio {
   segundoApellido?: string | null;
   email?: string;
   telefonoContacto?: string;
+  iBAN?: string;
   dni?: string;
   fechaNacimiento?: string;
   sexo?: string;

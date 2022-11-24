@@ -124,6 +124,16 @@ export const SocioUpdate = () => {
                 }}
               />
               <ValidatedField
+                label="I BAN"
+                id="socio-iBAN"
+                name="iBAN"
+                data-cy="iBAN"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
                 label="Dni"
                 id="socio-dni"
                 name="dni"

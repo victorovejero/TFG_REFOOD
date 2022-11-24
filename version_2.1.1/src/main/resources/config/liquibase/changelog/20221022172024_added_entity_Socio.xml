@@ -29,6 +29,9 @@
             <column name="telefono_contacto" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="i_ban" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="dni" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -97,6 +100,7 @@
             <column name="segundo_apellido" type="string"/>
             <column name="email" type="string"/>
             <column name="telefono_contacto" type="string"/>
+            <column name="i_ban" type="string"/>
             <column name="dni" type="string"/>
             <column name="fecha_nacimiento" type="date"/>
             <column name="sexo" type="string"/>

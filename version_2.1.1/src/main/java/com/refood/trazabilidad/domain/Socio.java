@@ -43,6 +43,10 @@ public class Socio implements Serializable {
     private String telefonoContacto;
 
     @NotNull
+    @Column(name = "i_ban", nullable = false)
+    private String iBAN;
+
+    @NotNull
     @Column(name = "dni", nullable = false)
     private String dni;
 
@@ -172,6 +176,19 @@ public class Socio implements Serializable {
 
     public void setTelefonoContacto(String telefonoContacto) {
         this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getiBAN() {
+        return this.iBAN;
+    }
+
+    public Socio iBAN(String iBAN) {
+        this.setiBAN(iBAN);
+        return this;
+    }
+
+    public void setiBAN(String iBAN) {
+        this.iBAN = iBAN;
     }
 
     public String getDni() {
@@ -385,6 +402,7 @@ public class Socio implements Serializable {
             ", segundoApellido='" + getSegundoApellido() + "'" +
             ", email='" + getEmail() + "'" +
             ", telefonoContacto='" + getTelefonoContacto() + "'" +
+            ", iBAN='" + getiBAN() + "'" +
             ", dni='" + getDni() + "'" +
             ", fechaNacimiento='" + getFechaNacimiento() + "'" +
             ", sexo='" + getSexo() + "'" +

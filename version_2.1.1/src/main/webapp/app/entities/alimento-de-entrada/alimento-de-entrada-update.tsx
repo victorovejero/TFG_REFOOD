@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
@@ -18,8 +18,16 @@ import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
 import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-entrada.reducer';
+import './alimento-de-entrada.css';
 
 export const AlimentoDeEntradaUpdate = () => {
+  const [mostrarHoraPrep,setMostrarHoraPrep] = useState<Boolean>(false);
+  const [mostrarHoraRecogida, setMostrarHoraRecogida] = useState<Boolean>(false);
+  //const frutaYVerdura = useRef<Boolean>(false);
+  const [frutaYVerdura,setFrutaYVerdura] = useState<Boolean>(false);
+  const today = useRef<String>("")
+  const peso = useRef<Number>();
+  const pesoMaxNotify = useRef<Boolean>(false);
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -80,12 +88,13 @@ export const AlimentoDeEntradaUpdate = () => {
     }
   };
 
-  const defaultValues = () =>
+  const defaultValues = () => 
     isNew
-      ? {
-          fechaYHoraEntrada: displayDefaultDateTime(),
-          fechaYHoraRecogida: displayDefaultDateTime(),
-          fechaYHoraPreparacion: displayDefaultDateTime(),
+      ? { 
+          //MOSTRAR SOLO LA HORA DE HOY EN FECHA ENTRADA, EL RESTO DEJARLOS A NULL PARA QUE NO AUTORELLENEN
+          fechaYHoraEntrada: today.current,//displayDefaultDateTime(),
+          fechaYHoraRecogida: null,//displayDefaultDateTime(),
+          fechaYHoraPreparacion: null//displayDefaultDateTime(),
         }
       : {
           ...alimentoDeEntradaEntity,
@@ -97,7 +106,51 @@ export const AlimentoDeEntradaUpdate = () => {
           donante: alimentoDeEntradaEntity?.donante?.id,
           tipoDeAlimento: alimentoDeEntradaEntity?.tipoDeAlimento?.id,
         };
+        
+  
 
+      useEffect(() => {
+        today.current = getToday();
+      })
+
+    const getToday = () =>{
+
+      const date = new Date();
+      let hour = date.getHours().toString();
+      if(Number(hour)<10){
+        hour = "0" + hour;
+      }
+      let min = date.getMinutes().toString();
+      if(Number(min)<10) {
+        min = "0" + min;
+      }
+      let day = date.getDate().toString();
+      if(Number(day)<10){
+        day = "0" + day;
+      }
+      let month = (date.getMonth() + 1).toString();
+      if(Number(month)<10){
+        month = "0" + month;
+      }
+      const year = date.getFullYear().toString();
+      return year + "-" + month + "-" + day + "T" + hour + ":" + min;
+      
+    }
+    
+
+    const changefrutaYVerdura = () => {
+      setFrutaYVerdura(frutaYVerdura => !frutaYVerdura);
+    }
+
+
+    const pesoAlert = (event) => {
+      peso.current = event.target.value;
+      if(peso.current >= 10 && pesoMaxNotify.current === false){
+        confirm("¿Está seguro de que el peso es mayor a 10Kg? \n\n Si acepta, no le volveremos a notificar.") ? pesoMaxNotify.current = true : null
+      }
+    }
+
+    //EL FLOW DEL FORMULARIO SOLO PARA ENTRADAS NUEVAS, NO IMPLENENTADO PARA ENTRADAS YA EXISTENTES.
   return (
     <div>
       <Row className="justify-content-center">
@@ -122,19 +175,15 @@ export const AlimentoDeEntradaUpdate = () => {
                 name="peso"
                 data-cy="peso"
                 type="text"
+                maxlength="6"
+                value={peso.current}
+                onChange={pesoAlert}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
-              <ValidatedField
-                label="Fruta Y Verdura"
-                id="alimento-de-entrada-frutaYVerdura"
-                name="frutaYVerdura"
-                data-cy="frutaYVerdura"
-                check
-                type="checkbox"
-              />
+              
               <ValidatedField
                 label="Fecha Y Hora Entrada"
                 id="alimento-de-entrada-fechaYHoraEntrada"
@@ -146,55 +195,89 @@ export const AlimentoDeEntradaUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <ValidatedField
-                label="Fecha Y Hora Recogida"
+              {isNew ? <Row>
+                {!mostrarHoraRecogida ? <Col className="option-button-col" md="6">
+                  <button type="button" className="option-button" onClick={() => setMostrarHoraRecogida(!mostrarHoraRecogida)}>Insertar hora de Recogida</button> 
+                </Col> : null}
+                {!mostrarHoraPrep ? <Col className="option-button-col" md="6">
+                <button type="button" className="option-button" onClick={() => setMostrarHoraPrep(!mostrarHoraPrep)}>Insertar hora de Preparación</button> 
+                </Col> : null}
+              </Row>:null}
+              {(mostrarHoraRecogida || !isNew)? 
+              <div className={isNew ? "campo-opcional-div":null}>
+                <ValidatedField
+                className={isNew ? "campo-opcional":null}
+                label={"Fecha Y Hora Recogida (Opcional)"}
                 id="alimento-de-entrada-fechaYHoraRecogida"
                 name="fechaYHoraRecogida"
                 data-cy="fechaYHoraRecogida"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
-              <ValidatedField
-                label="Fecha Y Hora Preparacion"
+              </div>
+              :null}
+              {(mostrarHoraPrep || !isNew) ? 
+              <div className={isNew ? "campo-opcional-div":null}>
+                <ValidatedField
+                className={isNew ? "campo-opcional":null}
+                label="Fecha Y Hora Preparacion (Opcional)"
                 id="alimento-de-entrada-fechaYHoraPreparacion"
                 name="fechaYHoraPreparacion"
                 data-cy="fechaYHoraPreparacion"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
               />
+              </div>
+               :null}
+
               <ValidatedField
+                className="checkbox"
                 label="Fruta Y Verdura"
+                id="alimento-de-enctrada-frutaYVerdura"
+                name="frutaYVerdura"
+                data-cy="frutaYVerdura"
+                check
+                value={isNew ? frutaYVerdura : null}
+                onChange={isNew ? changefrutaYVerdura : null}
+                type="checkbox"
+              />
+              
+              <ValidatedField
+                label="Seleccione las Frutas y Verduras del Paquete:"
                 id="alimento-de-entrada-frutaYVerdura"
                 data-cy="frutaYVerdura"
                 type="select"
                 multiple
                 name="frutaYVerduras"
+                className={!isNew || frutaYVerdura ? "":"hide"}
               >
                 <option value="" key="0" />
                 {frutaYVerduras
                   ? frutaYVerduras.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombreAlimento}
                       </option>
                     ))
                   : null}
-              </ValidatedField>
-              <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select">
+              </ValidatedField> 
+              
+              
+              <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" className={frutaYVerdura ? "hide":""} >
                 <option value="" key="0" />
                 {tuppers
                   ? tuppers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.modelo}
                       </option>
                     ))
                   : null}
-              </ValidatedField>
-              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select">
+              </ValidatedField> 
+              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select" required>
                 <option value="" key="0" />
                 {donantes
                   ? donantes.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.idDonante} - {otherEntity.nombre}
                       </option>
                     ))
                   : null}
@@ -205,17 +288,18 @@ export const AlimentoDeEntradaUpdate = () => {
                 data-cy="tipoDeAlimento"
                 label="Tipo De Alimento"
                 type="select"
+                className={frutaYVerdura ? "hide":""}
               >
-                <option value="" key="0" />
+                <option value="" key="0"/>
                 {tipoDeAlimentos
                   ? tipoDeAlimentos.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombreAlimento}
                       </option>
                     ))
                   : null}
-              </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/alimento-de-entrada" replace color="info">
+              </ValidatedField> 
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Volver</span>

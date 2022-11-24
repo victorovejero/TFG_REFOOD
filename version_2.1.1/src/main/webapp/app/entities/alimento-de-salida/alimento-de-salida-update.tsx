@@ -20,16 +20,25 @@ import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-salida.reducer';
 
 export const AlimentoDeSalidaUpdate = () => {
+  const [rangoEntradas, setRangoEntradas] = useState(2);
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
-
+  const today = new Date();
+  const day = today.getDate();
+  const month = today.getMonth() + 1;
+  const year = today.getFullYear();
+  // VERIFICACION FECHA DE HOY: 
+  //console.log("today's date: "  + day + "/" + month + "/" + year);
   const tuppers = useAppSelector(state => state.tupper.entities);
   const beneficiarios = useAppSelector(state => state.beneficiario.entities);
-  const alimentoDeEntradas = useAppSelector(state => state.alimentoDeEntrada.entities);
+  // FILTRO PARA QUE SOLO SE PUEDAN ESCOGER ALIMENTOS DE ENTRADA DE HACE 1 dia o de hoy
+  const alimentoDeEntradas = useAppSelector(state => state.alimentoDeEntrada.entities)
+  .filter(x => (( day - x.fechaYHoraEntrada.substring(8,10) <= rangoEntradas && month == x.fechaYHoraEntrada.substring(5,7)) || (x.fechaYHoraEntrada.substring(8,10) - day >= 31 - rangoEntradas && month - x.fechaYHoraEntrada.substring(5,7) == 1)) && year == x.fechaYHoraEntrada.substring(0,4));
   const checkouts = useAppSelector(state => state.checkout.entities);
   const alimentoDeSalidaEntity = useAppSelector(state => state.alimentoDeSalida.entity);
   const loading = useAppSelector(state => state.alimentoDeSalida.loading);
@@ -118,7 +127,7 @@ export const AlimentoDeSalidaUpdate = () => {
                 {tuppers
                   ? tuppers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.modelo}
                       </option>
                     ))
                   : null}
@@ -134,7 +143,7 @@ export const AlimentoDeSalidaUpdate = () => {
                 {beneficiarios
                   ? beneficiarios.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.idBeneficiario} - {otherEntity.nombreRepresentante}
                       </option>
                     ))
                   : null}
@@ -150,12 +159,12 @@ export const AlimentoDeSalidaUpdate = () => {
                 {alimentoDeEntradas
                   ? alimentoDeEntradas.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.tipoDeAlimento !== null ? otherEntity.tipoDeAlimento.nombreAlimento : "Fruta y Verdura"} - {otherEntity.donante.idDonante}
                       </option>
                     ))
                   : null}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/alimento-de-salida" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Volver</span>

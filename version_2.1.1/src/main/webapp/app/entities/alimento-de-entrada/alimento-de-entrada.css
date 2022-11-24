@@ -24,3 +24,15 @@
   padding-right:2%;
   padding-top:1%; 
 }
+
+.checkbox{
+  padding-bottom: 2%;
+}
+
+.hide{
+  display:none;
+}
+
+.peso-column{
+  text-align:center;
+}

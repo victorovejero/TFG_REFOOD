@@ -103,6 +103,9 @@ export const Voluntario = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('idVoluntario')}>
+                  Id Voluntario <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('nombre')}>
                   Nombre <FontAwesomeIcon icon="sort" />
                 </th>
@@ -133,8 +136,11 @@ export const Voluntario = () => {
                 <th className="hand" onClick={sort('fechaBaja')}>
                   Fecha Baja <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('perfil')}>
-                  Perfil <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('categoriaPerfil')}>
+                  Categoria Perfil <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('descripcionCategoria')}>
+                  Descripcion Categoria <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('diaRefood')}>
                   Dia Refood <FontAwesomeIcon icon="sort" />
@@ -168,6 +174,7 @@ export const Voluntario = () => {
                       {voluntario.id}
                     </Button>
                   </td>
+                  <td>{voluntario.idVoluntario}</td>
                   <td>{voluntario.nombre}</td>
                   <td>{voluntario.primerApellido}</td>
                   <td>{voluntario.segundoApellido}</td>
@@ -186,7 +193,8 @@ export const Voluntario = () => {
                   <td>
                     {voluntario.fechaBaja ? <TextFormat type="date" value={voluntario.fechaBaja} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
-                  <td>{voluntario.perfil}</td>
+                  <td>{voluntario.categoriaPerfil}</td>
+                  <td>{voluntario.descripcionCategoria}</td>
                   <td>{voluntario.diaRefood}</td>
                   <td>{voluntario.origen}</td>
                   <td>{voluntario.manipuladorAlimentos ? 'true' : 'false'}</td>

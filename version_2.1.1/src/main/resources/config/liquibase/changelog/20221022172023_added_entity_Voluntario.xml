@@ -14,6 +14,9 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
+            <column name="id_voluntario" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="nombre" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -44,8 +47,11 @@
             <column name="fecha_baja" type="date">
                 <constraints nullable="true" />
             </column>
-            <column name="perfil" type="varchar(255)">
+            <column name="categoria_perfil" type="varchar(255)">
                 <constraints nullable="false" />
+            </column>
+            <column name="descripcion_categoria" type="varchar(255)">
+                <constraints nullable="true" />
             </column>
             <column name="dia_refood" type="varchar(255)">
                 <constraints nullable="false" />
@@ -89,6 +95,7 @@
                   tableName="voluntario"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
+            <column name="id_voluntario" type="string"/>
             <column name="nombre" type="string"/>
             <column name="primer_apellido" type="string"/>
             <column name="segundo_apellido" type="string"/>
@@ -99,7 +106,8 @@
             <column name="sexo" type="string"/>
             <column name="fecha_alta" type="date"/>
             <column name="fecha_baja" type="date"/>
-            <column name="perfil" type="string"/>
+            <column name="categoria_perfil" type="string"/>
+            <column name="descripcion_categoria" type="string"/>
             <column name="dia_refood" type="string"/>
             <column name="origen" type="string"/>
             <column name="manipulador_alimentos" type="boolean"/>

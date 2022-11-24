@@ -48,6 +48,9 @@ class SocioResourceIT {
     private static final String DEFAULT_TELEFONO_CONTACTO = "AAAAAAAAAA";
     private static final String UPDATED_TELEFONO_CONTACTO = "BBBBBBBBBB";
 
+    private static final String DEFAULT_I_BAN = "AAAAAAAAAA";
+    private static final String UPDATED_I_BAN = "BBBBBBBBBB";
+
     private static final String DEFAULT_DNI = "AAAAAAAAAA";
     private static final String UPDATED_DNI = "BBBBBBBBBB";
 
@@ -123,6 +126,7 @@ class SocioResourceIT {
             .segundoApellido(DEFAULT_SEGUNDO_APELLIDO)
             .email(DEFAULT_EMAIL)
             .telefonoContacto(DEFAULT_TELEFONO_CONTACTO)
+            .iBAN(DEFAULT_I_BAN)
             .dni(DEFAULT_DNI)
             .fechaNacimiento(DEFAULT_FECHA_NACIMIENTO)
             .sexo(DEFAULT_SEXO)
@@ -153,6 +157,7 @@ class SocioResourceIT {
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
             .email(UPDATED_EMAIL)
             .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
+            .iBAN(UPDATED_I_BAN)
             .dni(UPDATED_DNI)
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
             .sexo(UPDATED_SEXO)
@@ -194,6 +199,7 @@ class SocioResourceIT {
         assertThat(testSocio.getSegundoApellido()).isEqualTo(DEFAULT_SEGUNDO_APELLIDO);
         assertThat(testSocio.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testSocio.getTelefonoContacto()).isEqualTo(DEFAULT_TELEFONO_CONTACTO);
+        assertThat(testSocio.getiBAN()).isEqualTo(DEFAULT_I_BAN);
         assertThat(testSocio.getDni()).isEqualTo(DEFAULT_DNI);
         assertThat(testSocio.getFechaNacimiento()).isEqualTo(DEFAULT_FECHA_NACIMIENTO);
         assertThat(testSocio.getSexo()).isEqualTo(DEFAULT_SEXO);
@@ -289,6 +295,24 @@ class SocioResourceIT {
         int databaseSizeBeforeTest = socioRepository.findAll().size();
         // set the field null
         socio.setTelefonoContacto(null);
+
+        // Create the Socio, which fails.
+        SocioDTO socioDTO = socioMapper.toDto(socio);
+
+        restSocioMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(socioDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Socio> socioList = socioRepository.findAll();
+        assertThat(socioList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkiBANIsRequired() throws Exception {
+        int databaseSizeBeforeTest = socioRepository.findAll().size();
+        // set the field null
+        socio.setiBAN(null);
 
         // Create the Socio, which fails.
         SocioDTO socioDTO = socioMapper.toDto(socio);
@@ -498,6 +522,7 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.[*].segundoApellido").value(hasItem(DEFAULT_SEGUNDO_APELLIDO)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
             .andExpect(jsonPath("$.[*].telefonoContacto").value(hasItem(DEFAULT_TELEFONO_CONTACTO)))
+            .andExpect(jsonPath("$.[*].iBAN").value(hasItem(DEFAULT_I_BAN)))
             .andExpect(jsonPath("$.[*].dni").value(hasItem(DEFAULT_DNI)))
             .andExpect(jsonPath("$.[*].fechaNacimiento").value(hasItem(DEFAULT_FECHA_NACIMIENTO.toString())))
             .andExpect(jsonPath("$.[*].sexo").value(hasItem(DEFAULT_SEXO)))
@@ -531,6 +556,7 @@ class SocioResourceIT {
             .andExpect(jsonPath("$.segundoApellido").value(DEFAULT_SEGUNDO_APELLIDO))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
             .andExpect(jsonPath("$.telefonoContacto").value(DEFAULT_TELEFONO_CONTACTO))
+            .andExpect(jsonPath("$.iBAN").value(DEFAULT_I_BAN))
             .andExpect(jsonPath("$.dni").value(DEFAULT_DNI))
             .andExpect(jsonPath("$.fechaNacimiento").value(DEFAULT_FECHA_NACIMIENTO.toString()))
             .andExpect(jsonPath("$.sexo").value(DEFAULT_SEXO))
@@ -572,6 +598,7 @@ class SocioResourceIT {
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
             .email(UPDATED_EMAIL)
             .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
+            .iBAN(UPDATED_I_BAN)
             .dni(UPDATED_DNI)
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
             .sexo(UPDATED_SEXO)
@@ -605,6 +632,7 @@ class SocioResourceIT {
         assertThat(testSocio.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
         assertThat(testSocio.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testSocio.getTelefonoContacto()).isEqualTo(UPDATED_TELEFONO_CONTACTO);
+        assertThat(testSocio.getiBAN()).isEqualTo(UPDATED_I_BAN);
         assertThat(testSocio.getDni()).isEqualTo(UPDATED_DNI);
         assertThat(testSocio.getFechaNacimiento()).isEqualTo(UPDATED_FECHA_NACIMIENTO);
         assertThat(testSocio.getSexo()).isEqualTo(UPDATED_SEXO);
@@ -703,11 +731,12 @@ class SocioResourceIT {
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
             .email(UPDATED_EMAIL)
             .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
-            .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
-            .fechaAlta(UPDATED_FECHA_ALTA)
-            .periodoPago(UPDATED_PERIODO_PAGO)
+            .dni(UPDATED_DNI)
+            .sexo(UPDATED_SEXO)
+            .contribucionMensual(UPDATED_CONTRIBUCION_MENSUAL)
+            .comunicacion(UPDATED_COMUNICACION)
             .direccion(UPDATED_DIRECCION)
-            .codigoPostal(UPDATED_CODIGO_POSTAL);
+            .pais(UPDATED_PAIS);
 
         restSocioMockMvc
             .perform(
@@ -726,20 +755,21 @@ class SocioResourceIT {
         assertThat(testSocio.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
         assertThat(testSocio.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testSocio.getTelefonoContacto()).isEqualTo(UPDATED_TELEFONO_CONTACTO);
-        assertThat(testSocio.getDni()).isEqualTo(DEFAULT_DNI);
-        assertThat(testSocio.getFechaNacimiento()).isEqualTo(UPDATED_FECHA_NACIMIENTO);
-        assertThat(testSocio.getSexo()).isEqualTo(DEFAULT_SEXO);
-        assertThat(testSocio.getFechaAlta()).isEqualTo(UPDATED_FECHA_ALTA);
+        assertThat(testSocio.getiBAN()).isEqualTo(DEFAULT_I_BAN);
+        assertThat(testSocio.getDni()).isEqualTo(UPDATED_DNI);
+        assertThat(testSocio.getFechaNacimiento()).isEqualTo(DEFAULT_FECHA_NACIMIENTO);
+        assertThat(testSocio.getSexo()).isEqualTo(UPDATED_SEXO);
+        assertThat(testSocio.getFechaAlta()).isEqualTo(DEFAULT_FECHA_ALTA);
         assertThat(testSocio.getFechaBaja()).isEqualTo(DEFAULT_FECHA_BAJA);
-        assertThat(testSocio.getContribucionMensual()).isEqualTo(DEFAULT_CONTRIBUCION_MENSUAL);
-        assertThat(testSocio.getPeriodoPago()).isEqualTo(UPDATED_PERIODO_PAGO);
+        assertThat(testSocio.getContribucionMensual()).isEqualTo(UPDATED_CONTRIBUCION_MENSUAL);
+        assertThat(testSocio.getPeriodoPago()).isEqualTo(DEFAULT_PERIODO_PAGO);
         assertThat(testSocio.getActivo()).isEqualTo(DEFAULT_ACTIVO);
         assertThat(testSocio.getNucleoAsociado()).isEqualTo(DEFAULT_NUCLEO_ASOCIADO);
-        assertThat(testSocio.getComunicacion()).isEqualTo(DEFAULT_COMUNICACION);
+        assertThat(testSocio.getComunicacion()).isEqualTo(UPDATED_COMUNICACION);
         assertThat(testSocio.getDireccion()).isEqualTo(UPDATED_DIRECCION);
-        assertThat(testSocio.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
+        assertThat(testSocio.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
         assertThat(testSocio.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
-        assertThat(testSocio.getPais()).isEqualTo(DEFAULT_PAIS);
+        assertThat(testSocio.getPais()).isEqualTo(UPDATED_PAIS);
     }
 
     @Test
@@ -760,6 +790,7 @@ class SocioResourceIT {
             .segundoApellido(UPDATED_SEGUNDO_APELLIDO)
             .email(UPDATED_EMAIL)
             .telefonoContacto(UPDATED_TELEFONO_CONTACTO)
+            .iBAN(UPDATED_I_BAN)
             .dni(UPDATED_DNI)
             .fechaNacimiento(UPDATED_FECHA_NACIMIENTO)
             .sexo(UPDATED_SEXO)
@@ -792,6 +823,7 @@ class SocioResourceIT {
         assertThat(testSocio.getSegundoApellido()).isEqualTo(UPDATED_SEGUNDO_APELLIDO);
         assertThat(testSocio.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testSocio.getTelefonoContacto()).isEqualTo(UPDATED_TELEFONO_CONTACTO);
+        assertThat(testSocio.getiBAN()).isEqualTo(UPDATED_I_BAN);
         assertThat(testSocio.getDni()).isEqualTo(UPDATED_DNI);
         assertThat(testSocio.getFechaNacimiento()).isEqualTo(UPDATED_FECHA_NACIMIENTO);
         assertThat(testSocio.getSexo()).isEqualTo(UPDATED_SEXO);

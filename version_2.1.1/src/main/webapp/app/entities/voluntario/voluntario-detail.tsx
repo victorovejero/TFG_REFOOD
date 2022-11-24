@@ -29,6 +29,10 @@ export const VoluntarioDetail = () => {
           </dt>
           <dd>{voluntarioEntity.id}</dd>
           <dt>
+            <span id="idVoluntario">Id Voluntario</span>
+          </dt>
+          <dd>{voluntarioEntity.idVoluntario}</dd>
+          <dt>
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{voluntarioEntity.nombre}</dd>
@@ -81,9 +85,13 @@ export const VoluntarioDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <span id="perfil">Perfil</span>
+            <span id="categoriaPerfil">Categoria Perfil</span>
           </dt>
-          <dd>{voluntarioEntity.perfil}</dd>
+          <dd>{voluntarioEntity.categoriaPerfil}</dd>
+          <dt>
+            <span id="descripcionCategoria">Descripcion Categoria</span>
+          </dt>
+          <dd>{voluntarioEntity.descripcionCategoria}</dd>
           <dt>
             <span id="diaRefood">Dia Refood</span>
           </dt>

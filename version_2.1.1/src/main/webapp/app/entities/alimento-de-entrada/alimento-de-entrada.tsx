@@ -81,6 +81,19 @@ export const AlimentoDeEntrada = () => {
     sortEntities();
   };
 
+  const printList = (i) => {
+    let arr = []
+    let counter = 0;
+    for (const int of alimentoDeEntradaList[i].frutaYVerduras){ 
+      arr[counter] =  int ? <Link key={counter} to={`/intolerancia/${int.id}`}>{int.nombreAlimento}</Link> : ''
+      counter++;
+      
+      arr[counter] = " - "
+      counter++;
+    }
+    return arr.slice(0,-1);
+    
+  }
   return (
     <div>
       <h2 id="alimento-de-entrada-heading" data-cy="AlimentoDeEntradaHeading">
@@ -105,9 +118,9 @@ export const AlimentoDeEntrada = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/* <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
-                </th>
+                </th> */}
                 <th className="hand" onClick={sort('peso')}>
                   Peso <FontAwesomeIcon icon="sort" />
                 </th>
@@ -117,20 +130,23 @@ export const AlimentoDeEntrada = () => {
                 <th className="hand" onClick={sort('fechaYHoraEntrada')}>
                   Fecha Y Hora Entrada <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('fechaYHoraRecogida')}>
-                  Fecha Y Hora Recogida <FontAwesomeIcon icon="sort" />
+                <th className="hand" >
+                  Fecha Y Hora Recogida 
                 </th>
-                <th className="hand" onClick={sort('fechaYHoraPreparacion')}>
-                  Fecha Y Hora Preparacion <FontAwesomeIcon icon="sort" />
-                </th>
-                <th>
+                {/* <th className="hand" >
+                  Fecha Y Hora Preparacion 
+                </th> */}
+                <th onClick={sort('tupper')}>
                   Tupper <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
-                  Donante <FontAwesomeIcon icon="sort" />
+                  Donante 
                 </th>
                 <th>
-                  Tipo De Alimento <FontAwesomeIcon icon="sort" />
+                  Tipo De Alimento
+                </th>
+                <th>
+                  Frutas y Verduras
                 </th>
                 <th />
               </tr>
@@ -138,13 +154,13 @@ export const AlimentoDeEntrada = () => {
             <tbody>
               {alimentoDeEntradaList.map((alimentoDeEntrada, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/* <td>
                     <Button tag={Link} to={`/alimento-de-entrada/${alimentoDeEntrada.id}`} color="link" size="sm">
                       {alimentoDeEntrada.id}
                     </Button>
-                  </td>
-                  <td>{alimentoDeEntrada.peso}</td>
-                  <td>{alimentoDeEntrada.frutaYVerdura ? 'true' : 'false'}</td>
+                  </td> */}
+                  <td>{alimentoDeEntrada.peso} kg</td>
+                  <td className="peso-column">{alimentoDeEntrada.frutaYVerdura ? 'Si' : 'No'}</td>
                   <td>
                     {alimentoDeEntrada.fechaYHoraEntrada ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraEntrada} format={APP_DATE_FORMAT} />
@@ -155,32 +171,33 @@ export const AlimentoDeEntrada = () => {
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraRecogida} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>
+                  {/* <td>
                     {alimentoDeEntrada.fechaYHoraPreparacion ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
                     ) : null}
-                  </td>
+                  </td> */}
                   <td>
                     {alimentoDeEntrada.tupper ? (
-                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.id}</Link>
+                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.modelo}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {alimentoDeEntrada.donante ? (
-                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.id}</Link>
+                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.idDonante}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
                     {alimentoDeEntrada.tipoDeAlimento ? (
-                      <Link to={`/tipo-de-alimento/${alimentoDeEntrada.tipoDeAlimento.id}`}>{alimentoDeEntrada.tipoDeAlimento.id}</Link>
+                      <Link to={`/tipo-de-alimento/${alimentoDeEntrada.tipoDeAlimento.id}`}>{alimentoDeEntrada.tipoDeAlimento.nombreAlimento}</Link>
                     ) : (
                       ''
                     )}
                   </td>
+                  <td>{printList(i)}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button

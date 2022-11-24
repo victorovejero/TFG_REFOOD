@@ -113,6 +113,7 @@ entity Intolerancia {
     descripcion String
 }
 entity Voluntario {
+    idVoluntario String required,
     nombre String required,
     primerApellido String required,
     segundoApellido String,
@@ -124,7 +125,8 @@ entity Voluntario {
     sexo String required,
     fechaAlta LocalDate required,
     fechaBaja LocalDate,
-    perfil String required, // universitario, beneficiario etc...
+    categoriaPerfil String required, // universitario, beneficiario etc...
+    descripcionCategoria String,
     diaRefood String required,
     //responsableDia Boolean,
     origen String,
@@ -134,11 +136,12 @@ entity Voluntario {
     activo Boolean required
 }
 entity Socio{
-    nombre String required,
+nombre String required,
     primerApellido String required,
     segundoApellido String,
     email String required,
     telefonoContacto String required,
+    IBAN String required,
     dni String required,
     fechaNacimiento LocalDate required,
     sexo String required,
@@ -152,8 +155,7 @@ entity Socio{
     direccion String required,
     codigoPostal String required,
     provincia String,
-    pais String
-}
+    pais String, }
 //CAMBIO - QUITAR
 //entity Registro {
 //diaActividad LocalDate required,

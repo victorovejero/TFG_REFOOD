@@ -3,6 +3,7 @@ import { INucleo } from 'app/shared/model/nucleo.model';
 
 export interface IVoluntario {
   id?: number;
+  idVoluntario?: string;
   nombre?: string;
   primerApellido?: string;
   segundoApellido?: string | null;
@@ -13,7 +14,8 @@ export interface IVoluntario {
   sexo?: string;
   fechaAlta?: string;
   fechaBaja?: string | null;
-  perfil?: string;
+  categoriaPerfil?: string;
+  descripcionCategoria?: string | null;
   diaRefood?: string;
   origen?: string | null;
   manipuladorAlimentos?: boolean;

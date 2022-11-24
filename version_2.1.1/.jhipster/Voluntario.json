@@ -6,6 +6,11 @@
   "entityTableName": "voluntario",
   "fields": [
     {
+      "fieldName": "idVoluntario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "nombre",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -53,9 +58,13 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "perfil",
+      "fieldName": "categoriaPerfil",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcionCategoria",
+      "fieldType": "String"
     },
     {
       "fieldName": "diaRefood",

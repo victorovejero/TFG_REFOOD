@@ -30,6 +30,11 @@
       "fieldValidateRules": ["required"]
     },
     {
+      "fieldName": "iBAN",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "dni",
       "fieldType": "String",
       "fieldValidateRules": ["required"]

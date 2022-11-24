@@ -28,6 +28,9 @@ public class SocioDTO implements Serializable {
     private String telefonoContacto;
 
     @NotNull
+    private String iBAN;
+
+    @NotNull
     private String dni;
 
     @NotNull
@@ -111,6 +114,14 @@ public class SocioDTO implements Serializable {
 
     public void setTelefonoContacto(String telefonoContacto) {
         this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getiBAN() {
+        return iBAN;
+    }
+
+    public void setiBAN(String iBAN) {
+        this.iBAN = iBAN;
     }
 
     public String getDni() {
@@ -256,6 +267,7 @@ public class SocioDTO implements Serializable {
             ", segundoApellido='" + getSegundoApellido() + "'" +
             ", email='" + getEmail() + "'" +
             ", telefonoContacto='" + getTelefonoContacto() + "'" +
+            ", iBAN='" + getiBAN() + "'" +
             ", dni='" + getDni() + "'" +
             ", fechaNacimiento='" + getFechaNacimiento() + "'" +
             ", sexo='" + getSexo() + "'" +

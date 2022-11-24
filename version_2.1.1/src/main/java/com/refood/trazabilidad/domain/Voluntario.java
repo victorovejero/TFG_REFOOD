@@ -25,6 +25,10 @@ public class Voluntario implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "id_voluntario", nullable = false)
+    private String idVoluntario;
+
+    @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
@@ -62,8 +66,11 @@ public class Voluntario implements Serializable {
     private LocalDate fechaBaja;
 
     @NotNull
-    @Column(name = "perfil", nullable = false)
-    private String perfil;
+    @Column(name = "categoria_perfil", nullable = false)
+    private String categoriaPerfil;
+
+    @Column(name = "descripcion_categoria")
+    private String descripcionCategoria;
 
     @NotNull
     @Column(name = "dia_refood", nullable = false)
@@ -105,6 +112,19 @@ public class Voluntario implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdVoluntario() {
+        return this.idVoluntario;
+    }
+
+    public Voluntario idVoluntario(String idVoluntario) {
+        this.setIdVoluntario(idVoluntario);
+        return this;
+    }
+
+    public void setIdVoluntario(String idVoluntario) {
+        this.idVoluntario = idVoluntario;
     }
 
     public String getNombre() {
@@ -237,17 +257,30 @@ public class Voluntario implements Serializable {
         this.fechaBaja = fechaBaja;
     }
 
-    public String getPerfil() {
-        return this.perfil;
+    public String getCategoriaPerfil() {
+        return this.categoriaPerfil;
     }
 
-    public Voluntario perfil(String perfil) {
-        this.setPerfil(perfil);
+    public Voluntario categoriaPerfil(String categoriaPerfil) {
+        this.setCategoriaPerfil(categoriaPerfil);
         return this;
     }
 
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
+    public void setCategoriaPerfil(String categoriaPerfil) {
+        this.categoriaPerfil = categoriaPerfil;
+    }
+
+    public String getDescripcionCategoria() {
+        return this.descripcionCategoria;
+    }
+
+    public Voluntario descripcionCategoria(String descripcionCategoria) {
+        this.setDescripcionCategoria(descripcionCategoria);
+        return this;
+    }
+
+    public void setDescripcionCategoria(String descripcionCategoria) {
+        this.descripcionCategoria = descripcionCategoria;
     }
 
     public String getDiaRefood() {
@@ -365,6 +398,7 @@ public class Voluntario implements Serializable {
     public String toString() {
         return "Voluntario{" +
             "id=" + getId() +
+            ", idVoluntario='" + getIdVoluntario() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", primerApellido='" + getPrimerApellido() + "'" +
             ", segundoApellido='" + getSegundoApellido() + "'" +
@@ -375,7 +409,8 @@ public class Voluntario implements Serializable {
             ", sexo='" + getSexo() + "'" +
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
-            ", perfil='" + getPerfil() + "'" +
+            ", categoriaPerfil='" + getCategoriaPerfil() + "'" +
+            ", descripcionCategoria='" + getDescripcionCategoria() + "'" +
             ", diaRefood='" + getDiaRefood() + "'" +
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +

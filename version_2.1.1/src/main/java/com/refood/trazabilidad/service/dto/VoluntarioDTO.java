@@ -14,6 +14,9 @@ public class VoluntarioDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String idVoluntario;
+
+    @NotNull
     private String nombre;
 
     @NotNull
@@ -41,7 +44,9 @@ public class VoluntarioDTO implements Serializable {
     private LocalDate fechaBaja;
 
     @NotNull
-    private String perfil;
+    private String categoriaPerfil;
+
+    private String descripcionCategoria;
 
     @NotNull
     private String diaRefood;
@@ -68,6 +73,14 @@ public class VoluntarioDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdVoluntario() {
+        return idVoluntario;
+    }
+
+    public void setIdVoluntario(String idVoluntario) {
+        this.idVoluntario = idVoluntario;
     }
 
     public String getNombre() {
@@ -150,12 +163,20 @@ public class VoluntarioDTO implements Serializable {
         this.fechaBaja = fechaBaja;
     }
 
-    public String getPerfil() {
-        return perfil;
+    public String getCategoriaPerfil() {
+        return categoriaPerfil;
     }
 
-    public void setPerfil(String perfil) {
-        this.perfil = perfil;
+    public void setCategoriaPerfil(String categoriaPerfil) {
+        this.categoriaPerfil = categoriaPerfil;
+    }
+
+    public String getDescripcionCategoria() {
+        return descripcionCategoria;
+    }
+
+    public void setDescripcionCategoria(String descripcionCategoria) {
+        this.descripcionCategoria = descripcionCategoria;
     }
 
     public String getDiaRefood() {
@@ -240,6 +261,7 @@ public class VoluntarioDTO implements Serializable {
     public String toString() {
         return "VoluntarioDTO{" +
             "id=" + getId() +
+            ", idVoluntario='" + getIdVoluntario() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", primerApellido='" + getPrimerApellido() + "'" +
             ", segundoApellido='" + getSegundoApellido() + "'" +
@@ -250,7 +272,8 @@ public class VoluntarioDTO implements Serializable {
             ", sexo='" + getSexo() + "'" +
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
-            ", perfil='" + getPerfil() + "'" +
+            ", categoriaPerfil='" + getCategoriaPerfil() + "'" +
+            ", descripcionCategoria='" + getDescripcionCategoria() + "'" +
             ", diaRefood='" + getDiaRefood() + "'" +
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +

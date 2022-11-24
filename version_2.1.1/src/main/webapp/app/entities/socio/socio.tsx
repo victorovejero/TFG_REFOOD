@@ -138,6 +138,9 @@ export const Socio = () => {
                   <th className="hand" onClick={sort('telefonoContacto')}>
                     Telefono Contacto <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('iBAN')}>
+                    I BAN <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('dni')}>
                     Dni <FontAwesomeIcon icon="sort" />
                   </th>
@@ -196,6 +199,7 @@ export const Socio = () => {
                     <td>{socio.segundoApellido}</td>
                     <td>{socio.email}</td>
                     <td>{socio.telefonoContacto}</td>
+                    <td>{socio.iBAN}</td>
                     <td>{socio.dni}</td>
                     <td>
                       {socio.fechaNacimiento ? (
