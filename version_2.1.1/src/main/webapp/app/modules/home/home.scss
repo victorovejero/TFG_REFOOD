@@ -24,8 +24,13 @@ Main page styles
 
 .home-col{
   padding-top:5%;
-  padding-bottom:5%;
+  padding-bottom:4%;
   text-align: center;
+}
+
+.home-col-2{
+  text-align:center;
+  padding-bottom:2%;
 }
 
 .home-button{
@@ -37,6 +42,14 @@ Main page styles
 
 }
 
+.home-button-2{
+  position:relative;
+  background-color: #f9b718;
+  color:black;
+  font-size:25px;
+  margin-top:0;
+}
+
 .registro-col{
   text-align:right;
   padding-bottom:5%;
@@ -46,6 +59,8 @@ Main page styles
   padding-top:3%
   
 }
+
+
 // UNSIGNED HOME PAGE STYLING
 
 // *{

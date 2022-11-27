@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
@@ -18,9 +18,15 @@ import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntities as getCheckouts } from 'app/entities/checkout/checkout.reducer';
 import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-salida.reducer';
+import {getToday} from 'app/shared/util/date-utils'
+
+import './alimento-de-salida.css';
 
 export const AlimentoDeSalidaUpdate = () => {
-  const [rangoEntradas, setRangoEntradas] = useState(2);
+  const [rangoEntradas, setRangoEntradas] = useState<number>(2);
+  const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
+
+
 
   const dispatch = useAppDispatch();
 
@@ -86,14 +92,16 @@ export const AlimentoDeSalidaUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {fechaSalida:defaultToday}
       : {
           ...alimentoDeSalidaEntity,
           tupper: alimentoDeSalidaEntity?.tupper?.id,
           beneficiario: alimentoDeSalidaEntity?.beneficiario?.id,
           alimentoDeEntrada: alimentoDeSalidaEntity?.alimentoDeEntrada?.id,
         };
-
+  
+  
+    
   return (
     <div>
       <Row className="justify-content-center">
@@ -117,6 +125,8 @@ export const AlimentoDeSalidaUpdate = () => {
                 id="alimento-de-salida-fechaSalida"
                 name="fechaSalida"
                 data-cy="fechaSalida"
+                value={defaultToday}
+                onChange={(e) => setDefaultToday(e.target.value)}
                 type="date"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
@@ -148,6 +158,9 @@ export const AlimentoDeSalidaUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+
+              
+
               <ValidatedField
                 id="alimento-de-salida-alimentoDeEntrada"
                 name="alimentoDeEntrada"
@@ -164,6 +177,10 @@ export const AlimentoDeSalidaUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <div className="slider-div">
+                <input  className="slider" type="range" min="0" max="3" value={rangoEntradas} onChange={(e) => setRangoEntradas(Number(e.target.value))} />
+                <p>{rangoEntradas} días</p>
+              </div>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

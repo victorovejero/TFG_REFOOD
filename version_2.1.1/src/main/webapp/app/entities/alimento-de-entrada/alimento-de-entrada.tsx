@@ -85,7 +85,7 @@ export const AlimentoDeEntrada = () => {
     let arr = []
     let counter = 0;
     for (const int of alimentoDeEntradaList[i].frutaYVerduras){ 
-      arr[counter] =  int ? <Link key={counter} to={`/intolerancia/${int.id}`}>{int.nombreAlimento}</Link> : ''
+      arr[counter] =  int ? <Link key={counter} to={`/fruta-y-verdura/${int.id}`}>{int.nombreAlimento}</Link> : ''
       counter++;
       
       arr[counter] = " - "

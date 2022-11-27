@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getSortState } from 'react-jhipster';
+import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -31,6 +31,78 @@ export const TipoDeAlimento = () => {
   const entity = useAppSelector(state => state.tipoDeAlimento.entity);
   const updateSuccess = useAppSelector(state => state.tipoDeAlimento.updateSuccess);
 
+
+  //FUNCTIONS FOR INFINITE SCROLL
+
+  // const getAllEntities = () => {
+  //   dispatch(
+  //     getEntities({
+  //       page: paginationState.activePage - 1,
+  //       size: paginationState.itemsPerPage,
+  //       sort: `${paginationState.sort},${paginationState.order}`,
+  //     })
+  //   );
+  // };
+
+  // const resetAll = () => {
+  //   dispatch(reset());
+  //   setPaginationState({
+  //     ...paginationState,
+  //     activePage: 1,
+  //   });
+  //   dispatch(getEntities({}));
+  // };
+
+  // useEffect(() => {
+  //   resetAll();
+  // }, []);
+
+  // useEffect(() => {
+  //   if (updateSuccess) {
+  //     resetAll();
+  //   }
+  // }, [updateSuccess]);
+
+  // useEffect(() => {
+  //   getAllEntities();
+  // }, [paginationState.activePage]);
+
+  // const handleLoadMore = () => {
+  //   if ((window as any).pageYOffset > 0) {
+  //     setPaginationState({
+  //       ...paginationState,
+  //       activePage: paginationState.activePage + 1,
+  //     });
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (sorting) {
+  //     getAllEntities();
+  //     setSorting(false);
+  //   }
+  // }, [sorting]);
+
+  // const sort = p => () => {
+  //   dispatch(reset());
+  //   setPaginationState({
+  //     ...paginationState,
+  //     activePage: 1,
+  //     order: paginationState.order === ASC ? DESC : ASC,
+  //     sort: p,
+  //   });
+  //   setSorting(true);
+  // };
+
+  // const handleSyncList = () => {
+  //   resetAll();
+  // };
+
+  //END OF FUNCTIONS FOR INFINITE SCROLL
+
+
+  // FUNCTIONS FOR PAGINATION
+
   const getAllEntities = () => {
     dispatch(
       getEntities({
@@ -41,60 +113,52 @@ export const TipoDeAlimento = () => {
     );
   };
 
-  const resetAll = () => {
-    dispatch(reset());
-    setPaginationState({
-      ...paginationState,
-      activePage: 1,
-    });
-    dispatch(getEntities({}));
+  const sortEntities = () => {
+    getAllEntities();
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    if (location.search !== endURL) {
+      navigate(`${location.pathname}${endURL}`);
+    }
   };
 
   useEffect(() => {
-    resetAll();
-  }, []);
+    sortEntities();
+  }, [paginationState.activePage, paginationState.order, paginationState.sort]);
 
   useEffect(() => {
-    if (updateSuccess) {
-      resetAll();
-    }
-  }, [updateSuccess]);
-
-  useEffect(() => {
-    getAllEntities();
-  }, [paginationState.activePage]);
-
-  const handleLoadMore = () => {
-    if ((window as any).pageYOffset > 0) {
+    const params = new URLSearchParams(location.search);
+    const page = params.get('page');
+    const sort = params.get(SORT);
+    if (page && sort) {
+      const sortSplit = sort.split(',');
       setPaginationState({
         ...paginationState,
-        activePage: paginationState.activePage + 1,
+        activePage: +page,
+        sort: sortSplit[0],
+        order: sortSplit[1],
       });
     }
-  };
-
-  useEffect(() => {
-    if (sorting) {
-      getAllEntities();
-      setSorting(false);
-    }
-  }, [sorting]);
+  }, [location.search]);
 
   const sort = p => () => {
-    dispatch(reset());
     setPaginationState({
       ...paginationState,
-      activePage: 1,
       order: paginationState.order === ASC ? DESC : ASC,
       sort: p,
     });
-    setSorting(true);
   };
+
+  const handlePagination = currentPage =>
+    setPaginationState({
+      ...paginationState,
+      activePage: currentPage,
+    });
 
   const handleSyncList = () => {
-    resetAll();
+    sortEntities();
   };
 
+  //END OF FUNCTIONS FOR PAGINATION
   return (
     <div>
       <h2 id="tipo-de-alimento-heading" data-cy="TipoDeAlimentoHeading">
@@ -110,12 +174,12 @@ export const TipoDeAlimento = () => {
         </div>
       </h2>
       <div className="table-responsive">
-        <InfiniteScroll
+        {/* <InfiniteScroll
           dataLength={tipoDeAlimentoList ? tipoDeAlimentoList.length : 0}
           next={handleLoadMore}
           hasMore={paginationState.activePage - 1 < links.next}
           loader={<div className="loader">Loading ...</div>}
-        >
+        > */}
           {tipoDeAlimentoList && tipoDeAlimentoList.length > 0 ? (
             <Table responsive>
               <thead>
@@ -180,8 +244,26 @@ export const TipoDeAlimento = () => {
           ) : (
             !loading && <div className="alert alert-warning">Ningún Tipo De Alimentos encontrado</div>
           )}
-        </InfiniteScroll>
+        {/* </InfiniteScroll> */}
       </div>
+      {totalItems ? (
+        <div className={tipoDeAlimentoList && tipoDeAlimentoList.length > 0 ? '' : 'd-none'}>
+          <div className="justify-content-center d-flex">
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} />
+          </div>
+          <div className="justify-content-center d-flex">
+            <JhiPagination
+              activePage={paginationState.activePage}
+              onSelect={handlePagination}
+              maxButtons={5}
+              itemsPerPage={paginationState.itemsPerPage}
+              totalItems={totalItems}
+            />
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

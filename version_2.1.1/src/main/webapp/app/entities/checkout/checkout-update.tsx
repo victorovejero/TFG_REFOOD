@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
@@ -14,8 +14,14 @@ import { IBeneficiario } from 'app/shared/model/beneficiario.model';
 import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
 import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntity, updateEntity, createEntity, reset } from './checkout.reducer';
+import {getToday} from 'app/shared/util/date-utils'
 
 export const CheckoutUpdate = () => {
+  const PESO_MAX = 15;
+  const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
+  const peso = useRef<Number>();
+  const pesoMaxNotify = useRef<Boolean>(false);
+  
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -68,13 +74,19 @@ export const CheckoutUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {}
+      ? {fechaSalida:defaultToday}
       : {
           ...checkoutEntity,
           alimentoDeSalidas: checkoutEntity?.alimentoDeSalidas?.map(e => e.id.toString()),
           beneficiario: checkoutEntity?.beneficiario?.id,
         };
 
+  const pesoAlert = (event) => {
+    peso.current = event.target.value;
+    if(peso.current >= PESO_MAX && pesoMaxNotify.current === false){
+      confirm("¿Está seguro de que el peso es mayor a "+ PESO_MAX + "Kg? \n\n Si acepta, no le volveremos a notificar.") ? pesoMaxNotify.current = true : null
+    }
+  }
   return (
     <div>
       <Row className="justify-content-center">
@@ -97,6 +109,8 @@ export const CheckoutUpdate = () => {
                 name="fechaSalida"
                 data-cy="fechaSalida"
                 type="date"
+                value={defaultToday}
+                onChange={(e) => setDefaultToday(e.target.value)}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
@@ -107,6 +121,9 @@ export const CheckoutUpdate = () => {
                 name="peso"
                 data-cy="peso"
                 type="text"
+                maxlength="6"
+                value={peso.current}
+                onChange={pesoAlert}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
@@ -139,7 +156,7 @@ export const CheckoutUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/checkout" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Volver</span>

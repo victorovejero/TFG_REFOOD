@@ -15,16 +15,18 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface CheckoutMapper extends EntityMapper<CheckoutDTO, Checkout> {
-    @Mapping(target = "alimentoDeSalidas", source = "alimentoDeSalidas", qualifiedByName = "alimentoDeSalidaIdSet")
-    @Mapping(target = "beneficiario", source = "beneficiario", qualifiedByName = "beneficiarioId")
+    // @Mapping(target = "alimentoDeSalidas", source = "alimentoDeSalidas",
+    // qualifiedByName = "alimentoDeSalidaIdSet")
+    // @Mapping(target = "beneficiario", source = "beneficiario", qualifiedByName =
+    // "beneficiarioId")
     CheckoutDTO toDto(Checkout s);
 
     @Mapping(target = "removeAlimentoDeSalida", ignore = true)
     Checkout toEntity(CheckoutDTO checkoutDTO);
 
-    @Named("alimentoDeSalidaId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("alimentoDeSalidaId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     AlimentoDeSalidaDTO toDtoAlimentoDeSalidaId(AlimentoDeSalida alimentoDeSalida);
 
     @Named("alimentoDeSalidaIdSet")
@@ -32,8 +34,8 @@ public interface CheckoutMapper extends EntityMapper<CheckoutDTO, Checkout> {
         return alimentoDeSalida.stream().map(this::toDtoAlimentoDeSalidaId).collect(Collectors.toSet());
     }
 
-    @Named("beneficiarioId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
+    // @Named("beneficiarioId")
+    // @BeanMapping(ignoreByDefault = true)
+    // @Mapping(target = "id", source = "id")
     BeneficiarioDTO toDtoBeneficiarioId(Beneficiario beneficiario);
 }

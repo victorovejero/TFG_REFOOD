@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
+// import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -38,6 +38,7 @@ export const getEntity = createAsyncThunk(
 export const createEntity = createAsyncThunk(
   'tipoDeAlimento/create_entity',
   async (entity: ITipoDeAlimento, thunkAPI) => {
+    // console.log(entity)
     return axios.post<ITipoDeAlimento>(apiUrl, cleanEntity(entity));
   },
   { serializeError: serializeAxiosError }
@@ -86,13 +87,16 @@ export const TipoDeAlimentoSlice = createEntitySlice({
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
         const { data, headers } = action.payload;
-        const links = parseHeaderForLinks(headers.link);
+        //CHANGES FOR PAGINATION
+        // const links = parseHeaderForLinks(headers.link);
 
         return {
           ...state,
           loading: false,
-          links,
-          entities: loadMoreDataWhenScrolled(state.entities, data, links),
+          // links,
+          entities:data,
+          //CHANGE FOR PAGINATION
+          // entities: loadMoreDataWhenScrolled(state.entities, data, links),
           totalItems: parseInt(headers['x-total-count'], 10),
         };
       })
