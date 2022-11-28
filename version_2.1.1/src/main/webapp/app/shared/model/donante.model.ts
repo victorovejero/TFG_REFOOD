@@ -6,9 +6,10 @@ export interface IDonante {
   id?: number;
   idDonante?: string;
   nombre?: string;
-  tipo?: string;
-  ruta?: number;
+  categoria?: string;
   direccion?: string;
+  codigoPostal?: string;
+  provincia?: string;
   telefono?: string;
   email?: string;
   responsable?: string;

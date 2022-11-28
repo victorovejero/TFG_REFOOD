@@ -1,6 +1,7 @@
 package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -18,10 +19,35 @@ public class BeneficiarioDTO implements Serializable {
     private String idBeneficiario;
 
     @NotNull
-    private String nombre;
+    private String nombreRepresentante;
+
+    @NotNull
+    private String primerApellidoRepresentante;
+
+    private String segundoApellidoRepresentante;
 
     @NotNull
     private Integer numeroPersonas;
+
+    @NotNull
+    private String email;
+
+    @NotNull
+    private String telefono;
+
+    @NotNull
+    private String telefonoSecundario;
+
+    @NotNull
+    private String direccion;
+
+    @NotNull
+    private String codigoPostal;
+
+    @NotNull
+    private LocalDate fechaAlta;
+
+    private LocalDate fechaBaja;
 
     @NotNull
     private Integer numeroNinios;
@@ -51,12 +77,28 @@ public class BeneficiarioDTO implements Serializable {
         this.idBeneficiario = idBeneficiario;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombreRepresentante() {
+        return nombreRepresentante;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRepresentante(String nombreRepresentante) {
+        this.nombreRepresentante = nombreRepresentante;
+    }
+
+    public String getPrimerApellidoRepresentante() {
+        return primerApellidoRepresentante;
+    }
+
+    public void setPrimerApellidoRepresentante(String primerApellidoRepresentante) {
+        this.primerApellidoRepresentante = primerApellidoRepresentante;
+    }
+
+    public String getSegundoApellidoRepresentante() {
+        return segundoApellidoRepresentante;
+    }
+
+    public void setSegundoApellidoRepresentante(String segundoApellidoRepresentante) {
+        this.segundoApellidoRepresentante = segundoApellidoRepresentante;
     }
 
     public Integer getNumeroPersonas() {
@@ -65,6 +107,62 @@ public class BeneficiarioDTO implements Serializable {
 
     public void setNumeroPersonas(Integer numeroPersonas) {
         this.numeroPersonas = numeroPersonas;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefonoSecundario() {
+        return telefonoSecundario;
+    }
+
+    public void setTelefonoSecundario(String telefonoSecundario) {
+        this.telefonoSecundario = telefonoSecundario;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public LocalDate getFechaAlta() {
+        return fechaAlta;
+    }
+
+    public void setFechaAlta(LocalDate fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
+    public LocalDate getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public Integer getNumeroNinios() {
@@ -134,8 +232,17 @@ public class BeneficiarioDTO implements Serializable {
         return "BeneficiarioDTO{" +
             "id=" + getId() +
             ", idBeneficiario='" + getIdBeneficiario() + "'" +
-            ", nombre='" + getNombre() + "'" +
+            ", nombreRepresentante='" + getNombreRepresentante() + "'" +
+            ", primerApellidoRepresentante='" + getPrimerApellidoRepresentante() + "'" +
+            ", segundoApellidoRepresentante='" + getSegundoApellidoRepresentante() + "'" +
             ", numeroPersonas=" + getNumeroPersonas() +
+            ", email='" + getEmail() + "'" +
+            ", telefono='" + getTelefono() + "'" +
+            ", telefonoSecundario='" + getTelefonoSecundario() + "'" +
+            ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", fechaAlta='" + getFechaAlta() + "'" +
+            ", fechaBaja='" + getFechaBaja() + "'" +
             ", numeroNinios=" + getNumeroNinios() +
             ", idDual='" + getIdDual() + "'" +
             ", activo='" + getActivo() + "'" +

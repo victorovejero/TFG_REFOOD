@@ -4,6 +4,7 @@ import { IIntolerancia } from 'app/shared/model/intolerancia.model';
 export interface ITipoDeAlimento {
   id?: number;
   nombreAlimento?: string;
+  descripcion?: string | null;
   alimentoDeEntradas?: IAlimentoDeEntrada[] | null;
   intolerancias?: IIntolerancia[] | null;
 }

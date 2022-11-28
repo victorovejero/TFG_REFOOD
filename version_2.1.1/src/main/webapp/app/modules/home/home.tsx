@@ -30,6 +30,11 @@ export const Home = () => {
             <Link to="/alimento-de-salida/new" className="btn btn-primary home-button">Registrar Alimento de Salida</Link>
             </Col>
         </Row>
+        <Row>
+          <Col md="12" className="home-col-2">
+            <Link to="/checkout/new" className="btn btn-primary home-button-2">Checkout</Link>
+          </Col>
+        </Row>
         {/* <Row>
         <Col md="6" className="registro-col">
             <Link to="/registro/new" className="btn btn-primary home-button">Registro Diario de Rutas</Link>

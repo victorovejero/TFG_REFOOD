@@ -79,6 +79,17 @@ public class CacheConfiguration {
             createCache(cm, com.refood.trazabilidad.domain.AlimentoDeSalida.class.getName() + ".tipoDeAlimentos");
             createCache(cm, com.refood.trazabilidad.domain.AlimentoDeEntrada.class.getName() + ".tipoDeAlimentos");
             createCache(cm, com.refood.trazabilidad.domain.TipoDeAlimento.class.getName() + ".alimentoDeEntradas");
+            createCache(cm, com.refood.trazabilidad.domain.Beneficiario.class.getName() + ".personaBeneficiarias");
+            createCache(cm, com.refood.trazabilidad.domain.Beneficiario.class.getName() + ".checkouts");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeEntrada.class.getName() + ".frutaYVerduras");
+            createCache(cm, com.refood.trazabilidad.domain.AlimentoDeSalida.class.getName() + ".checkouts");
+            createCache(cm, com.refood.trazabilidad.domain.Intolerancia.class.getName() + ".personaBeneficiarias");
+            createCache(cm, com.refood.trazabilidad.domain.PersonaBeneficiaria.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.PersonaBeneficiaria.class.getName() + ".intolerancias");
+            createCache(cm, com.refood.trazabilidad.domain.Checkout.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Checkout.class.getName() + ".alimentoDeSalidas");
+            createCache(cm, com.refood.trazabilidad.domain.FrutaYVerdura.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.FrutaYVerdura.class.getName() + ".alimentoDeEntradas");
             // jhipster-needle-ehcache-add-entry
         };
     }

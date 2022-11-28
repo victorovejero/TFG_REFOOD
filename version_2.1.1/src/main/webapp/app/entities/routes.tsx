@@ -14,6 +14,9 @@ import Intolerancia from './intolerancia';
 import Voluntario from './voluntario';
 import Socio from './socio';
 import Registro from './registro';
+import PersonaBeneficiaria from './persona-beneficiaria';
+import Checkout from './checkout';
+import FrutaYVerdura from './fruta-y-verdura';
 /* jhipster-needle-add-route-import - JHipster will add routes here */
 
 export default () => {
@@ -32,6 +35,9 @@ export default () => {
         <Route path="voluntario/*" element={<Voluntario />} />
         <Route path="socio/*" element={<Socio />} />
         <Route path="registro/*" element={<Registro />} />
+        <Route path="persona-beneficiaria/*" element={<PersonaBeneficiaria />} />
+        <Route path="checkout/*" element={<Checkout />} />
+        <Route path="fruta-y-verdura/*" element={<FrutaYVerdura />} />
         {/* jhipster-needle-add-route-path - JHipster will add routes here */}
       </ErrorBoundaryRoutes>
     </div>

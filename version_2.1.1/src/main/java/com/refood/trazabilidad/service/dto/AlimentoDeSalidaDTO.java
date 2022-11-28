@@ -14,9 +14,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Double peso;
-
-    @NotNull
     private LocalDate fechaSalida;
 
     private TupperDTO tupper;
@@ -31,14 +28,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(Double peso) {
-        this.peso = peso;
     }
 
     public LocalDate getFechaSalida() {
@@ -99,7 +88,6 @@ public class AlimentoDeSalidaDTO implements Serializable {
     public String toString() {
         return "AlimentoDeSalidaDTO{" +
             "id=" + getId() +
-            ", peso=" + getPeso() +
             ", fechaSalida='" + getFechaSalida() + "'" +
             ", tupper=" + getTupper() +
             ", beneficiario=" + getBeneficiario() +

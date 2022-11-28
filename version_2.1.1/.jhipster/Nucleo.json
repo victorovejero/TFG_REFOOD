@@ -6,12 +6,22 @@
   "entityTableName": "nucleo",
   "fields": [
     {
+      "fieldName": "idNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "nombre",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
@@ -33,11 +43,6 @@
     {
       "fieldName": "email",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "numeroRutas",
-      "fieldType": "Integer",
       "fieldValidateRules": ["required"]
     },
     {
@@ -68,18 +73,6 @@
       "otherEntityName": "voluntario",
       "otherEntityRelationshipName": "nucleo",
       "relationshipName": "voluntario",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "socio",
-      "otherEntityRelationshipName": "nucleo",
-      "relationshipName": "socio",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "registro",
-      "otherEntityRelationshipName": "nucleo",
-      "relationshipName": "registro",
       "relationshipType": "one-to-many"
     }
   ],

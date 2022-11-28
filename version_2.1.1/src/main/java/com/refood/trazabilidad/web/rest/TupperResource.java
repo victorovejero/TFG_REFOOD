@@ -1,5 +1,9 @@
 package com.refood.trazabilidad.web.rest;
 
+//IMPORTS FOR GET ALL ENDPOINT
+import com.refood.trazabilidad.domain.Tupper;
+import java.util.List;
+// END IMPORT FOR GET ALL
 import com.refood.trazabilidad.repository.TupperRepository;
 import com.refood.trazabilidad.service.TupperService;
 import com.refood.trazabilidad.service.dto.TupperDTO;
@@ -47,6 +51,17 @@ public class TupperResource {
         this.tupperService = tupperService;
         this.tupperRepository = tupperRepository;
     }
+
+
+      // Implementación Endpoint para sacar todos los elementos de la tabla
+      @GetMapping("/tuppers-all")
+      public ResponseEntity<List<Tupper>> getAllTuppers() {
+          List<Tupper> tuppers = tupperService.findAll();
+          log.debug("REST request to get Tuppers : {}", tuppers);
+          return ResponseEntity.ok().body(tuppers);
+  
+      }
+
 
     /**
      * {@code POST  /tuppers} : Create a new tupper.

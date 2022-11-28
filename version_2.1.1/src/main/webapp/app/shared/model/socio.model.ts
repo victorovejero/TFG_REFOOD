@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-import { INucleo } from 'app/shared/model/nucleo.model';
 
 export interface ISocio {
   id?: number;
@@ -8,6 +7,7 @@ export interface ISocio {
   segundoApellido?: string | null;
   email?: string;
   telefonoContacto?: string;
+  iBAN?: string;
   dni?: string;
   fechaNacimiento?: string;
   sexo?: string;
@@ -16,9 +16,15 @@ export interface ISocio {
   contribucionMensual?: number;
   periodoPago?: string;
   activo?: boolean;
-  nucleo?: INucleo | null;
+  nucleoAsociado?: string | null;
+  comunicacion?: boolean;
+  direccion?: string;
+  codigoPostal?: string;
+  provincia?: string | null;
+  pais?: string | null;
 }
 
 export const defaultValue: Readonly<ISocio> = {
   activo: false,
+  comunicacion: false,
 };

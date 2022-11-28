@@ -28,6 +28,9 @@ public class SocioDTO implements Serializable {
     private String telefonoContacto;
 
     @NotNull
+    private String iBAN;
+
+    @NotNull
     private String dni;
 
     @NotNull
@@ -50,7 +53,20 @@ public class SocioDTO implements Serializable {
     @NotNull
     private Boolean activo;
 
-    private NucleoDTO nucleo;
+    private String nucleoAsociado;
+
+    @NotNull
+    private Boolean comunicacion;
+
+    @NotNull
+    private String direccion;
+
+    @NotNull
+    private String codigoPostal;
+
+    private String provincia;
+
+    private String pais;
 
     public Long getId() {
         return id;
@@ -98,6 +114,14 @@ public class SocioDTO implements Serializable {
 
     public void setTelefonoContacto(String telefonoContacto) {
         this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getiBAN() {
+        return iBAN;
+    }
+
+    public void setiBAN(String iBAN) {
+        this.iBAN = iBAN;
     }
 
     public String getDni() {
@@ -164,12 +188,52 @@ public class SocioDTO implements Serializable {
         this.activo = activo;
     }
 
-    public NucleoDTO getNucleo() {
-        return nucleo;
+    public String getNucleoAsociado() {
+        return nucleoAsociado;
     }
 
-    public void setNucleo(NucleoDTO nucleo) {
-        this.nucleo = nucleo;
+    public void setNucleoAsociado(String nucleoAsociado) {
+        this.nucleoAsociado = nucleoAsociado;
+    }
+
+    public Boolean getComunicacion() {
+        return comunicacion;
+    }
+
+    public void setComunicacion(Boolean comunicacion) {
+        this.comunicacion = comunicacion;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(String provincia) {
+        this.provincia = provincia;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
     @Override
@@ -203,6 +267,7 @@ public class SocioDTO implements Serializable {
             ", segundoApellido='" + getSegundoApellido() + "'" +
             ", email='" + getEmail() + "'" +
             ", telefonoContacto='" + getTelefonoContacto() + "'" +
+            ", iBAN='" + getiBAN() + "'" +
             ", dni='" + getDni() + "'" +
             ", fechaNacimiento='" + getFechaNacimiento() + "'" +
             ", sexo='" + getSexo() + "'" +
@@ -211,7 +276,12 @@ public class SocioDTO implements Serializable {
             ", contribucionMensual=" + getContribucionMensual() +
             ", periodoPago='" + getPeriodoPago() + "'" +
             ", activo='" + getActivo() + "'" +
-            ", nucleo=" + getNucleo() +
+            ", nucleoAsociado='" + getNucleoAsociado() + "'" +
+            ", comunicacion='" + getComunicacion() + "'" +
+            ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", provincia='" + getProvincia() + "'" +
+            ", pais='" + getPais() + "'" +
             "}";
     }
 }

@@ -21,7 +21,7 @@ const apiUrl = 'api/alimento-de-entradas';
 
 export const getEntities = createAsyncThunk('alimentoDeEntrada/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
-  return axios.get<IAlimentoDeEntrada[]>(requestUrl);
+  return axios.get<IAlimentoDeEntrada[]>(requestUrl,{params:{eagerload:true}});
 });
 
 export const getEntity = createAsyncThunk(

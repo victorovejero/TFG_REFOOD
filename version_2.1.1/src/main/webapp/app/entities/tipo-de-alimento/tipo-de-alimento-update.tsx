@@ -13,7 +13,11 @@ import { getEntities as getIntolerancias } from 'app/entities/intolerancia/intol
 import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
 import { getEntity, updateEntity, createEntity, reset } from './tipo-de-alimento.reducer';
 
-export const TipoDeAlimentoUpdate = () => {
+interface IShowTitle {
+  showTitle?:boolean;
+  submitNavigate?:string;
+}
+export const TipoDeAlimentoUpdate = ({showTitle = true, submitNavigate="/tipo-de-alimento"}:IShowTitle) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -28,7 +32,7 @@ export const TipoDeAlimentoUpdate = () => {
   const updateSuccess = useAppSelector(state => state.tipoDeAlimento.updateSuccess);
 
   const handleClose = () => {
-    navigate('/tipo-de-alimento');
+    navigate(submitNavigate);
   };
 
   useEffect(() => {
@@ -47,12 +51,13 @@ export const TipoDeAlimentoUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...tipoDeAlimentoEntity,
+      // ...tipoDeAlimentoEntity,
       ...values,
       intolerancias: mapIdList(values.intolerancias),
     };
 
     if (isNew) {
+      console.log(entity);
       dispatch(createEntity(entity));
     } else {
       dispatch(updateEntity(entity));
@@ -69,13 +74,13 @@ export const TipoDeAlimentoUpdate = () => {
 
   return (
     <div>
-      <Row className="justify-content-center">
+      {showTitle ? <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.tipoDeAlimento.home.createOrEditLabel" data-cy="TipoDeAlimentoCreateUpdateHeading">
             Crear o editar Tipo De Alimento
           </h2>
         </Col>
-      </Row>
+      </Row> : null}
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
@@ -95,8 +100,9 @@ export const TipoDeAlimentoUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField label="Descripcion" id="tipo-de-alimento-descripcion" name="descripcion" data-cy="descripcion" type="text" />
               <ValidatedField
-                label="Intolerancia"
+                label="Intolerancias"
                 id="tipo-de-alimento-intolerancia"
                 data-cy="intolerancia"
                 type="select"

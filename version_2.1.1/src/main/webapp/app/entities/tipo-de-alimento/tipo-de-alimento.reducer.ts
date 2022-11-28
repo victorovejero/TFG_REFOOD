@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
+// import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -20,9 +20,16 @@ const initialState: EntityState<ITipoDeAlimento> = {
 const apiUrl = 'api/tipo-de-alimentos';
 
 // Actions
+// ACTION CREADA PARA DEVOLVER TODOS LOS TIPOS DE ALIMENTOS PARA EL SELECT DE ALIMENTOS DE ENTRADA
 
-export const getEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getAllEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+   const requestUrl = 'api/tipo-de-alimentos-all';
+   return axios.get<ITipoDeAlimento[]>(requestUrl);
+})
+
+export const getEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async ({ page, size, sort}: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+  // const requestUrl = 'api/tipo-de-alimento-all'
   return axios.get<ITipoDeAlimento[]>(requestUrl);
 });
 
@@ -86,13 +93,16 @@ export const TipoDeAlimentoSlice = createEntitySlice({
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
         const { data, headers } = action.payload;
-        const links = parseHeaderForLinks(headers.link);
+        //CHANGES FOR PAGINATION
+        // const links = parseHeaderForLinks(headers.link);
 
         return {
           ...state,
           loading: false,
-          links,
-          entities: loadMoreDataWhenScrolled(state.entities, data, links),
+          // links,
+          entities:data,
+          //CHANGE FOR PAGINATION
+          // entities: loadMoreDataWhenScrolled(state.entities, data, links),
           totalItems: parseInt(headers['x-total-count'], 10),
         };
       })
@@ -102,7 +112,7 @@ export const TipoDeAlimentoSlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = action.payload.data;
       })
-      .addMatcher(isPending(getEntities, getEntity), state => {
+      .addMatcher(isPending(getEntities, getEntity, getAllEntities), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;

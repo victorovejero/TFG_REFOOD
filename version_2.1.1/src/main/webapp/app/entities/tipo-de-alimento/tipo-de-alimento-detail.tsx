@@ -32,6 +32,10 @@ export const TipoDeAlimentoDetail = () => {
             <span id="nombreAlimento">Nombre Alimento</span>
           </dt>
           <dd>{tipoDeAlimentoEntity.nombreAlimento}</dd>
+          <dt>
+            <span id="descripcion">Descripcion</span>
+          </dt>
+          <dd>{tipoDeAlimentoEntity.descripcion}</dd>
           <dt>Intolerancia</dt>
           <dd>
             {tipoDeAlimentoEntity.intolerancias

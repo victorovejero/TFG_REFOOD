@@ -3,26 +3,35 @@ package com.refood.trazabilidad.web.rest;
 import static com.refood.trazabilidad.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.refood.trazabilidad.IntegrationTest;
 import com.refood.trazabilidad.domain.AlimentoDeEntrada;
 import com.refood.trazabilidad.repository.AlimentoDeEntradaRepository;
+import com.refood.trazabilidad.service.AlimentoDeEntradaService;
 import com.refood.trazabilidad.service.dto.AlimentoDeEntradaDTO;
 import com.refood.trazabilidad.service.mapper.AlimentoDeEntradaMapper;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -32,12 +41,16 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link AlimentoDeEntradaResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class AlimentoDeEntradaResourceIT {
 
     private static final Double DEFAULT_PESO = 1D;
     private static final Double UPDATED_PESO = 2D;
+
+    private static final Boolean DEFAULT_FRUTA_Y_VERDURA = false;
+    private static final Boolean UPDATED_FRUTA_Y_VERDURA = true;
 
     private static final ZonedDateTime DEFAULT_FECHA_Y_HORA_ENTRADA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_FECHA_Y_HORA_ENTRADA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -57,8 +70,14 @@ class AlimentoDeEntradaResourceIT {
     @Autowired
     private AlimentoDeEntradaRepository alimentoDeEntradaRepository;
 
+    @Mock
+    private AlimentoDeEntradaRepository alimentoDeEntradaRepositoryMock;
+
     @Autowired
     private AlimentoDeEntradaMapper alimentoDeEntradaMapper;
+
+    @Mock
+    private AlimentoDeEntradaService alimentoDeEntradaServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -77,6 +96,7 @@ class AlimentoDeEntradaResourceIT {
     public static AlimentoDeEntrada createEntity(EntityManager em) {
         AlimentoDeEntrada alimentoDeEntrada = new AlimentoDeEntrada()
             .peso(DEFAULT_PESO)
+            .frutaYVerdura(DEFAULT_FRUTA_Y_VERDURA)
             .fechaYHoraEntrada(DEFAULT_FECHA_Y_HORA_ENTRADA)
             .fechaYHoraRecogida(DEFAULT_FECHA_Y_HORA_RECOGIDA)
             .fechaYHoraPreparacion(DEFAULT_FECHA_Y_HORA_PREPARACION);
@@ -92,6 +112,7 @@ class AlimentoDeEntradaResourceIT {
     public static AlimentoDeEntrada createUpdatedEntity(EntityManager em) {
         AlimentoDeEntrada alimentoDeEntrada = new AlimentoDeEntrada()
             .peso(UPDATED_PESO)
+            .frutaYVerdura(UPDATED_FRUTA_Y_VERDURA)
             .fechaYHoraEntrada(UPDATED_FECHA_Y_HORA_ENTRADA)
             .fechaYHoraRecogida(UPDATED_FECHA_Y_HORA_RECOGIDA)
             .fechaYHoraPreparacion(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -122,6 +143,7 @@ class AlimentoDeEntradaResourceIT {
         assertThat(alimentoDeEntradaList).hasSize(databaseSizeBeforeCreate + 1);
         AlimentoDeEntrada testAlimentoDeEntrada = alimentoDeEntradaList.get(alimentoDeEntradaList.size() - 1);
         assertThat(testAlimentoDeEntrada.getPeso()).isEqualTo(DEFAULT_PESO);
+        assertThat(testAlimentoDeEntrada.getFrutaYVerdura()).isEqualTo(DEFAULT_FRUTA_Y_VERDURA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraEntrada()).isEqualTo(DEFAULT_FECHA_Y_HORA_ENTRADA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraRecogida()).isEqualTo(DEFAULT_FECHA_Y_HORA_RECOGIDA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraPreparacion()).isEqualTo(DEFAULT_FECHA_Y_HORA_PREPARACION);
@@ -174,6 +196,28 @@ class AlimentoDeEntradaResourceIT {
 
     @Test
     @Transactional
+    void checkFrutaYVerduraIsRequired() throws Exception {
+        int databaseSizeBeforeTest = alimentoDeEntradaRepository.findAll().size();
+        // set the field null
+        alimentoDeEntrada.setFrutaYVerdura(null);
+
+        // Create the AlimentoDeEntrada, which fails.
+        AlimentoDeEntradaDTO alimentoDeEntradaDTO = alimentoDeEntradaMapper.toDto(alimentoDeEntrada);
+
+        restAlimentoDeEntradaMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(alimentoDeEntradaDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<AlimentoDeEntrada> alimentoDeEntradaList = alimentoDeEntradaRepository.findAll();
+        assertThat(alimentoDeEntradaList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkFechaYHoraEntradaIsRequired() throws Exception {
         int databaseSizeBeforeTest = alimentoDeEntradaRepository.findAll().size();
         // set the field null
@@ -207,9 +251,27 @@ class AlimentoDeEntradaResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(alimentoDeEntrada.getId().intValue())))
             .andExpect(jsonPath("$.[*].peso").value(hasItem(DEFAULT_PESO.doubleValue())))
+            .andExpect(jsonPath("$.[*].frutaYVerdura").value(hasItem(DEFAULT_FRUTA_Y_VERDURA.booleanValue())))
             .andExpect(jsonPath("$.[*].fechaYHoraEntrada").value(hasItem(sameInstant(DEFAULT_FECHA_Y_HORA_ENTRADA))))
             .andExpect(jsonPath("$.[*].fechaYHoraRecogida").value(hasItem(sameInstant(DEFAULT_FECHA_Y_HORA_RECOGIDA))))
             .andExpect(jsonPath("$.[*].fechaYHoraPreparacion").value(hasItem(sameInstant(DEFAULT_FECHA_Y_HORA_PREPARACION))));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAlimentoDeEntradasWithEagerRelationshipsIsEnabled() throws Exception {
+        when(alimentoDeEntradaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAlimentoDeEntradaMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(alimentoDeEntradaServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllAlimentoDeEntradasWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(alimentoDeEntradaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restAlimentoDeEntradaMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(alimentoDeEntradaRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -225,6 +287,7 @@ class AlimentoDeEntradaResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(alimentoDeEntrada.getId().intValue()))
             .andExpect(jsonPath("$.peso").value(DEFAULT_PESO.doubleValue()))
+            .andExpect(jsonPath("$.frutaYVerdura").value(DEFAULT_FRUTA_Y_VERDURA.booleanValue()))
             .andExpect(jsonPath("$.fechaYHoraEntrada").value(sameInstant(DEFAULT_FECHA_Y_HORA_ENTRADA)))
             .andExpect(jsonPath("$.fechaYHoraRecogida").value(sameInstant(DEFAULT_FECHA_Y_HORA_RECOGIDA)))
             .andExpect(jsonPath("$.fechaYHoraPreparacion").value(sameInstant(DEFAULT_FECHA_Y_HORA_PREPARACION)));
@@ -251,6 +314,7 @@ class AlimentoDeEntradaResourceIT {
         em.detach(updatedAlimentoDeEntrada);
         updatedAlimentoDeEntrada
             .peso(UPDATED_PESO)
+            .frutaYVerdura(UPDATED_FRUTA_Y_VERDURA)
             .fechaYHoraEntrada(UPDATED_FECHA_Y_HORA_ENTRADA)
             .fechaYHoraRecogida(UPDATED_FECHA_Y_HORA_RECOGIDA)
             .fechaYHoraPreparacion(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -269,6 +333,7 @@ class AlimentoDeEntradaResourceIT {
         assertThat(alimentoDeEntradaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeEntrada testAlimentoDeEntrada = alimentoDeEntradaList.get(alimentoDeEntradaList.size() - 1);
         assertThat(testAlimentoDeEntrada.getPeso()).isEqualTo(UPDATED_PESO);
+        assertThat(testAlimentoDeEntrada.getFrutaYVerdura()).isEqualTo(UPDATED_FRUTA_Y_VERDURA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraEntrada()).isEqualTo(UPDATED_FECHA_Y_HORA_ENTRADA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraRecogida()).isEqualTo(UPDATED_FECHA_Y_HORA_RECOGIDA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraPreparacion()).isEqualTo(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -355,6 +420,7 @@ class AlimentoDeEntradaResourceIT {
 
         partialUpdatedAlimentoDeEntrada
             .peso(UPDATED_PESO)
+            .frutaYVerdura(UPDATED_FRUTA_Y_VERDURA)
             .fechaYHoraEntrada(UPDATED_FECHA_Y_HORA_ENTRADA)
             .fechaYHoraRecogida(UPDATED_FECHA_Y_HORA_RECOGIDA)
             .fechaYHoraPreparacion(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -372,6 +438,7 @@ class AlimentoDeEntradaResourceIT {
         assertThat(alimentoDeEntradaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeEntrada testAlimentoDeEntrada = alimentoDeEntradaList.get(alimentoDeEntradaList.size() - 1);
         assertThat(testAlimentoDeEntrada.getPeso()).isEqualTo(UPDATED_PESO);
+        assertThat(testAlimentoDeEntrada.getFrutaYVerdura()).isEqualTo(UPDATED_FRUTA_Y_VERDURA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraEntrada()).isEqualTo(UPDATED_FECHA_Y_HORA_ENTRADA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraRecogida()).isEqualTo(UPDATED_FECHA_Y_HORA_RECOGIDA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraPreparacion()).isEqualTo(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -391,6 +458,7 @@ class AlimentoDeEntradaResourceIT {
 
         partialUpdatedAlimentoDeEntrada
             .peso(UPDATED_PESO)
+            .frutaYVerdura(UPDATED_FRUTA_Y_VERDURA)
             .fechaYHoraEntrada(UPDATED_FECHA_Y_HORA_ENTRADA)
             .fechaYHoraRecogida(UPDATED_FECHA_Y_HORA_RECOGIDA)
             .fechaYHoraPreparacion(UPDATED_FECHA_Y_HORA_PREPARACION);
@@ -408,6 +476,7 @@ class AlimentoDeEntradaResourceIT {
         assertThat(alimentoDeEntradaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeEntrada testAlimentoDeEntrada = alimentoDeEntradaList.get(alimentoDeEntradaList.size() - 1);
         assertThat(testAlimentoDeEntrada.getPeso()).isEqualTo(UPDATED_PESO);
+        assertThat(testAlimentoDeEntrada.getFrutaYVerdura()).isEqualTo(UPDATED_FRUTA_Y_VERDURA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraEntrada()).isEqualTo(UPDATED_FECHA_Y_HORA_ENTRADA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraRecogida()).isEqualTo(UPDATED_FECHA_Y_HORA_RECOGIDA);
         assertThat(testAlimentoDeEntrada.getFechaYHoraPreparacion()).isEqualTo(UPDATED_FECHA_Y_HORA_PREPARACION);

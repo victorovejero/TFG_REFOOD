@@ -1,4 +1,3 @@
-
 entity Nucleo {
     // @Id idNucleo Integer required,
     idNucleo String required,
@@ -94,7 +93,8 @@ entity Checkout{
 }
 
 entity FrutaYVerdura{
-nombreAlimento String required, }
+    nombreAlimento String required
+}
 entity TipoDeAlimento{
     nombreAlimento String required,
     descripcion String
@@ -112,6 +112,7 @@ entity Intolerancia {
     descripcion String
 }
 entity Voluntario {
+    idVoluntario String required,
     nombre String required,
     primerApellido String required,
     segundoApellido String,
@@ -123,7 +124,8 @@ entity Voluntario {
     sexo String required,
     fechaAlta LocalDate required,
     fechaBaja LocalDate,
-    perfil String required, // universitario, beneficiario etc...
+    categoriaPerfil String required, // universitario, beneficiario etc...
+    descripcionCategoria String,
     diaRefood String required,
     //responsableDia Boolean,
     origen String,
@@ -133,11 +135,12 @@ entity Voluntario {
     activo Boolean required
 }
 entity Socio{
-    nombre String required,
+nombre String required,
     primerApellido String required,
     segundoApellido String,
     email String required,
     telefonoContacto String required,
+    IBAN String required,
     dni String required,
     fechaNacimiento LocalDate required,
     sexo String required,
@@ -151,8 +154,7 @@ entity Socio{
     direccion String required,
     codigoPostal String required,
     provincia String,
-    pais String
-}
+    pais String, }
 //CAMBIO - QUITAR
 //entity Registro {
 //diaActividad LocalDate required,
@@ -179,20 +181,20 @@ relationship OneToMany {
 // TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
 // TipoDeAlimento to AlimentoDeSalida{tipoDeAlimento}
     TipoDeAlimento to AlimentoDeEntrada{tipoDeAlimento}
-    Beneficiario to PersonasBeneficiarias{beneficiario}
+    Beneficiario to PersonaBeneficiaria{beneficiario}
     Beneficiario to Checkout{beneficiario}
 }
 relationship ManyToMany {
     // Intolerancia{tipoDeAlimento} to TipoDeAlimento{intolerancia}
     Beneficiario{intolerancia} to Intolerancia{beneficiario}
-	PersonaBeneficiario{intolerancia} to Intolerancia{personaBeneficiaria}
-    //Registro{voluntario} to Voluntario{registro}
+	PersonaBeneficiaria{intolerancia} to Intolerancia{personaBeneficiaria}
+   // Registro{voluntario} to Voluntario{registro}
     TipoDeAlimento{intolerancia} to Intolerancia{tipoDeAlimento}
     AlimentoDeEntrada{frutaYVerdura} to FrutaYVerdura{alimentoDeEntrada}
     Checkout{alimentoDeSalida} to AlimentoDeSalida{checkout}
 }
 paginate Intolerancia, Nucleo, Tupper, Socio, TipoDeAlimento, FrutaYVerdura with infinite-scroll
-paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Registro, Voluntario, Checkout with pagination
+paginate  Donante, Beneficiario, AlimentoDeEntrada, AlimentoDeSalida, Voluntario, Checkout with pagination
 service all with serviceImpl
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

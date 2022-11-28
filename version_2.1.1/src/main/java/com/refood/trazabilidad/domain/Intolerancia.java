@@ -34,8 +34,16 @@ public class Intolerancia implements Serializable {
 
     @ManyToMany(mappedBy = "intolerancias")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias", "nucleo" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "alimentoDeSalidas", "personaBeneficiarias", "checkouts", "intolerancias", "nucleo" },
+        allowSetters = true
+    )
     private Set<Beneficiario> beneficiarios = new HashSet<>();
+
+    @ManyToMany(mappedBy = "intolerancias")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "intolerancias", "beneficiario" }, allowSetters = true)
+    private Set<PersonaBeneficiaria> personaBeneficiarias = new HashSet<>();
 
     @ManyToMany(mappedBy = "intolerancias")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -111,6 +119,37 @@ public class Intolerancia implements Serializable {
     public Intolerancia removeBeneficiario(Beneficiario beneficiario) {
         this.beneficiarios.remove(beneficiario);
         beneficiario.getIntolerancias().remove(this);
+        return this;
+    }
+
+    public Set<PersonaBeneficiaria> getPersonaBeneficiarias() {
+        return this.personaBeneficiarias;
+    }
+
+    public void setPersonaBeneficiarias(Set<PersonaBeneficiaria> personaBeneficiarias) {
+        if (this.personaBeneficiarias != null) {
+            this.personaBeneficiarias.forEach(i -> i.removeIntolerancia(this));
+        }
+        if (personaBeneficiarias != null) {
+            personaBeneficiarias.forEach(i -> i.addIntolerancia(this));
+        }
+        this.personaBeneficiarias = personaBeneficiarias;
+    }
+
+    public Intolerancia personaBeneficiarias(Set<PersonaBeneficiaria> personaBeneficiarias) {
+        this.setPersonaBeneficiarias(personaBeneficiarias);
+        return this;
+    }
+
+    public Intolerancia addPersonaBeneficiaria(PersonaBeneficiaria personaBeneficiaria) {
+        this.personaBeneficiarias.add(personaBeneficiaria);
+        personaBeneficiaria.getIntolerancias().add(this);
+        return this;
+    }
+
+    public Intolerancia removePersonaBeneficiaria(PersonaBeneficiaria personaBeneficiaria) {
+        this.personaBeneficiarias.remove(personaBeneficiaria);
+        personaBeneficiaria.getIntolerancias().remove(this);
         return this;
     }
 

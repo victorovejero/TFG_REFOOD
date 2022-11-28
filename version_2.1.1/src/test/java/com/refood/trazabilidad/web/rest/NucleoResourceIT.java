@@ -31,11 +31,17 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class NucleoResourceIT {
 
+    private static final String DEFAULT_ID_NUCLEO = "AAAAAAAAAA";
+    private static final String UPDATED_ID_NUCLEO = "BBBBBBBBBB";
+
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
     private static final String DEFAULT_DIRECCION = "AAAAAAAAAA";
     private static final String UPDATED_DIRECCION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CODIGO_POSTAL = "AAAAAAAAAA";
+    private static final String UPDATED_CODIGO_POSTAL = "BBBBBBBBBB";
 
     private static final String DEFAULT_PROVINCIA = "AAAAAAAAAA";
     private static final String UPDATED_PROVINCIA = "BBBBBBBBBB";
@@ -48,9 +54,6 @@ class NucleoResourceIT {
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
-
-    private static final Integer DEFAULT_NUMERO_RUTAS = 1;
-    private static final Integer UPDATED_NUMERO_RUTAS = 2;
 
     private static final Boolean DEFAULT_ACTIVO = false;
     private static final Boolean UPDATED_ACTIVO = true;
@@ -83,13 +86,14 @@ class NucleoResourceIT {
      */
     public static Nucleo createEntity(EntityManager em) {
         Nucleo nucleo = new Nucleo()
+            .idNucleo(DEFAULT_ID_NUCLEO)
             .nombre(DEFAULT_NOMBRE)
             .direccion(DEFAULT_DIRECCION)
+            .codigoPostal(DEFAULT_CODIGO_POSTAL)
             .provincia(DEFAULT_PROVINCIA)
             .responsable(DEFAULT_RESPONSABLE)
             .telefono(DEFAULT_TELEFONO)
             .email(DEFAULT_EMAIL)
-            .numeroRutas(DEFAULT_NUMERO_RUTAS)
             .activo(DEFAULT_ACTIVO);
         return nucleo;
     }
@@ -102,13 +106,14 @@ class NucleoResourceIT {
      */
     public static Nucleo createUpdatedEntity(EntityManager em) {
         Nucleo nucleo = new Nucleo()
+            .idNucleo(UPDATED_ID_NUCLEO)
             .nombre(UPDATED_NOMBRE)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
             .provincia(UPDATED_PROVINCIA)
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS)
             .activo(UPDATED_ACTIVO);
         return nucleo;
     }
@@ -132,13 +137,14 @@ class NucleoResourceIT {
         List<Nucleo> nucleoList = nucleoRepository.findAll();
         assertThat(nucleoList).hasSize(databaseSizeBeforeCreate + 1);
         Nucleo testNucleo = nucleoList.get(nucleoList.size() - 1);
+        assertThat(testNucleo.getIdNucleo()).isEqualTo(DEFAULT_ID_NUCLEO);
         assertThat(testNucleo.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testNucleo.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testNucleo.getCodigoPostal()).isEqualTo(DEFAULT_CODIGO_POSTAL);
         assertThat(testNucleo.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
         assertThat(testNucleo.getResponsable()).isEqualTo(DEFAULT_RESPONSABLE);
         assertThat(testNucleo.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testNucleo.getNumeroRutas()).isEqualTo(DEFAULT_NUMERO_RUTAS);
         assertThat(testNucleo.getActivo()).isEqualTo(DEFAULT_ACTIVO);
     }
 
@@ -159,6 +165,24 @@ class NucleoResourceIT {
         // Validate the Nucleo in the database
         List<Nucleo> nucleoList = nucleoRepository.findAll();
         assertThat(nucleoList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkIdNucleoIsRequired() throws Exception {
+        int databaseSizeBeforeTest = nucleoRepository.findAll().size();
+        // set the field null
+        nucleo.setIdNucleo(null);
+
+        // Create the Nucleo, which fails.
+        NucleoDTO nucleoDTO = nucleoMapper.toDto(nucleo);
+
+        restNucleoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(nucleoDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Nucleo> nucleoList = nucleoRepository.findAll();
+        assertThat(nucleoList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -185,6 +209,24 @@ class NucleoResourceIT {
         int databaseSizeBeforeTest = nucleoRepository.findAll().size();
         // set the field null
         nucleo.setDireccion(null);
+
+        // Create the Nucleo, which fails.
+        NucleoDTO nucleoDTO = nucleoMapper.toDto(nucleo);
+
+        restNucleoMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(nucleoDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Nucleo> nucleoList = nucleoRepository.findAll();
+        assertThat(nucleoList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCodigoPostalIsRequired() throws Exception {
+        int databaseSizeBeforeTest = nucleoRepository.findAll().size();
+        // set the field null
+        nucleo.setCodigoPostal(null);
 
         // Create the Nucleo, which fails.
         NucleoDTO nucleoDTO = nucleoMapper.toDto(nucleo);
@@ -271,24 +313,6 @@ class NucleoResourceIT {
 
     @Test
     @Transactional
-    void checkNumeroRutasIsRequired() throws Exception {
-        int databaseSizeBeforeTest = nucleoRepository.findAll().size();
-        // set the field null
-        nucleo.setNumeroRutas(null);
-
-        // Create the Nucleo, which fails.
-        NucleoDTO nucleoDTO = nucleoMapper.toDto(nucleo);
-
-        restNucleoMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(nucleoDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Nucleo> nucleoList = nucleoRepository.findAll();
-        assertThat(nucleoList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkActivoIsRequired() throws Exception {
         int databaseSizeBeforeTest = nucleoRepository.findAll().size();
         // set the field null
@@ -317,13 +341,14 @@ class NucleoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(nucleo.getId().intValue())))
+            .andExpect(jsonPath("$.[*].idNucleo").value(hasItem(DEFAULT_ID_NUCLEO)))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
             .andExpect(jsonPath("$.[*].direccion").value(hasItem(DEFAULT_DIRECCION)))
+            .andExpect(jsonPath("$.[*].codigoPostal").value(hasItem(DEFAULT_CODIGO_POSTAL)))
             .andExpect(jsonPath("$.[*].provincia").value(hasItem(DEFAULT_PROVINCIA)))
             .andExpect(jsonPath("$.[*].responsable").value(hasItem(DEFAULT_RESPONSABLE)))
             .andExpect(jsonPath("$.[*].telefono").value(hasItem(DEFAULT_TELEFONO)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
-            .andExpect(jsonPath("$.[*].numeroRutas").value(hasItem(DEFAULT_NUMERO_RUTAS)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO.booleanValue())));
     }
 
@@ -339,13 +364,14 @@ class NucleoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(nucleo.getId().intValue()))
+            .andExpect(jsonPath("$.idNucleo").value(DEFAULT_ID_NUCLEO))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
             .andExpect(jsonPath("$.direccion").value(DEFAULT_DIRECCION))
+            .andExpect(jsonPath("$.codigoPostal").value(DEFAULT_CODIGO_POSTAL))
             .andExpect(jsonPath("$.provincia").value(DEFAULT_PROVINCIA))
             .andExpect(jsonPath("$.responsable").value(DEFAULT_RESPONSABLE))
             .andExpect(jsonPath("$.telefono").value(DEFAULT_TELEFONO))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
-            .andExpect(jsonPath("$.numeroRutas").value(DEFAULT_NUMERO_RUTAS))
             .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO.booleanValue()));
     }
 
@@ -369,13 +395,14 @@ class NucleoResourceIT {
         // Disconnect from session so that the updates on updatedNucleo are not directly saved in db
         em.detach(updatedNucleo);
         updatedNucleo
+            .idNucleo(UPDATED_ID_NUCLEO)
             .nombre(UPDATED_NOMBRE)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
             .provincia(UPDATED_PROVINCIA)
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS)
             .activo(UPDATED_ACTIVO);
         NucleoDTO nucleoDTO = nucleoMapper.toDto(updatedNucleo);
 
@@ -391,13 +418,14 @@ class NucleoResourceIT {
         List<Nucleo> nucleoList = nucleoRepository.findAll();
         assertThat(nucleoList).hasSize(databaseSizeBeforeUpdate);
         Nucleo testNucleo = nucleoList.get(nucleoList.size() - 1);
+        assertThat(testNucleo.getIdNucleo()).isEqualTo(UPDATED_ID_NUCLEO);
         assertThat(testNucleo.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testNucleo.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testNucleo.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
         assertThat(testNucleo.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
         assertThat(testNucleo.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
         assertThat(testNucleo.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testNucleo.getNumeroRutas()).isEqualTo(UPDATED_NUMERO_RUTAS);
         assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
@@ -478,7 +506,12 @@ class NucleoResourceIT {
         Nucleo partialUpdatedNucleo = new Nucleo();
         partialUpdatedNucleo.setId(nucleo.getId());
 
-        partialUpdatedNucleo.nombre(UPDATED_NOMBRE).responsable(UPDATED_RESPONSABLE).email(UPDATED_EMAIL).activo(UPDATED_ACTIVO);
+        partialUpdatedNucleo
+            .idNucleo(UPDATED_ID_NUCLEO)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
+            .responsable(UPDATED_RESPONSABLE)
+            .email(UPDATED_EMAIL)
+            .activo(UPDATED_ACTIVO);
 
         restNucleoMockMvc
             .perform(
@@ -492,13 +525,14 @@ class NucleoResourceIT {
         List<Nucleo> nucleoList = nucleoRepository.findAll();
         assertThat(nucleoList).hasSize(databaseSizeBeforeUpdate);
         Nucleo testNucleo = nucleoList.get(nucleoList.size() - 1);
-        assertThat(testNucleo.getNombre()).isEqualTo(UPDATED_NOMBRE);
+        assertThat(testNucleo.getIdNucleo()).isEqualTo(UPDATED_ID_NUCLEO);
+        assertThat(testNucleo.getNombre()).isEqualTo(DEFAULT_NOMBRE);
         assertThat(testNucleo.getDireccion()).isEqualTo(DEFAULT_DIRECCION);
+        assertThat(testNucleo.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
         assertThat(testNucleo.getProvincia()).isEqualTo(DEFAULT_PROVINCIA);
         assertThat(testNucleo.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
         assertThat(testNucleo.getTelefono()).isEqualTo(DEFAULT_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testNucleo.getNumeroRutas()).isEqualTo(DEFAULT_NUMERO_RUTAS);
         assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 
@@ -515,13 +549,14 @@ class NucleoResourceIT {
         partialUpdatedNucleo.setId(nucleo.getId());
 
         partialUpdatedNucleo
+            .idNucleo(UPDATED_ID_NUCLEO)
             .nombre(UPDATED_NOMBRE)
             .direccion(UPDATED_DIRECCION)
+            .codigoPostal(UPDATED_CODIGO_POSTAL)
             .provincia(UPDATED_PROVINCIA)
             .responsable(UPDATED_RESPONSABLE)
             .telefono(UPDATED_TELEFONO)
             .email(UPDATED_EMAIL)
-            .numeroRutas(UPDATED_NUMERO_RUTAS)
             .activo(UPDATED_ACTIVO);
 
         restNucleoMockMvc
@@ -536,13 +571,14 @@ class NucleoResourceIT {
         List<Nucleo> nucleoList = nucleoRepository.findAll();
         assertThat(nucleoList).hasSize(databaseSizeBeforeUpdate);
         Nucleo testNucleo = nucleoList.get(nucleoList.size() - 1);
+        assertThat(testNucleo.getIdNucleo()).isEqualTo(UPDATED_ID_NUCLEO);
         assertThat(testNucleo.getNombre()).isEqualTo(UPDATED_NOMBRE);
         assertThat(testNucleo.getDireccion()).isEqualTo(UPDATED_DIRECCION);
+        assertThat(testNucleo.getCodigoPostal()).isEqualTo(UPDATED_CODIGO_POSTAL);
         assertThat(testNucleo.getProvincia()).isEqualTo(UPDATED_PROVINCIA);
         assertThat(testNucleo.getResponsable()).isEqualTo(UPDATED_RESPONSABLE);
         assertThat(testNucleo.getTelefono()).isEqualTo(UPDATED_TELEFONO);
         assertThat(testNucleo.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testNucleo.getNumeroRutas()).isEqualTo(UPDATED_NUMERO_RUTAS);
         assertThat(testNucleo.getActivo()).isEqualTo(UPDATED_ACTIVO);
     }
 

@@ -108,9 +108,6 @@ export const AlimentoDeSalida = () => {
                 <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('peso')}>
-                  Peso <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('fechaSalida')}>
                   Fecha Salida <FontAwesomeIcon icon="sort" />
                 </th>
@@ -134,7 +131,6 @@ export const AlimentoDeSalida = () => {
                       {alimentoDeSalida.id}
                     </Button>
                   </td>
-                  <td>{alimentoDeSalida.peso}</td>
                   <td>
                     {alimentoDeSalida.fechaSalida ? (
                       <TextFormat type="date" value={alimentoDeSalida.fechaSalida} format={APP_LOCAL_DATE_FORMAT} />

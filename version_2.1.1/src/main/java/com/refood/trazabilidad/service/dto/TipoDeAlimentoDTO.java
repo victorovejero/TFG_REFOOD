@@ -17,6 +17,8 @@ public class TipoDeAlimentoDTO implements Serializable {
     @NotNull
     private String nombreAlimento;
 
+    private String descripcion;
+
     private Set<IntoleranciaDTO> intolerancias = new HashSet<>();
 
     public Long getId() {
@@ -33,6 +35,14 @@ public class TipoDeAlimentoDTO implements Serializable {
 
     public void setNombreAlimento(String nombreAlimento) {
         this.nombreAlimento = nombreAlimento;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Set<IntoleranciaDTO> getIntolerancias() {
@@ -70,6 +80,7 @@ public class TipoDeAlimentoDTO implements Serializable {
         return "TipoDeAlimentoDTO{" +
             "id=" + getId() +
             ", nombreAlimento='" + getNombreAlimento() + "'" +
+            ", descripcion='" + getDescripcion() + "'" +
             ", intolerancias=" + getIntolerancias() +
             "}";
     }

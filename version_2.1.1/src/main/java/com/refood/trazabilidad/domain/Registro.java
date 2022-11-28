@@ -41,11 +41,11 @@ public class Registro implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "voluntario_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "nucleo", "registros" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "nucleo" }, allowSetters = true)
     private Set<Voluntario> voluntarios = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios" }, allowSetters = true)
     private Nucleo nucleo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -104,13 +104,11 @@ public class Registro implements Serializable {
 
     public Registro addVoluntario(Voluntario voluntario) {
         this.voluntarios.add(voluntario);
-        voluntario.getRegistros().add(this);
         return this;
     }
 
     public Registro removeVoluntario(Voluntario voluntario) {
         this.voluntarios.remove(voluntario);
-        voluntario.getRegistros().remove(this);
         return this;
     }
 

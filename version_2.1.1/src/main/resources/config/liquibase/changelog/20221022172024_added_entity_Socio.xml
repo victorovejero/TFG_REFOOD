@@ -29,6 +29,9 @@
             <column name="telefono_contacto" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="i_ban" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
             <column name="dni" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -53,7 +56,22 @@
             <column name="activo" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="nucleo_id" type="bigint">
+            <column name="nucleo_asociado" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="comunicacion" type="boolean">
+                <constraints nullable="false" />
+            </column>
+            <column name="direccion" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="provincia" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+            <column name="pais" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -82,6 +100,7 @@
             <column name="segundo_apellido" type="string"/>
             <column name="email" type="string"/>
             <column name="telefono_contacto" type="string"/>
+            <column name="i_ban" type="string"/>
             <column name="dni" type="string"/>
             <column name="fecha_nacimiento" type="date"/>
             <column name="sexo" type="string"/>
@@ -90,6 +109,12 @@
             <column name="contribucion_mensual" type="numeric"/>
             <column name="periodo_pago" type="string"/>
             <column name="activo" type="boolean"/>
+            <column name="nucleo_asociado" type="string"/>
+            <column name="comunicacion" type="boolean"/>
+            <column name="direccion" type="string"/>
+            <column name="codigo_postal" type="string"/>
+            <column name="provincia" type="string"/>
+            <column name="pais" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -14,6 +14,9 @@ public class VoluntarioDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String idVoluntario;
+
+    @NotNull
     private String nombre;
 
     @NotNull
@@ -41,16 +44,20 @@ public class VoluntarioDTO implements Serializable {
     private LocalDate fechaBaja;
 
     @NotNull
-    private String tipo;
+    private String categoriaPerfil;
 
-    private String tipoTurno;
+    private String descripcionCategoria;
 
-    private Boolean responsableDia;
+    @NotNull
+    private String diaRefood;
 
     private String origen;
 
     @NotNull
     private Boolean manipuladorAlimentos;
+
+    @NotNull
+    private String direccion;
 
     @NotNull
     private String codigoPostal;
@@ -66,6 +73,14 @@ public class VoluntarioDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdVoluntario() {
+        return idVoluntario;
+    }
+
+    public void setIdVoluntario(String idVoluntario) {
+        this.idVoluntario = idVoluntario;
     }
 
     public String getNombre() {
@@ -148,28 +163,28 @@ public class VoluntarioDTO implements Serializable {
         this.fechaBaja = fechaBaja;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getCategoriaPerfil() {
+        return categoriaPerfil;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setCategoriaPerfil(String categoriaPerfil) {
+        this.categoriaPerfil = categoriaPerfil;
     }
 
-    public String getTipoTurno() {
-        return tipoTurno;
+    public String getDescripcionCategoria() {
+        return descripcionCategoria;
     }
 
-    public void setTipoTurno(String tipoTurno) {
-        this.tipoTurno = tipoTurno;
+    public void setDescripcionCategoria(String descripcionCategoria) {
+        this.descripcionCategoria = descripcionCategoria;
     }
 
-    public Boolean getResponsableDia() {
-        return responsableDia;
+    public String getDiaRefood() {
+        return diaRefood;
     }
 
-    public void setResponsableDia(Boolean responsableDia) {
-        this.responsableDia = responsableDia;
+    public void setDiaRefood(String diaRefood) {
+        this.diaRefood = diaRefood;
     }
 
     public String getOrigen() {
@@ -186,6 +201,14 @@ public class VoluntarioDTO implements Serializable {
 
     public void setManipuladorAlimentos(Boolean manipuladorAlimentos) {
         this.manipuladorAlimentos = manipuladorAlimentos;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public String getCodigoPostal() {
@@ -238,6 +261,7 @@ public class VoluntarioDTO implements Serializable {
     public String toString() {
         return "VoluntarioDTO{" +
             "id=" + getId() +
+            ", idVoluntario='" + getIdVoluntario() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", primerApellido='" + getPrimerApellido() + "'" +
             ", segundoApellido='" + getSegundoApellido() + "'" +
@@ -248,11 +272,12 @@ public class VoluntarioDTO implements Serializable {
             ", sexo='" + getSexo() + "'" +
             ", fechaAlta='" + getFechaAlta() + "'" +
             ", fechaBaja='" + getFechaBaja() + "'" +
-            ", tipo='" + getTipo() + "'" +
-            ", tipoTurno='" + getTipoTurno() + "'" +
-            ", responsableDia='" + getResponsableDia() + "'" +
+            ", categoriaPerfil='" + getCategoriaPerfil() + "'" +
+            ", descripcionCategoria='" + getDescripcionCategoria() + "'" +
+            ", diaRefood='" + getDiaRefood() + "'" +
             ", origen='" + getOrigen() + "'" +
             ", manipuladorAlimentos='" + getManipuladorAlimentos() + "'" +
+            ", direccion='" + getDireccion() + "'" +
             ", codigoPostal='" + getCodigoPostal() + "'" +
             ", activo='" + getActivo() + "'" +
             ", nucleo=" + getNucleo() +

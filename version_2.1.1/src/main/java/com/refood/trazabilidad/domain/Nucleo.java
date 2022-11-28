@@ -26,12 +26,20 @@ public class Nucleo implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "id_nucleo", nullable = false)
+    private String idNucleo;
+
+    @NotNull
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
     @NotNull
     @Column(name = "direccion", nullable = false)
     private String direccion;
+
+    @NotNull
+    @Column(name = "codigo_postal", nullable = false)
+    private String codigoPostal;
 
     @NotNull
     @Column(name = "provincia", nullable = false)
@@ -50,10 +58,6 @@ public class Nucleo implements Serializable {
     private String email;
 
     @NotNull
-    @Column(name = "numero_rutas", nullable = false)
-    private Integer numeroRutas;
-
-    @NotNull
     @Column(name = "activo", nullable = false)
     private Boolean activo;
 
@@ -64,23 +68,16 @@ public class Nucleo implements Serializable {
 
     @OneToMany(mappedBy = "nucleo")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "intolerancias", "nucleo" }, allowSetters = true)
+    @JsonIgnoreProperties(
+        value = { "alimentoDeSalidas", "personaBeneficiarias", "checkouts", "intolerancias", "nucleo" },
+        allowSetters = true
+    )
     private Set<Beneficiario> beneficiarios = new HashSet<>();
 
     @OneToMany(mappedBy = "nucleo")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "nucleo", "registros" }, allowSetters = true)
-    private Set<Voluntario> voluntarios = new HashSet<>();
-
-    @OneToMany(mappedBy = "nucleo")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "nucleo" }, allowSetters = true)
-    private Set<Socio> socios = new HashSet<>();
-
-    @OneToMany(mappedBy = "nucleo")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "voluntarios", "nucleo" }, allowSetters = true)
-    private Set<Registro> registros = new HashSet<>();
+    private Set<Voluntario> voluntarios = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -95,6 +92,19 @@ public class Nucleo implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getIdNucleo() {
+        return this.idNucleo;
+    }
+
+    public Nucleo idNucleo(String idNucleo) {
+        this.setIdNucleo(idNucleo);
+        return this;
+    }
+
+    public void setIdNucleo(String idNucleo) {
+        this.idNucleo = idNucleo;
     }
 
     public String getNombre() {
@@ -121,6 +131,19 @@ public class Nucleo implements Serializable {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return this.codigoPostal;
+    }
+
+    public Nucleo codigoPostal(String codigoPostal) {
+        this.setCodigoPostal(codigoPostal);
+        return this;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
     }
 
     public String getProvincia() {
@@ -173,19 +196,6 @@ public class Nucleo implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Integer getNumeroRutas() {
-        return this.numeroRutas;
-    }
-
-    public Nucleo numeroRutas(Integer numeroRutas) {
-        this.setNumeroRutas(numeroRutas);
-        return this;
-    }
-
-    public void setNumeroRutas(Integer numeroRutas) {
-        this.numeroRutas = numeroRutas;
     }
 
     public Boolean getActivo() {
@@ -294,68 +304,6 @@ public class Nucleo implements Serializable {
         return this;
     }
 
-    public Set<Socio> getSocios() {
-        return this.socios;
-    }
-
-    public void setSocios(Set<Socio> socios) {
-        if (this.socios != null) {
-            this.socios.forEach(i -> i.setNucleo(null));
-        }
-        if (socios != null) {
-            socios.forEach(i -> i.setNucleo(this));
-        }
-        this.socios = socios;
-    }
-
-    public Nucleo socios(Set<Socio> socios) {
-        this.setSocios(socios);
-        return this;
-    }
-
-    public Nucleo addSocio(Socio socio) {
-        this.socios.add(socio);
-        socio.setNucleo(this);
-        return this;
-    }
-
-    public Nucleo removeSocio(Socio socio) {
-        this.socios.remove(socio);
-        socio.setNucleo(null);
-        return this;
-    }
-
-    public Set<Registro> getRegistros() {
-        return this.registros;
-    }
-
-    public void setRegistros(Set<Registro> registros) {
-        if (this.registros != null) {
-            this.registros.forEach(i -> i.setNucleo(null));
-        }
-        if (registros != null) {
-            registros.forEach(i -> i.setNucleo(this));
-        }
-        this.registros = registros;
-    }
-
-    public Nucleo registros(Set<Registro> registros) {
-        this.setRegistros(registros);
-        return this;
-    }
-
-    public Nucleo addRegistro(Registro registro) {
-        this.registros.add(registro);
-        registro.setNucleo(this);
-        return this;
-    }
-
-    public Nucleo removeRegistro(Registro registro) {
-        this.registros.remove(registro);
-        registro.setNucleo(null);
-        return this;
-    }
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 
     @Override
@@ -380,13 +328,14 @@ public class Nucleo implements Serializable {
     public String toString() {
         return "Nucleo{" +
             "id=" + getId() +
+            ", idNucleo='" + getIdNucleo() + "'" +
             ", nombre='" + getNombre() + "'" +
             ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
             ", provincia='" + getProvincia() + "'" +
             ", responsable='" + getResponsable() + "'" +
             ", telefono='" + getTelefono() + "'" +
             ", email='" + getEmail() + "'" +
-            ", numeroRutas=" + getNumeroRutas() +
             ", activo='" + getActivo() + "'" +
             "}";
     }

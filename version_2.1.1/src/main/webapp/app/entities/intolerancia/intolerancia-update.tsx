@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IBeneficiario } from 'app/shared/model/beneficiario.model';
 import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
+import { IPersonaBeneficiaria } from 'app/shared/model/persona-beneficiaria.model';
+import { getEntities as getPersonaBeneficiarias } from 'app/entities/persona-beneficiaria/persona-beneficiaria.reducer';
 import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
 import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IIntolerancia } from 'app/shared/model/intolerancia.model';
@@ -24,6 +26,7 @@ export const IntoleranciaUpdate = () => {
   const isNew = id === undefined;
 
   const beneficiarios = useAppSelector(state => state.beneficiario.entities);
+  const personaBeneficiarias = useAppSelector(state => state.personaBeneficiaria.entities);
   const tipoDeAlimentos = useAppSelector(state => state.tipoDeAlimento.entities);
   const intoleranciaEntity = useAppSelector(state => state.intolerancia.entity);
   const loading = useAppSelector(state => state.intolerancia.loading);
@@ -40,6 +43,7 @@ export const IntoleranciaUpdate = () => {
     }
 
     dispatch(getBeneficiarios({}));
+    dispatch(getPersonaBeneficiarias({}));
     dispatch(getTipoDeAlimentos({}));
   }, []);
 

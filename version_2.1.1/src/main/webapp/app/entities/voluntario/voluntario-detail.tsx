@@ -29,6 +29,10 @@ export const VoluntarioDetail = () => {
           </dt>
           <dd>{voluntarioEntity.id}</dd>
           <dt>
+            <span id="idVoluntario">Id Voluntario</span>
+          </dt>
+          <dd>{voluntarioEntity.idVoluntario}</dd>
+          <dt>
             <span id="nombre">Nombre</span>
           </dt>
           <dd>{voluntarioEntity.nombre}</dd>
@@ -81,17 +85,17 @@ export const VoluntarioDetail = () => {
             ) : null}
           </dd>
           <dt>
-            <span id="tipo">Tipo</span>
+            <span id="categoriaPerfil">Categoria Perfil</span>
           </dt>
-          <dd>{voluntarioEntity.tipo}</dd>
+          <dd>{voluntarioEntity.categoriaPerfil}</dd>
           <dt>
-            <span id="tipoTurno">Tipo Turno</span>
+            <span id="descripcionCategoria">Descripcion Categoria</span>
           </dt>
-          <dd>{voluntarioEntity.tipoTurno}</dd>
+          <dd>{voluntarioEntity.descripcionCategoria}</dd>
           <dt>
-            <span id="responsableDia">Responsable Dia</span>
+            <span id="diaRefood">Dia Refood</span>
           </dt>
-          <dd>{voluntarioEntity.responsableDia ? 'true' : 'false'}</dd>
+          <dd>{voluntarioEntity.diaRefood}</dd>
           <dt>
             <span id="origen">Origen</span>
           </dt>
@@ -100,6 +104,10 @@ export const VoluntarioDetail = () => {
             <span id="manipuladorAlimentos">Manipulador Alimentos</span>
           </dt>
           <dd>{voluntarioEntity.manipuladorAlimentos ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="direccion">Direccion</span>
+          </dt>
+          <dd>{voluntarioEntity.direccion}</dd>
           <dt>
             <span id="codigoPostal">Codigo Postal</span>
           </dt>

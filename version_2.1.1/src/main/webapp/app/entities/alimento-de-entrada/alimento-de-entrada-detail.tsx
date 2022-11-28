@@ -24,14 +24,18 @@ export const AlimentoDeEntradaDetail = () => {
       <Col md="8">
         <h2 data-cy="alimentoDeEntradaDetailsHeading">Alimento De Entrada</h2>
         <dl className="jh-entity-details">
-          <dt>
+          {/* <dt>
             <span id="id">ID</span>
           </dt>
-          <dd>{alimentoDeEntradaEntity.id}</dd>
+          <dd>{alimentoDeEntradaEntity.id}</dd> */}
           <dt>
             <span id="peso">Peso</span>
           </dt>
           <dd>{alimentoDeEntradaEntity.peso}</dd>
+          <dt>
+            <span id="frutaYVerdura">Fruta Y Verdura</span>
+          </dt>
+          <dd>{alimentoDeEntradaEntity.frutaYVerdura ? 'true' : 'false'}</dd>
           <dt>
             <span id="fechaYHoraEntrada">Fecha Y Hora Entrada</span>
           </dt>
@@ -56,12 +60,35 @@ export const AlimentoDeEntradaDetail = () => {
               <TextFormat value={alimentoDeEntradaEntity.fechaYHoraPreparacion} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
+          <dt>Fruta Y Verdura</dt>
+          <dd>
+            {alimentoDeEntradaEntity.frutaYVerduras
+              ? alimentoDeEntradaEntity.frutaYVerduras.map((val, i) => (
+                  <span key={val.id}>
+                    {val.nombreAlimento}
+                    {alimentoDeEntradaEntity.frutaYVerduras && i === alimentoDeEntradaEntity.frutaYVerduras.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
           <dt>Tupper</dt>
-          <dd>{alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.id : ''}</dd>
+          <dd>
+          <Link to={`/tupper/${id}`}>
+            {alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.modelo : ''}
+          </Link>
+          </dd>
           <dt>Donante</dt>
-          <dd>{alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.id : ''}</dd>
+          <dd>
+            <Link to={`/donante/${id}`}>
+              {alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.idDonante : ''}
+            </Link> 
+          </dd>
           <dt>Tipo De Alimento</dt>
-          <dd>{alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.id : ''}</dd>
+          <dd>
+            <Link to={`/tipo-de-alimento/${id}`}>
+                {alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.nombreAlimento : ''}
+            </Link>
+          </dd>
         </dl>
         <Button tag={Link} to="/alimento-de-entrada" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

@@ -123,11 +123,17 @@ export const Nucleo = () => {
                   <th className="hand" onClick={sort('id')}>
                     ID <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('idNucleo')}>
+                    Id Nucleo <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('nombre')}>
                     Nombre <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('direccion')}>
                     Direccion <FontAwesomeIcon icon="sort" />
+                  </th>
+                  <th className="hand" onClick={sort('codigoPostal')}>
+                    Codigo Postal <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('provincia')}>
                     Provincia <FontAwesomeIcon icon="sort" />
@@ -140,9 +146,6 @@ export const Nucleo = () => {
                   </th>
                   <th className="hand" onClick={sort('email')}>
                     Email <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('numeroRutas')}>
-                    Numero Rutas <FontAwesomeIcon icon="sort" />
                   </th>
                   <th className="hand" onClick={sort('activo')}>
                     Activo <FontAwesomeIcon icon="sort" />
@@ -158,13 +161,14 @@ export const Nucleo = () => {
                         {nucleo.id}
                       </Button>
                     </td>
+                    <td>{nucleo.idNucleo}</td>
                     <td>{nucleo.nombre}</td>
                     <td>{nucleo.direccion}</td>
+                    <td>{nucleo.codigoPostal}</td>
                     <td>{nucleo.provincia}</td>
                     <td>{nucleo.responsable}</td>
                     <td>{nucleo.telefono}</td>
                     <td>{nucleo.email}</td>
-                    <td>{nucleo.numeroRutas}</td>
                     <td>{nucleo.activo ? 'true' : 'false'}</td>
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">

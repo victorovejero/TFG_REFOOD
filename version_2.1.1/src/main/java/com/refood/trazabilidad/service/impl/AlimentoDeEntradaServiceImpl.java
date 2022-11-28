@@ -72,11 +72,15 @@ public class AlimentoDeEntradaServiceImpl implements AlimentoDeEntradaService {
         return alimentoDeEntradaRepository.findAll(pageable).map(alimentoDeEntradaMapper::toDto);
     }
 
+    public Page<AlimentoDeEntradaDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return alimentoDeEntradaRepository.findAllWithEagerRelationships(pageable).map(alimentoDeEntradaMapper::toDto);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public Optional<AlimentoDeEntradaDTO> findOne(Long id) {
         log.debug("Request to get AlimentoDeEntrada : {}", id);
-        return alimentoDeEntradaRepository.findById(id).map(alimentoDeEntradaMapper::toDto);
+        return alimentoDeEntradaRepository.findOneWithEagerRelationships(id).map(alimentoDeEntradaMapper::toDto);
     }
 
     @Override

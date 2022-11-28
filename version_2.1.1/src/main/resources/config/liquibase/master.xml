@@ -22,6 +22,9 @@
     <include file="config/liquibase/changelog/20221022172023_added_entity_Voluntario.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172024_added_entity_Socio.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172025_added_entity_Registro.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221122140420_added_entity_PersonaBeneficiaria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221122140421_added_entity_Checkout.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221122140422_added_entity_FrutaYVerdura.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20221022172016_added_entity_constraints_Donante.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172017_added_entity_constraints_Beneficiario.xml" relativeToChangelogFile="false"/>
@@ -32,6 +35,8 @@
     <include file="config/liquibase/changelog/20221022172024_added_entity_constraints_Socio.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172025_added_entity_constraints_Registro.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20221022172020_added_entity_constraints_TipoDeAlimento.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221122140420_added_entity_constraints_PersonaBeneficiaria.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20221122140421_added_entity_constraints_Checkout.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

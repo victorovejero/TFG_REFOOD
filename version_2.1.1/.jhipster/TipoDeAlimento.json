@@ -9,6 +9,10 @@
       "fieldName": "nombreAlimento",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String"
     }
   ],
   "fluentMethods": true,

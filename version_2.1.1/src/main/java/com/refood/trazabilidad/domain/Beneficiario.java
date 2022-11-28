@@ -2,6 +2,7 @@ package com.refood.trazabilidad.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -30,12 +31,46 @@ public class Beneficiario implements Serializable {
     private String idBeneficiario;
 
     @NotNull
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
+    @Column(name = "nombre_representante", nullable = false)
+    private String nombreRepresentante;
+
+    @NotNull
+    @Column(name = "primer_apellido_representante", nullable = false)
+    private String primerApellidoRepresentante;
+
+    @Column(name = "segundo_apellido_representante")
+    private String segundoApellidoRepresentante;
 
     @NotNull
     @Column(name = "numero_personas", nullable = false)
     private Integer numeroPersonas;
+
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
+
+    @NotNull
+    @Column(name = "telefono", nullable = false)
+    private String telefono;
+
+    @NotNull
+    @Column(name = "telefono_secundario", nullable = false)
+    private String telefonoSecundario;
+
+    @NotNull
+    @Column(name = "direccion", nullable = false)
+    private String direccion;
+
+    @NotNull
+    @Column(name = "codigo_postal", nullable = false)
+    private String codigoPostal;
+
+    @NotNull
+    @Column(name = "fecha_alta", nullable = false)
+    private LocalDate fechaAlta;
+
+    @Column(name = "fecha_baja")
+    private LocalDate fechaBaja;
 
     @NotNull
     @Column(name = "numero_ninios", nullable = false)
@@ -50,8 +85,18 @@ public class Beneficiario implements Serializable {
 
     @OneToMany(mappedBy = "beneficiario")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "tupper", "beneficiario", "alimentoDeEntrada", "checkouts" }, allowSetters = true)
     private Set<AlimentoDeSalida> alimentoDeSalidas = new HashSet<>();
+
+    @OneToMany(mappedBy = "beneficiario")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "intolerancias", "beneficiario" }, allowSetters = true)
+    private Set<PersonaBeneficiaria> personaBeneficiarias = new HashSet<>();
+
+    @OneToMany(mappedBy = "beneficiario")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "alimentoDeSalidas", "beneficiario" }, allowSetters = true)
+    private Set<Checkout> checkouts = new HashSet<>();
 
     @ManyToMany
     @JoinTable(
@@ -60,11 +105,11 @@ public class Beneficiario implements Serializable {
         inverseJoinColumns = @JoinColumn(name = "intolerancia_id")
     )
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "beneficiarios", "tipoDeAlimentos" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "beneficiarios", "personaBeneficiarias", "tipoDeAlimentos" }, allowSetters = true)
     private Set<Intolerancia> intolerancias = new HashSet<>();
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios", "socios", "registros" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "donantes", "beneficiarios", "voluntarios" }, allowSetters = true)
     private Nucleo nucleo;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -95,17 +140,43 @@ public class Beneficiario implements Serializable {
         this.idBeneficiario = idBeneficiario;
     }
 
-    public String getNombre() {
-        return this.nombre;
+    public String getNombreRepresentante() {
+        return this.nombreRepresentante;
     }
 
-    public Beneficiario nombre(String nombre) {
-        this.setNombre(nombre);
+    public Beneficiario nombreRepresentante(String nombreRepresentante) {
+        this.setNombreRepresentante(nombreRepresentante);
         return this;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreRepresentante(String nombreRepresentante) {
+        this.nombreRepresentante = nombreRepresentante;
+    }
+
+    public String getPrimerApellidoRepresentante() {
+        return this.primerApellidoRepresentante;
+    }
+
+    public Beneficiario primerApellidoRepresentante(String primerApellidoRepresentante) {
+        this.setPrimerApellidoRepresentante(primerApellidoRepresentante);
+        return this;
+    }
+
+    public void setPrimerApellidoRepresentante(String primerApellidoRepresentante) {
+        this.primerApellidoRepresentante = primerApellidoRepresentante;
+    }
+
+    public String getSegundoApellidoRepresentante() {
+        return this.segundoApellidoRepresentante;
+    }
+
+    public Beneficiario segundoApellidoRepresentante(String segundoApellidoRepresentante) {
+        this.setSegundoApellidoRepresentante(segundoApellidoRepresentante);
+        return this;
+    }
+
+    public void setSegundoApellidoRepresentante(String segundoApellidoRepresentante) {
+        this.segundoApellidoRepresentante = segundoApellidoRepresentante;
     }
 
     public Integer getNumeroPersonas() {
@@ -119,6 +190,97 @@ public class Beneficiario implements Serializable {
 
     public void setNumeroPersonas(Integer numeroPersonas) {
         this.numeroPersonas = numeroPersonas;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public Beneficiario email(String email) {
+        this.setEmail(email);
+        return this;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return this.telefono;
+    }
+
+    public Beneficiario telefono(String telefono) {
+        this.setTelefono(telefono);
+        return this;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefonoSecundario() {
+        return this.telefonoSecundario;
+    }
+
+    public Beneficiario telefonoSecundario(String telefonoSecundario) {
+        this.setTelefonoSecundario(telefonoSecundario);
+        return this;
+    }
+
+    public void setTelefonoSecundario(String telefonoSecundario) {
+        this.telefonoSecundario = telefonoSecundario;
+    }
+
+    public String getDireccion() {
+        return this.direccion;
+    }
+
+    public Beneficiario direccion(String direccion) {
+        this.setDireccion(direccion);
+        return this;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodigoPostal() {
+        return this.codigoPostal;
+    }
+
+    public Beneficiario codigoPostal(String codigoPostal) {
+        this.setCodigoPostal(codigoPostal);
+        return this;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public LocalDate getFechaAlta() {
+        return this.fechaAlta;
+    }
+
+    public Beneficiario fechaAlta(LocalDate fechaAlta) {
+        this.setFechaAlta(fechaAlta);
+        return this;
+    }
+
+    public void setFechaAlta(LocalDate fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
+
+    public LocalDate getFechaBaja() {
+        return this.fechaBaja;
+    }
+
+    public Beneficiario fechaBaja(LocalDate fechaBaja) {
+        this.setFechaBaja(fechaBaja);
+        return this;
+    }
+
+    public void setFechaBaja(LocalDate fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
     public Integer getNumeroNinios() {
@@ -191,6 +353,68 @@ public class Beneficiario implements Serializable {
         return this;
     }
 
+    public Set<PersonaBeneficiaria> getPersonaBeneficiarias() {
+        return this.personaBeneficiarias;
+    }
+
+    public void setPersonaBeneficiarias(Set<PersonaBeneficiaria> personaBeneficiarias) {
+        if (this.personaBeneficiarias != null) {
+            this.personaBeneficiarias.forEach(i -> i.setBeneficiario(null));
+        }
+        if (personaBeneficiarias != null) {
+            personaBeneficiarias.forEach(i -> i.setBeneficiario(this));
+        }
+        this.personaBeneficiarias = personaBeneficiarias;
+    }
+
+    public Beneficiario personaBeneficiarias(Set<PersonaBeneficiaria> personaBeneficiarias) {
+        this.setPersonaBeneficiarias(personaBeneficiarias);
+        return this;
+    }
+
+    public Beneficiario addPersonaBeneficiaria(PersonaBeneficiaria personaBeneficiaria) {
+        this.personaBeneficiarias.add(personaBeneficiaria);
+        personaBeneficiaria.setBeneficiario(this);
+        return this;
+    }
+
+    public Beneficiario removePersonaBeneficiaria(PersonaBeneficiaria personaBeneficiaria) {
+        this.personaBeneficiarias.remove(personaBeneficiaria);
+        personaBeneficiaria.setBeneficiario(null);
+        return this;
+    }
+
+    public Set<Checkout> getCheckouts() {
+        return this.checkouts;
+    }
+
+    public void setCheckouts(Set<Checkout> checkouts) {
+        if (this.checkouts != null) {
+            this.checkouts.forEach(i -> i.setBeneficiario(null));
+        }
+        if (checkouts != null) {
+            checkouts.forEach(i -> i.setBeneficiario(this));
+        }
+        this.checkouts = checkouts;
+    }
+
+    public Beneficiario checkouts(Set<Checkout> checkouts) {
+        this.setCheckouts(checkouts);
+        return this;
+    }
+
+    public Beneficiario addCheckout(Checkout checkout) {
+        this.checkouts.add(checkout);
+        checkout.setBeneficiario(this);
+        return this;
+    }
+
+    public Beneficiario removeCheckout(Checkout checkout) {
+        this.checkouts.remove(checkout);
+        checkout.setBeneficiario(null);
+        return this;
+    }
+
     public Set<Intolerancia> getIntolerancias() {
         return this.intolerancias;
     }
@@ -254,8 +478,17 @@ public class Beneficiario implements Serializable {
         return "Beneficiario{" +
             "id=" + getId() +
             ", idBeneficiario='" + getIdBeneficiario() + "'" +
-            ", nombre='" + getNombre() + "'" +
+            ", nombreRepresentante='" + getNombreRepresentante() + "'" +
+            ", primerApellidoRepresentante='" + getPrimerApellidoRepresentante() + "'" +
+            ", segundoApellidoRepresentante='" + getSegundoApellidoRepresentante() + "'" +
             ", numeroPersonas=" + getNumeroPersonas() +
+            ", email='" + getEmail() + "'" +
+            ", telefono='" + getTelefono() + "'" +
+            ", telefonoSecundario='" + getTelefonoSecundario() + "'" +
+            ", direccion='" + getDireccion() + "'" +
+            ", codigoPostal='" + getCodigoPostal() + "'" +
+            ", fechaAlta='" + getFechaAlta() + "'" +
+            ", fechaBaja='" + getFechaBaja() + "'" +
             ", numeroNinios=" + getNumeroNinios() +
             ", idDual='" + getIdDual() + "'" +
             ", activo='" + getActivo() + "'" +

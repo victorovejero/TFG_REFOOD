@@ -1,11 +1,11 @@
-id;id_donante;nombre;tipo;ruta;direccion;telefono;email;responsable;fecha_alta;fecha_baja;comentarios;activo
-1;application one-to-one Account;Librería Ordenador Hecho;Filipinas;12607;Calleja no-volátil bus;Auto;Antonia46@hotmail.com;logística Mesa;2022-10-22;2022-10-22;Account Sterling Fantástico;false
-2;out-of-the-box;Aplicaciones Metal;Sincronizado basado;51812;Berkshire deliverables;payment;Cristin_Alonzo@yahoo.com;array;2022-10-22;2022-10-21;experiences Fundamental Bedfordshire;false
-3;invoice;out-of-the-box;Extendido Jefe International;64491;Blanco Sorprendente Ingeniero;Ejecutivo;Jacobo.Santana96@gmail.com;digital Morado;2022-10-21;2022-10-22;Bedfordshire Puerta;false
-4;Ladrillo gestión;tangible Metal;algoritmo;74284;Granito parsing Soluciones;payment;Vctor_Ornelas@gmail.com;Guapo web-enabled;2022-10-21;2022-10-22;Aragón Bicicleta;false
-5;soporte;drive streamline Bacon;architect payment Interno;59351;TCP;Mascotas Hormigon;Ramn.Briones83@yahoo.com;Representante Navarra;2022-10-22;2022-10-22;logística Macedonia Madera;true
-6;Estados synthesizing quantifying;Distrito;Andalucía SDD withdrawal;89129;moderador;deposit Berkshire;Ester33@gmail.com;Distrito Moda;2022-10-22;2022-10-21;Murcia Grupo Compartible;true
-7;innovate holística up;por Negro Videojuegos;Borders;68154;orquestar Galicia;Navarra;Gonzalo16@yahoo.com;digital;2022-10-21;2022-10-22;Morado Salud;true
-8;Puente;Borders Coche;Bloque;12462;moderador;Apartamento Rojo revolutionize;Carolina.Almarz59@yahoo.com;quantifying En Vasco;2022-10-22;2022-10-22;digital scale;false
-9;matrix;Soluciones Pollo;intermedia;16366;Implementación;coherente;Cristin.Prado41@hotmail.com;Borders;2022-10-22;2022-10-22;Azul Multi Metal;false
-10;Plástico brand;Account;generate systems compelling;82651;Guinea open-source Marca;Quinta Terrenos;Cecilia_Espinosa28@yahoo.com;Paradigma División Futuro;2022-10-22;2022-10-21;quantifying Metal hacking;false
+id;id_donante;nombre;categoria;direccion;codigo_postal;provincia;telefono;email;responsable;fecha_alta;fecha_baja;comentarios;activo
+1;application one-to-one Account;Librería Ordenador Hecho;Filipinas;connect;no-volátil bus;Auto;Bedfordshire Lugar Turquia;Juan_Montemayor@yahoo.com;invoice misión;2022-10-22;2022-10-22;Pelota;false
+2;bandwidth Cambridgeshire Credit;deposit incentivize;Borders;content Escalinata;Mascotas Silla;analista index;Fundamental Bedfordshire dinámica;Bernardo_Carrera@hotmail.com;open-source fritas Shilling;2022-10-21;2022-10-22;deposit Zimbabwe;true
+3;Ejecutivo;Morado;Coordinador Morado;Pizza payment Arquitecto;Algodón auxiliary;Berkshire;GB platforms Parafarmacia;Csar.Medina@hotmail.com;parsing Soluciones;2022-10-22;2022-10-22;Silla withdrawal Barein;false
+4;extranet;Comunicaciones Aragón Bicicleta;configurable neural;interface Asociado;synthesizing architect payment;redundant Intercambiable heurística;Asturias Coordinador;Leonor.Casares98@gmail.com;Genérico Krona Respuesta;2022-10-21;2022-10-22;Avon mano;true
+5;Guapa Loan clicks-and-mortar;a SDD;middleware Guantes;Extremadura Kazajistan alianza;Fundamental Distrito Moda;mobile;online compress Ensalada;Juana44@yahoo.com;up AGP eyeballs;2022-10-21;2022-10-22;Granito;true
+6;orquestar Galicia;Navarra;Pelota Pelota;1080p;Morado Salud;homogénea alarm;Deportes Arroyo;Alejandra.Ballesteros@gmail.com;moderador;2022-10-21;2022-10-22;Oficial;false
+7;copying Andalucía;Account;architect interfaces Ejecutivo;digital scale;Parafarmacia;web;Pollo didactica panel;Jaime26@hotmail.com;Credit;2022-10-22;2022-10-21;synergies;true
+8;generación;Rojo;web-readiness index;Bloque Juguetería;fases transmitter;Account cross-platform;programming matrix;Silvia39@yahoo.com;Quinta Terrenos;2022-10-22;2022-10-22;THX XSS;false
+9;Ramal secundaria neural;generación pixel;Bicicleta Berkshire AGP;Bedfordshire Tonga Pre-emptivo;Videojuegos Urbanización;Camiseta Ladrillo applications;Malaysian Kuwait;Berta_Sanabria@hotmail.com;Violeta Guayana;2022-10-22;2022-10-21;Funcionario;false
+10;Factores Mónaco Marketing;Borders Negro;Central;Cambridgeshire e-business;Sopa Avon;Pública payment;Guapa Extramuros Acero;Benito.Sisneros18@yahoo.com;clicks-and-mortar Barrio Mascotas;2022-10-21;2022-10-22;distributed Lempira Coordinador;true

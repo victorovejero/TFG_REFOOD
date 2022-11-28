@@ -29,10 +29,6 @@ export const AlimentoDeSalidaDetail = () => {
           </dt>
           <dd>{alimentoDeSalidaEntity.id}</dd>
           <dt>
-            <span id="peso">Peso</span>
-          </dt>
-          <dd>{alimentoDeSalidaEntity.peso}</dd>
-          <dt>
             <span id="fechaSalida">Fecha Salida</span>
           </dt>
           <dd>

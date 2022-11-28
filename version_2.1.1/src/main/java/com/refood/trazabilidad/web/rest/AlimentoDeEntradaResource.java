@@ -146,14 +146,21 @@ public class AlimentoDeEntradaResource {
      * {@code GET  /alimento-de-entradas} : get all the alimentoDeEntradas.
      *
      * @param pageable the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of alimentoDeEntradas in body.
      */
     @GetMapping("/alimento-de-entradas")
     public ResponseEntity<List<AlimentoDeEntradaDTO>> getAllAlimentoDeEntradas(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+        @RequestParam(required = false, defaultValue = "false") boolean eagerload
     ) {
         log.debug("REST request to get a page of AlimentoDeEntradas");
-        Page<AlimentoDeEntradaDTO> page = alimentoDeEntradaService.findAll(pageable);
+        Page<AlimentoDeEntradaDTO> page;
+        if (eagerload) {
+            page = alimentoDeEntradaService.findAllWithEagerRelationships(pageable);
+        } else {
+            page = alimentoDeEntradaService.findAll(pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

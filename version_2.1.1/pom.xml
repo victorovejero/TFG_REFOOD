@@ -94,6 +94,7 @@
     <dependencyManagement>
         
         <dependencies>
+       
             <dependency>
                 <groupId>tech.jhipster</groupId>
                 <artifactId>jhipster-dependencies</artifactId>

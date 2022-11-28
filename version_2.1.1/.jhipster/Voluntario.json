@@ -6,6 +6,11 @@
   "entityTableName": "voluntario",
   "fields": [
     {
+      "fieldName": "idVoluntario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
       "fieldName": "nombre",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -53,17 +58,18 @@
       "fieldType": "LocalDate"
     },
     {
-      "fieldName": "tipo",
+      "fieldName": "categoriaPerfil",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "tipoTurno",
+      "fieldName": "descripcionCategoria",
       "fieldType": "String"
     },
     {
-      "fieldName": "responsableDia",
-      "fieldType": "Boolean"
+      "fieldName": "diaRefood",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "origen",
@@ -72,6 +78,11 @@
     {
       "fieldName": "manipuladorAlimentos",
       "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
@@ -96,13 +107,6 @@
       "otherEntityRelationshipName": "voluntario",
       "relationshipName": "nucleo",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "registro",
-      "otherEntityRelationshipName": "voluntario",
-      "ownerSide": false,
-      "relationshipName": "registro",
-      "relationshipType": "many-to-many"
     }
   ],
   "service": "serviceImpl"

@@ -33,9 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class AlimentoDeSalidaResourceIT {
 
-    private static final Double DEFAULT_PESO = 1D;
-    private static final Double UPDATED_PESO = 2D;
-
     private static final LocalDate DEFAULT_FECHA_SALIDA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_FECHA_SALIDA = LocalDate.now(ZoneId.systemDefault());
 
@@ -66,7 +63,7 @@ class AlimentoDeSalidaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AlimentoDeSalida createEntity(EntityManager em) {
-        AlimentoDeSalida alimentoDeSalida = new AlimentoDeSalida().peso(DEFAULT_PESO).fechaSalida(DEFAULT_FECHA_SALIDA);
+        AlimentoDeSalida alimentoDeSalida = new AlimentoDeSalida().fechaSalida(DEFAULT_FECHA_SALIDA);
         return alimentoDeSalida;
     }
 
@@ -77,7 +74,7 @@ class AlimentoDeSalidaResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AlimentoDeSalida createUpdatedEntity(EntityManager em) {
-        AlimentoDeSalida alimentoDeSalida = new AlimentoDeSalida().peso(UPDATED_PESO).fechaSalida(UPDATED_FECHA_SALIDA);
+        AlimentoDeSalida alimentoDeSalida = new AlimentoDeSalida().fechaSalida(UPDATED_FECHA_SALIDA);
         return alimentoDeSalida;
     }
 
@@ -102,7 +99,6 @@ class AlimentoDeSalidaResourceIT {
         List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
         assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeCreate + 1);
         AlimentoDeSalida testAlimentoDeSalida = alimentoDeSalidaList.get(alimentoDeSalidaList.size() - 1);
-        assertThat(testAlimentoDeSalida.getPeso()).isEqualTo(DEFAULT_PESO);
         assertThat(testAlimentoDeSalida.getFechaSalida()).isEqualTo(DEFAULT_FECHA_SALIDA);
     }
 
@@ -125,26 +121,6 @@ class AlimentoDeSalidaResourceIT {
         // Validate the AlimentoDeSalida in the database
         List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
         assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    void checkPesoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = alimentoDeSalidaRepository.findAll().size();
-        // set the field null
-        alimentoDeSalida.setPeso(null);
-
-        // Create the AlimentoDeSalida, which fails.
-        AlimentoDeSalidaDTO alimentoDeSalidaDTO = alimentoDeSalidaMapper.toDto(alimentoDeSalida);
-
-        restAlimentoDeSalidaMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(alimentoDeSalidaDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
-        assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -179,7 +155,6 @@ class AlimentoDeSalidaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(alimentoDeSalida.getId().intValue())))
-            .andExpect(jsonPath("$.[*].peso").value(hasItem(DEFAULT_PESO.doubleValue())))
             .andExpect(jsonPath("$.[*].fechaSalida").value(hasItem(DEFAULT_FECHA_SALIDA.toString())));
     }
 
@@ -195,7 +170,6 @@ class AlimentoDeSalidaResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(alimentoDeSalida.getId().intValue()))
-            .andExpect(jsonPath("$.peso").value(DEFAULT_PESO.doubleValue()))
             .andExpect(jsonPath("$.fechaSalida").value(DEFAULT_FECHA_SALIDA.toString()));
     }
 
@@ -218,7 +192,7 @@ class AlimentoDeSalidaResourceIT {
         AlimentoDeSalida updatedAlimentoDeSalida = alimentoDeSalidaRepository.findById(alimentoDeSalida.getId()).get();
         // Disconnect from session so that the updates on updatedAlimentoDeSalida are not directly saved in db
         em.detach(updatedAlimentoDeSalida);
-        updatedAlimentoDeSalida.peso(UPDATED_PESO).fechaSalida(UPDATED_FECHA_SALIDA);
+        updatedAlimentoDeSalida.fechaSalida(UPDATED_FECHA_SALIDA);
         AlimentoDeSalidaDTO alimentoDeSalidaDTO = alimentoDeSalidaMapper.toDto(updatedAlimentoDeSalida);
 
         restAlimentoDeSalidaMockMvc
@@ -233,7 +207,6 @@ class AlimentoDeSalidaResourceIT {
         List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
         assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeSalida testAlimentoDeSalida = alimentoDeSalidaList.get(alimentoDeSalidaList.size() - 1);
-        assertThat(testAlimentoDeSalida.getPeso()).isEqualTo(UPDATED_PESO);
         assertThat(testAlimentoDeSalida.getFechaSalida()).isEqualTo(UPDATED_FECHA_SALIDA);
     }
 
@@ -328,7 +301,6 @@ class AlimentoDeSalidaResourceIT {
         List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
         assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeSalida testAlimentoDeSalida = alimentoDeSalidaList.get(alimentoDeSalidaList.size() - 1);
-        assertThat(testAlimentoDeSalida.getPeso()).isEqualTo(DEFAULT_PESO);
         assertThat(testAlimentoDeSalida.getFechaSalida()).isEqualTo(DEFAULT_FECHA_SALIDA);
     }
 
@@ -344,7 +316,7 @@ class AlimentoDeSalidaResourceIT {
         AlimentoDeSalida partialUpdatedAlimentoDeSalida = new AlimentoDeSalida();
         partialUpdatedAlimentoDeSalida.setId(alimentoDeSalida.getId());
 
-        partialUpdatedAlimentoDeSalida.peso(UPDATED_PESO).fechaSalida(UPDATED_FECHA_SALIDA);
+        partialUpdatedAlimentoDeSalida.fechaSalida(UPDATED_FECHA_SALIDA);
 
         restAlimentoDeSalidaMockMvc
             .perform(
@@ -358,7 +330,6 @@ class AlimentoDeSalidaResourceIT {
         List<AlimentoDeSalida> alimentoDeSalidaList = alimentoDeSalidaRepository.findAll();
         assertThat(alimentoDeSalidaList).hasSize(databaseSizeBeforeUpdate);
         AlimentoDeSalida testAlimentoDeSalida = alimentoDeSalidaList.get(alimentoDeSalidaList.size() - 1);
-        assertThat(testAlimentoDeSalida.getPeso()).isEqualTo(UPDATED_PESO);
         assertThat(testAlimentoDeSalida.getFechaSalida()).isEqualTo(UPDATED_FECHA_SALIDA);
     }
 

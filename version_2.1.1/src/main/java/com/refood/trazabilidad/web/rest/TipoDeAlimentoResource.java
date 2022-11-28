@@ -1,5 +1,7 @@
 package com.refood.trazabilidad.web.rest;
 
+import com.refood.trazabilidad.domain.TipoDeAlimento;
+
 import com.refood.trazabilidad.repository.TipoDeAlimentoRepository;
 import com.refood.trazabilidad.service.TipoDeAlimentoService;
 import com.refood.trazabilidad.service.dto.TipoDeAlimentoDTO;
@@ -26,7 +28,8 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.refood.trazabilidad.domain.TipoDeAlimento}.
+ * REST controller for managing
+ * {@link com.refood.trazabilidad.domain.TipoDeAlimento}.
  */
 @RestController
 @RequestMapping("/api")
@@ -43,47 +46,64 @@ public class TipoDeAlimentoResource {
 
     private final TipoDeAlimentoRepository tipoDeAlimentoRepository;
 
-    public TipoDeAlimentoResource(TipoDeAlimentoService tipoDeAlimentoService, TipoDeAlimentoRepository tipoDeAlimentoRepository) {
+    public TipoDeAlimentoResource(TipoDeAlimentoService tipoDeAlimentoService,
+            TipoDeAlimentoRepository tipoDeAlimentoRepository) {
         this.tipoDeAlimentoService = tipoDeAlimentoService;
         this.tipoDeAlimentoRepository = tipoDeAlimentoRepository;
+    }
+
+    // Implementación Endpoint para sacar todos los elementos de la tabla
+    @GetMapping("/tipo-de-alimentos-all")
+    public ResponseEntity<List<TipoDeAlimento>> getAll() {
+        List<TipoDeAlimento> tipoDeAlimentos = tipoDeAlimentoService.findAll();
+        log.debug("REST request to get TipoDeAlimento : {}", tipoDeAlimentos);
+        return ResponseEntity.ok().body(tipoDeAlimentos);
+
     }
 
     /**
      * {@code POST  /tipo-de-alimentos} : Create a new tipoDeAlimento.
      *
      * @param tipoDeAlimentoDTO the tipoDeAlimentoDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new tipoDeAlimentoDTO, or with status {@code 400 (Bad Request)} if the tipoDeAlimento has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new tipoDeAlimentoDTO, or with status
+     *         {@code 400 (Bad Request)} if the tipoDeAlimento has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/tipo-de-alimentos")
-    public ResponseEntity<TipoDeAlimentoDTO> createTipoDeAlimento(@Valid @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO)
-        throws URISyntaxException {
+    public ResponseEntity<TipoDeAlimentoDTO> createTipoDeAlimento(
+            @Valid @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO)
+            throws URISyntaxException {
         log.debug("REST request to save TipoDeAlimento : {}", tipoDeAlimentoDTO);
         if (tipoDeAlimentoDTO.getId() != null) {
-            throw new BadRequestAlertException("A new tipoDeAlimento cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new tipoDeAlimento cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         TipoDeAlimentoDTO result = tipoDeAlimentoService.save(tipoDeAlimentoDTO);
         return ResponseEntity
-            .created(new URI("/api/tipo-de-alimentos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .created(new URI("/api/tipo-de-alimentos/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME,
+                        result.getId().toString()))
+                .body(result);
     }
 
     /**
      * {@code PUT  /tipo-de-alimentos/:id} : Updates an existing tipoDeAlimento.
      *
-     * @param id the id of the tipoDeAlimentoDTO to save.
+     * @param id                the id of the tipoDeAlimentoDTO to save.
      * @param tipoDeAlimentoDTO the tipoDeAlimentoDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated tipoDeAlimentoDTO,
-     * or with status {@code 400 (Bad Request)} if the tipoDeAlimentoDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the tipoDeAlimentoDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated tipoDeAlimentoDTO,
+     *         or with status {@code 400 (Bad Request)} if the tipoDeAlimentoDTO is
+     *         not valid,
+     *         or with status {@code 500 (Internal Server Error)} if the
+     *         tipoDeAlimentoDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/tipo-de-alimentos/{id}")
     public ResponseEntity<TipoDeAlimentoDTO> updateTipoDeAlimento(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO
-    ) throws URISyntaxException {
+            @PathVariable(value = "id", required = false) final Long id,
+            @Valid @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO) throws URISyntaxException {
         log.debug("REST request to update TipoDeAlimento : {}, {}", id, tipoDeAlimentoDTO);
         if (tipoDeAlimentoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -98,27 +118,32 @@ public class TipoDeAlimentoResource {
 
         TipoDeAlimentoDTO result = tipoDeAlimentoService.update(tipoDeAlimentoDTO);
         return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, tipoDeAlimentoDTO.getId().toString()))
-            .body(result);
+                .ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
+                        tipoDeAlimentoDTO.getId().toString()))
+                .body(result);
     }
 
     /**
-     * {@code PATCH  /tipo-de-alimentos/:id} : Partial updates given fields of an existing tipoDeAlimento, field will ignore if it is null
+     * {@code PATCH  /tipo-de-alimentos/:id} : Partial updates given fields of an
+     * existing tipoDeAlimento, field will ignore if it is null
      *
-     * @param id the id of the tipoDeAlimentoDTO to save.
+     * @param id                the id of the tipoDeAlimentoDTO to save.
      * @param tipoDeAlimentoDTO the tipoDeAlimentoDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated tipoDeAlimentoDTO,
-     * or with status {@code 400 (Bad Request)} if the tipoDeAlimentoDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the tipoDeAlimentoDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the tipoDeAlimentoDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated tipoDeAlimentoDTO,
+     *         or with status {@code 400 (Bad Request)} if the tipoDeAlimentoDTO is
+     *         not valid,
+     *         or with status {@code 404 (Not Found)} if the tipoDeAlimentoDTO is
+     *         not found,
+     *         or with status {@code 500 (Internal Server Error)} if the
+     *         tipoDeAlimentoDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/tipo-de-alimentos/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<TipoDeAlimentoDTO> partialUpdateTipoDeAlimento(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO
-    ) throws URISyntaxException {
+            @PathVariable(value = "id", required = false) final Long id,
+            @NotNull @RequestBody TipoDeAlimentoDTO tipoDeAlimentoDTO) throws URISyntaxException {
         log.debug("REST request to partial update TipoDeAlimento partially : {}, {}", id, tipoDeAlimentoDTO);
         if (tipoDeAlimentoDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -134,23 +159,24 @@ public class TipoDeAlimentoResource {
         Optional<TipoDeAlimentoDTO> result = tipoDeAlimentoService.partialUpdate(tipoDeAlimentoDTO);
 
         return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, tipoDeAlimentoDTO.getId().toString())
-        );
+                result,
+                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
+                        tipoDeAlimentoDTO.getId().toString()));
     }
 
     /**
      * {@code GET  /tipo-de-alimentos} : get all the tipoDeAlimentos.
      *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of tipoDeAlimentos in body.
+     * @param pageable  the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is
+     *                  applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of tipoDeAlimentos in body.
      */
     @GetMapping("/tipo-de-alimentos")
     public ResponseEntity<List<TipoDeAlimentoDTO>> getAllTipoDeAlimentos(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
+            @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+            @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of TipoDeAlimentos");
         Page<TipoDeAlimentoDTO> page;
         if (eagerload) {
@@ -158,7 +184,8 @@ public class TipoDeAlimentoResource {
         } else {
             page = tipoDeAlimentoService.findAll(pageable);
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil
+                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -166,7 +193,8 @@ public class TipoDeAlimentoResource {
      * {@code GET  /tipo-de-alimentos/:id} : get the "id" tipoDeAlimento.
      *
      * @param id the id of the tipoDeAlimentoDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the tipoDeAlimentoDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the tipoDeAlimentoDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/tipo-de-alimentos/{id}")
     public ResponseEntity<TipoDeAlimentoDTO> getTipoDeAlimento(@PathVariable Long id) {
@@ -186,8 +214,8 @@ public class TipoDeAlimentoResource {
         log.debug("REST request to delete TipoDeAlimento : {}", id);
         tipoDeAlimentoService.delete(id);
         return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
-            .build();
+                .noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+                .build();
     }
 }

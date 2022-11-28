@@ -102,14 +102,31 @@ export const BeneficiarioUpdate = () => {
                 }}
               />
               <ValidatedField
-                label="Nombre"
-                id="beneficiario-nombre"
-                name="nombre"
-                data-cy="nombre"
+                label="Nombre Representante"
+                id="beneficiario-nombreRepresentante"
+                name="nombreRepresentante"
+                data-cy="nombreRepresentante"
                 type="text"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
+              />
+              <ValidatedField
+                label="Primer Apellido Representante"
+                id="beneficiario-primerApellidoRepresentante"
+                name="primerApellidoRepresentante"
+                data-cy="primerApellidoRepresentante"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Segundo Apellido Representante"
+                id="beneficiario-segundoApellidoRepresentante"
+                name="segundoApellidoRepresentante"
+                data-cy="segundoApellidoRepresentante"
+                type="text"
               />
               <ValidatedField
                 label="Numero Personas"
@@ -122,6 +139,67 @@ export const BeneficiarioUpdate = () => {
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
+              <ValidatedField
+                label="Email"
+                id="beneficiario-email"
+                name="email"
+                data-cy="email"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Telefono"
+                id="beneficiario-telefono"
+                name="telefono"
+                data-cy="telefono"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Telefono Secundario"
+                id="beneficiario-telefonoSecundario"
+                name="telefonoSecundario"
+                data-cy="telefonoSecundario"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Direccion"
+                id="beneficiario-direccion"
+                name="direccion"
+                data-cy="direccion"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Codigo Postal"
+                id="beneficiario-codigoPostal"
+                name="codigoPostal"
+                data-cy="codigoPostal"
+                type="text"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField
+                label="Fecha Alta"
+                id="beneficiario-fechaAlta"
+                name="fechaAlta"
+                data-cy="fechaAlta"
+                type="date"
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
+              <ValidatedField label="Fecha Baja" id="beneficiario-fechaBaja" name="fechaBaja" data-cy="fechaBaja" type="date" />
               <ValidatedField
                 label="Numero Ninios"
                 id="beneficiario-numeroNinios"

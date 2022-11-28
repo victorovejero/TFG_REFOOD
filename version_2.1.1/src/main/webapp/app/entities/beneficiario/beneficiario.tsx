@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -106,11 +106,38 @@ export const Beneficiario = () => {
                 <th className="hand" onClick={sort('idBeneficiario')}>
                   Id Beneficiario <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('nombre')}>
-                  Nombre <FontAwesomeIcon icon="sort" />
+                <th className="hand" onClick={sort('nombreRepresentante')}>
+                  Nombre Representante <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('primerApellidoRepresentante')}>
+                  Primer Apellido Representante <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('segundoApellidoRepresentante')}>
+                  Segundo Apellido Representante <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('numeroPersonas')}>
                   Numero Personas <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('email')}>
+                  Email <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('telefono')}>
+                  Telefono <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('telefonoSecundario')}>
+                  Telefono Secundario <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('direccion')}>
+                  Direccion <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('codigoPostal')}>
+                  Codigo Postal <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('fechaAlta')}>
+                  Fecha Alta <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('fechaBaja')}>
+                  Fecha Baja <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('numeroNinios')}>
                   Numero Ninios <FontAwesomeIcon icon="sort" />
@@ -136,8 +163,25 @@ export const Beneficiario = () => {
                     </Button>
                   </td>
                   <td>{beneficiario.idBeneficiario}</td>
-                  <td>{beneficiario.nombre}</td>
+                  <td>{beneficiario.nombreRepresentante}</td>
+                  <td>{beneficiario.primerApellidoRepresentante}</td>
+                  <td>{beneficiario.segundoApellidoRepresentante}</td>
                   <td>{beneficiario.numeroPersonas}</td>
+                  <td>{beneficiario.email}</td>
+                  <td>{beneficiario.telefono}</td>
+                  <td>{beneficiario.telefonoSecundario}</td>
+                  <td>{beneficiario.direccion}</td>
+                  <td>{beneficiario.codigoPostal}</td>
+                  <td>
+                    {beneficiario.fechaAlta ? (
+                      <TextFormat type="date" value={beneficiario.fechaAlta} format={APP_LOCAL_DATE_FORMAT} />
+                    ) : null}
+                  </td>
+                  <td>
+                    {beneficiario.fechaBaja ? (
+                      <TextFormat type="date" value={beneficiario.fechaBaja} format={APP_LOCAL_DATE_FORMAT} />
+                    ) : null}
+                  </td>
                   <td>{beneficiario.numeroNinios}</td>
                   <td>{beneficiario.idDual}</td>
                   <td>{beneficiario.activo ? 'true' : 'false'}</td>

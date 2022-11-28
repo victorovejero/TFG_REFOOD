@@ -49,6 +49,10 @@ export const SocioDetail = () => {
           </dt>
           <dd>{socioEntity.telefonoContacto}</dd>
           <dt>
+            <span id="iBAN">I BAN</span>
+          </dt>
+          <dd>{socioEntity.iBAN}</dd>
+          <dt>
             <span id="dni">Dni</span>
           </dt>
           <dd>{socioEntity.dni}</dd>
@@ -84,8 +88,30 @@ export const SocioDetail = () => {
             <span id="activo">Activo</span>
           </dt>
           <dd>{socioEntity.activo ? 'true' : 'false'}</dd>
-          <dt>Nucleo</dt>
-          <dd>{socioEntity.nucleo ? socioEntity.nucleo.id : ''}</dd>
+          <dt>
+            <span id="nucleoAsociado">Nucleo Asociado</span>
+          </dt>
+          <dd>{socioEntity.nucleoAsociado}</dd>
+          <dt>
+            <span id="comunicacion">Comunicacion</span>
+          </dt>
+          <dd>{socioEntity.comunicacion ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="direccion">Direccion</span>
+          </dt>
+          <dd>{socioEntity.direccion}</dd>
+          <dt>
+            <span id="codigoPostal">Codigo Postal</span>
+          </dt>
+          <dd>{socioEntity.codigoPostal}</dd>
+          <dt>
+            <span id="provincia">Provincia</span>
+          </dt>
+          <dd>{socioEntity.provincia}</dd>
+          <dt>
+            <span id="pais">Pais</span>
+          </dt>
+          <dd>{socioEntity.pais}</dd>
         </dl>
         <Button tag={Link} to="/socio" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>
