@@ -136,11 +136,12 @@ export const AlimentoDeEntrada = () => {
                 {/* <th className="hand" >
                   Fecha Y Hora Preparacion 
                 </th> */}
-                <th onClick={sort('tupper')}>
-                  Tupper <FontAwesomeIcon icon="sort" />
-                </th>
+               
                 <th>
                   Donante 
+                </th>
+                <th onClick={sort('tupper')}>
+                  Tupper <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
                   Tipo De Alimento
@@ -176,16 +177,17 @@ export const AlimentoDeEntrada = () => {
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td> */}
+                  
                   <td>
-                    {alimentoDeEntrada.tupper ? (
-                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.modelo}</Link>
+                    {alimentoDeEntrada.donante ? (
+                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.idDonante}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
-                    {alimentoDeEntrada.donante ? (
-                      <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.idDonante}</Link>
+                    {alimentoDeEntrada.tupper ? (
+                      <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.modelo}</Link>
                     ) : (
                       ''
                     )}

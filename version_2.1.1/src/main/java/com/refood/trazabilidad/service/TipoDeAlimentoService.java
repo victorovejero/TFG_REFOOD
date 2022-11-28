@@ -1,14 +1,21 @@
 package com.refood.trazabilidad.service;
 
+import java.util.List;
+import com.refood.trazabilidad.domain.TipoDeAlimento;
+
 import com.refood.trazabilidad.service.dto.TipoDeAlimentoDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link com.refood.trazabilidad.domain.TipoDeAlimento}.
+ * Service Interface for managing
+ * {@link com.refood.trazabilidad.domain.TipoDeAlimento}.
  */
 public interface TipoDeAlimentoService {
+
+    List<TipoDeAlimento> findAll();
+
     /**
      * Save a tipoDeAlimento.
      *

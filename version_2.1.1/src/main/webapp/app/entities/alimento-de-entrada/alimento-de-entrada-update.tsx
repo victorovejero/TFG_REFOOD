@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
 import { mapIdList } from 'app/shared/util/entity-utils';
-import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { useAppDispatch, useAppSelector} from 'app/config/store';
 
 import { IFrutaYVerdura } from 'app/shared/model/fruta-y-verdura.model';
 import { getEntities as getFrutaYVerduras } from 'app/entities/fruta-y-verdura/fruta-y-verdura.reducer';
@@ -15,7 +15,7 @@ import { getEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IDonante } from 'app/shared/model/donante.model';
 import { getEntities as getDonantes } from 'app/entities/donante/donante.reducer';
 import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
-import { getEntities as getTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
+import { getAllEntities as getAllTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-entrada.reducer';
 import {getToday} from 'app/shared/util/date-utils'
@@ -54,7 +54,8 @@ export const AlimentoDeEntradaUpdate = () => {
   const loading = useAppSelector(state => state.alimentoDeEntrada.loading);
   const updating = useAppSelector(state => state.alimentoDeEntrada.updating);
   const updateSuccess = useAppSelector(state => state.alimentoDeEntrada.updateSuccess);
-  console.log(tipoDeAlimentos);
+  // console.log("Tipo de Alimentos " + tipoDeAlimentos);
+
   const handleClose = () => {
     navigate('/alimento-de-entrada' + location.search);
   };
@@ -69,7 +70,7 @@ export const AlimentoDeEntradaUpdate = () => {
     dispatch(getFrutaYVerduras({}));
     dispatch(getTuppers({}));
     dispatch(getDonantes({}));
-    dispatch(getTipoDeAlimentos({}));
+    dispatch(getAllTipoDeAlimentos({}));
   }, []);
 
   useEffect(() => {
@@ -79,7 +80,6 @@ export const AlimentoDeEntradaUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    console.log(values);
     values.fechaYHoraEntrada = convertDateTimeToServer(values.fechaYHoraEntrada);
     values.fechaYHoraRecogida = convertDateTimeToServer(values.fechaYHoraRecogida);
     values.fechaYHoraPreparacion = convertDateTimeToServer(values.fechaYHoraPreparacion);
@@ -175,7 +175,39 @@ export const AlimentoDeEntradaUpdate = () => {
               {!isNew ? (
                 <ValidatedField name="id" required readOnly id="alimento-de-entrada-id" label="ID" validate={{ required: true }} />
               ) : null}
-            
+
+
+<ValidatedField
+                className="checkbox"
+                label="Fruta Y Verdura"
+                id="alimento-de-enctrada-frutaYVerdura"
+                name="frutaYVerdura"
+                data-cy="frutaYVerdura"
+                check
+                value={isNew ? frutaYVerdura : null}
+                onChange={isNew ? changefrutaYVerdura : null}
+                type="checkbox"
+              />
+              
+              <ValidatedField
+                label="Seleccione las Frutas y Verduras del Paquete:"
+                id="alimento-de-entrada-frutaYVerdura"
+                data-cy="frutaYVerdura"
+                type="select"
+                multiple
+                name="frutaYVerduras"
+                className={!isNew || frutaYVerdura ? "":"hide"}
+                required={isNew ? frutaYVerdura:null}
+              >
+                <option value="" key="0" />
+                {frutaYVerduras
+                  ? frutaYVerduras.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.nombreAlimento}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField> 
               <ValidatedField
                 id="alimento-de-entrada-tipoDeAlimento"
                 name="tipoDeAlimento"
@@ -197,7 +229,7 @@ export const AlimentoDeEntradaUpdate = () => {
               </ValidatedField> 
 
               <div className="modal-button-div">
-                <Button onClick={showModal} color="warning" className="modal-button">
+                <Button onClick={showModal} color="warning" className={frutaYVerdura ? "hide":""}>
                     &#10010;
                 </Button>
               </div>
@@ -267,40 +299,6 @@ export const AlimentoDeEntradaUpdate = () => {
                 value={isNew ? fechaPrep : null}
                 onChange={isNew ? ((e) => setFechaPrep(e.target.value)) : null}
               />
-
-             
-              
-              <ValidatedField
-                className="checkbox"
-                label="Fruta Y Verdura"
-                id="alimento-de-enctrada-frutaYVerdura"
-                name="frutaYVerdura"
-                data-cy="frutaYVerdura"
-                check
-                value={isNew ? frutaYVerdura : null}
-                onChange={isNew ? changefrutaYVerdura : null}
-                type="checkbox"
-              />
-              
-              <ValidatedField
-                label="Seleccione las Frutas y Verduras del Paquete:"
-                id="alimento-de-entrada-frutaYVerdura"
-                data-cy="frutaYVerdura"
-                type="select"
-                multiple
-                name="frutaYVerduras"
-                className={!isNew || frutaYVerdura ? "":"hide"}
-                required={isNew ? frutaYVerdura:null}
-              >
-                <option value="" key="0" />
-                {frutaYVerduras
-                  ? frutaYVerduras.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nombreAlimento}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField> 
               
               
               <ValidatedField id="alimento-de-entrada-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" className={frutaYVerdura ? "hide":""} required={isNew ? !frutaYVerdura: null}>

@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.refood.trazabilidad.domain.TipoDeAlimento;
 import com.refood.trazabilidad.repository.TipoDeAlimentoRepository;
 import com.refood.trazabilidad.service.TipoDeAlimentoService;
@@ -26,9 +29,20 @@ public class TipoDeAlimentoServiceImpl implements TipoDeAlimentoService {
 
     private final TipoDeAlimentoMapper tipoDeAlimentoMapper;
 
-    public TipoDeAlimentoServiceImpl(TipoDeAlimentoRepository tipoDeAlimentoRepository, TipoDeAlimentoMapper tipoDeAlimentoMapper) {
+    public TipoDeAlimentoServiceImpl(TipoDeAlimentoRepository tipoDeAlimentoRepository,
+            TipoDeAlimentoMapper tipoDeAlimentoMapper) {
         this.tipoDeAlimentoRepository = tipoDeAlimentoRepository;
         this.tipoDeAlimentoMapper = tipoDeAlimentoMapper;
+    }
+
+    @Override
+    public List<TipoDeAlimento> findAll() {
+
+        List<TipoDeAlimento> tipoDeAlimentos = tipoDeAlimentoRepository.findAll();
+        // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
+        // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
+
+        return tipoDeAlimentos;
     }
 
     @Override
@@ -52,14 +66,14 @@ public class TipoDeAlimentoServiceImpl implements TipoDeAlimentoService {
         log.debug("Request to partially update TipoDeAlimento : {}", tipoDeAlimentoDTO);
 
         return tipoDeAlimentoRepository
-            .findById(tipoDeAlimentoDTO.getId())
-            .map(existingTipoDeAlimento -> {
-                tipoDeAlimentoMapper.partialUpdate(existingTipoDeAlimento, tipoDeAlimentoDTO);
+                .findById(tipoDeAlimentoDTO.getId())
+                .map(existingTipoDeAlimento -> {
+                    tipoDeAlimentoMapper.partialUpdate(existingTipoDeAlimento, tipoDeAlimentoDTO);
 
-                return existingTipoDeAlimento;
-            })
-            .map(tipoDeAlimentoRepository::save)
-            .map(tipoDeAlimentoMapper::toDto);
+                    return existingTipoDeAlimento;
+                })
+                .map(tipoDeAlimentoRepository::save)
+                .map(tipoDeAlimentoMapper::toDto);
     }
 
     @Override

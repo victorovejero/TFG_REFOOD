@@ -20,9 +20,16 @@ const initialState: EntityState<ITipoDeAlimento> = {
 const apiUrl = 'api/tipo-de-alimentos';
 
 // Actions
+// ACTION CREADA PARA DEVOLVER TODOS LOS TIPOS DE ALIMENTOS PARA EL SELECT DE ALIMENTOS DE ENTRADA
 
-export const getEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+export const getAllEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+   const requestUrl = 'api/tipo-de-alimento-all'
+   return axios.get<ITipoDeAlimento[]>(requestUrl);
+})
+
+export const getEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async ({ page, size, sort}: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
+  // const requestUrl = 'api/tipo-de-alimento-all'
   return axios.get<ITipoDeAlimento[]>(requestUrl);
 });
 
@@ -38,7 +45,6 @@ export const getEntity = createAsyncThunk(
 export const createEntity = createAsyncThunk(
   'tipoDeAlimento/create_entity',
   async (entity: ITipoDeAlimento, thunkAPI) => {
-    // console.log(entity)
     return axios.post<ITipoDeAlimento>(apiUrl, cleanEntity(entity));
   },
   { serializeError: serializeAxiosError }
