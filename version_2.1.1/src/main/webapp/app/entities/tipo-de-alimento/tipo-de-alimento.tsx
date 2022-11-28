@@ -22,7 +22,7 @@ export const TipoDeAlimento = () => {
   const [paginationState, setPaginationState] = useState(
     overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
   );
-  const [sorting, setSorting] = useState(false);
+  // const [sorting, setSorting] = useState(false);
 
   const tipoDeAlimentoList = useAppSelector(state => state.tipoDeAlimento.entities);
   const loading = useAppSelector(state => state.tipoDeAlimento.loading);

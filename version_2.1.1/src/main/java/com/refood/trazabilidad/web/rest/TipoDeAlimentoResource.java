@@ -52,11 +52,11 @@ public class TipoDeAlimentoResource {
         this.tipoDeAlimentoRepository = tipoDeAlimentoRepository;
     }
 
-    @GetMapping("/tipo-de-alimento-all")
+    // Implementación Endpoint para sacar todos los elementos de la tabla
+    @GetMapping("/tipo-de-alimentos-all")
     public ResponseEntity<List<TipoDeAlimento>> getAll() {
         List<TipoDeAlimento> tipoDeAlimentos = tipoDeAlimentoService.findAll();
         log.debug("REST request to get TipoDeAlimento : {}", tipoDeAlimentos);
-        System.out.println("HOLAHOLAHOLAAAAAAAAAAA" + tipoDeAlimentos);
         return ResponseEntity.ok().body(tipoDeAlimentos);
 
     }

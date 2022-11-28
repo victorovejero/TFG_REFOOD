@@ -23,7 +23,7 @@ const apiUrl = 'api/tipo-de-alimentos';
 // ACTION CREADA PARA DEVOLVER TODOS LOS TIPOS DE ALIMENTOS PARA EL SELECT DE ALIMENTOS DE ENTRADA
 
 export const getAllEntities = createAsyncThunk('tipoDeAlimento/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
-   const requestUrl = 'api/tipo-de-alimento-all'
+   const requestUrl = 'api/tipo-de-alimentos-all';
    return axios.get<ITipoDeAlimento[]>(requestUrl);
 })
 
@@ -112,7 +112,7 @@ export const TipoDeAlimentoSlice = createEntitySlice({
         state.updateSuccess = true;
         state.entity = action.payload.data;
       })
-      .addMatcher(isPending(getEntities, getEntity), state => {
+      .addMatcher(isPending(getEntities, getEntity, getAllEntities), state => {
         state.errorMessage = null;
         state.updateSuccess = false;
         state.loading = true;

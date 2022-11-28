@@ -1,5 +1,6 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
 import com.refood.trazabilidad.domain.Tupper;
 import com.refood.trazabilidad.repository.TupperRepository;
 import com.refood.trazabilidad.service.TupperService;
@@ -30,6 +31,16 @@ public class TupperServiceImpl implements TupperService {
         this.tupperRepository = tupperRepository;
         this.tupperMapper = tupperMapper;
     }
+
+
+    @Override
+    public List<Tupper> findAll(){
+
+        List<Tupper> tuppers = tupperRepository.findAll();
+
+        return tuppers;
+    }
+
 
     @Override
     public TupperDTO save(TupperDTO tupperDTO) {

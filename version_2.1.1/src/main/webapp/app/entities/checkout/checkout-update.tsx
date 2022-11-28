@@ -19,8 +19,10 @@ import {getToday} from 'app/shared/util/date-utils'
 export const CheckoutUpdate = () => {
   const PESO_MAX = 15;
   const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
+  const [beneficiario, setBeneficiario] = useState<number>(0);
   const peso = useRef<Number>();
   const pesoMaxNotify = useRef<Boolean>(false);
+  
   
   const dispatch = useAppDispatch();
 
@@ -36,6 +38,7 @@ export const CheckoutUpdate = () => {
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
 
+  console.log(alimentoDeSalidas);
   const handleClose = () => {
     navigate('/checkout' + location.search);
   };
@@ -92,7 +95,7 @@ export const CheckoutUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.checkout.home.createOrEditLabel" data-cy="CheckoutCreateUpdateHeading">
-            Crear o editar Checkout
+            Crear o editar Checkout {JSON.stringify(beneficiario)}
           </h2>
         </Col>
       </Row>
@@ -109,8 +112,8 @@ export const CheckoutUpdate = () => {
                 name="fechaSalida"
                 data-cy="fechaSalida"
                 type="date"
-                value={defaultToday}
-                onChange={(e) => setDefaultToday(e.target.value)}
+                value={isNew ? defaultToday : null}
+                onChange={isNew ? (e) => setDefaultToday(e.target.value) : null}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
@@ -129,6 +132,16 @@ export const CheckoutUpdate = () => {
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
+              <ValidatedField id="checkout-beneficiario" name="beneficiario" data-cy="beneficiario" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))}>
+                <option value="ninguno" key="0" />
+                {beneficiarios
+                  ? beneficiarios.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.idBeneficiario}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 label="Alimento De Salida"
                 id="checkout-alimentoDeSalida"
@@ -137,25 +150,17 @@ export const CheckoutUpdate = () => {
                 multiple
                 name="alimentoDeSalidas"
               >
-                <option value="" key="0" />
+                <option value="ninguno" key="0" />
                 {alimentoDeSalidas
                   ? alimentoDeSalidas.map(otherEntity => (
+                    otherEntity.beneficiario.id == beneficiario && otherEntity.fechaSalida == getToday(false)? 
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
-                      </option>
+                      </option> : ""
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="checkout-beneficiario" name="beneficiario" data-cy="beneficiario" label="Beneficiario" type="select">
-                <option value="" key="0" />
-                {beneficiarios
-                  ? beneficiarios.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
+              
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

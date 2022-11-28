@@ -11,7 +11,7 @@ import { useAppDispatch, useAppSelector} from 'app/config/store';
 import { IFrutaYVerdura } from 'app/shared/model/fruta-y-verdura.model';
 import { getEntities as getFrutaYVerduras } from 'app/entities/fruta-y-verdura/fruta-y-verdura.reducer';
 import { ITupper } from 'app/shared/model/tupper.model';
-import { getEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
+import { getAllEntities as getAllTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IDonante } from 'app/shared/model/donante.model';
 import { getEntities as getDonantes } from 'app/entities/donante/donante.reducer';
 import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
@@ -55,7 +55,6 @@ export const AlimentoDeEntradaUpdate = () => {
   const updating = useAppSelector(state => state.alimentoDeEntrada.updating);
   const updateSuccess = useAppSelector(state => state.alimentoDeEntrada.updateSuccess);
   // console.log("Tipo de Alimentos " + tipoDeAlimentos);
-
   const handleClose = () => {
     navigate('/alimento-de-entrada' + location.search);
   };
@@ -68,7 +67,7 @@ export const AlimentoDeEntradaUpdate = () => {
     }
 
     dispatch(getFrutaYVerduras({}));
-    dispatch(getTuppers({}));
+    dispatch(getAllTuppers({}));
     dispatch(getDonantes({}));
     dispatch(getAllTipoDeAlimentos({}));
   }, []);

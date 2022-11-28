@@ -125,8 +125,8 @@ export const AlimentoDeSalidaUpdate = () => {
                 id="alimento-de-salida-fechaSalida"
                 name="fechaSalida"
                 data-cy="fechaSalida"
-                value={defaultToday}
-                onChange={(e) => setDefaultToday(e.target.value)}
+                value={ isNew ? defaultToday : null}
+                onChange={ isNew ? (e) => setDefaultToday(e.target.value) : null}
                 type="date"
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
