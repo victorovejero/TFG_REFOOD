@@ -78,6 +78,23 @@ export const AlimentoDeEntradaUpdate = () => {
     }
   }, [updateSuccess]);
 
+  const getEmptyObject = (name:string) => {
+    let value;
+    if(frutaYVerdura){
+      switch(name){
+        case "tupper":
+          value = (): ITupper => ({});
+        break;
+        case "tipoDeAlimento":
+          value = () : ITipoDeAlimento => ({});
+          break;
+      }
+    }else{
+      value = () : IFrutaYVerdura => ({});
+    }
+
+  }
+  
   const saveEntity = values => {
     values.fechaYHoraEntrada = convertDateTimeToServer(values.fechaYHoraEntrada);
     values.fechaYHoraRecogida = convertDateTimeToServer(values.fechaYHoraRecogida);
@@ -86,10 +103,10 @@ export const AlimentoDeEntradaUpdate = () => {
     const entity = {
       ...alimentoDeEntradaEntity,
       ...values,
-      frutaYVerduras: mapIdList(values.frutaYVerduras),
-      tupper: tuppers.find(it => it.id.toString() === values.tupper.toString()),
+      frutaYVerduras: frutaYVerdura ? mapIdList(values.frutaYVerduras) : getEmptyObject("frutaYVerdura"),
+      tupper: !frutaYVerdura ? tuppers.find(it => it.id.toString() === values.tupper.toString()) : getEmptyObject("tupper"),
       donante: donantes.find(it => it.id.toString() === values.donante.toString()),
-      tipoDeAlimento: tipoDeAlimentos.find(it => it.id.toString() === values.tipoDeAlimento.toString()),
+      tipoDeAlimento: !frutaYVerdura ? tipoDeAlimentos.find(it => it.id.toString() === values.tipoDeAlimento.toString()) : getEmptyObject("tipoDeAlimento"),
     };
 
     if (isNew) {
