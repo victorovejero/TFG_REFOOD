@@ -13,20 +13,26 @@ import { getEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IBeneficiario } from 'app/shared/model/beneficiario.model';
 import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
-import { getEntities as getAlimentoDeEntradas } from 'app/entities/alimento-de-entrada/alimento-de-entrada.reducer';
+import { getAllEntities as getAllAlimentoDeEntradas } from 'app/entities/alimento-de-entrada/alimento-de-entrada.reducer';
 import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntities as getCheckouts } from 'app/entities/checkout/checkout.reducer';
 import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
 import { getEntity, updateEntity, createEntity, reset } from './alimento-de-salida.reducer';
 import {getToday} from 'app/shared/util/date-utils'
-
+// import { useLocalStorage } from 'app/shared/util/custom-hooks';
+import useLocalStorageState from 'use-local-storage-state'
 import './alimento-de-salida.css';
 
 export const AlimentoDeSalidaUpdate = () => {
-  const [rangoEntradas, setRangoEntradas] = useState<number>(2);
+  const [rangoEntradas, setRangoEntradas] = useState<number>(0);
   const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
+  // const [beneficiario, setBeneficiario] = useLocalStorageState('beneficiario',{defaultValue:""});
+  const [beneficiario, setBeneficiario] = useState(localStorage.getItem("beneficiario-actual") ?? "");
 
-
+  //Para persistir el estado de beneficiario en memoria.
+  useEffect(() => {
+    localStorage.setItem("beneficiario-actual",beneficiario);
+  },[beneficiario])
 
   const dispatch = useAppDispatch();
 
@@ -52,8 +58,11 @@ export const AlimentoDeSalidaUpdate = () => {
   const updateSuccess = useAppSelector(state => state.alimentoDeSalida.updateSuccess);
 
   const handleClose = () => {
-    navigate('/alimento-de-salida' + location.search);
+    location.reload();
+    navigate('/alimento-de-salida/new' + location.search);
   };
+
+  console.log("Estado de beneficiario: " + beneficiario);
 
   useEffect(() => {
     if (isNew) {
@@ -64,7 +73,7 @@ export const AlimentoDeSalidaUpdate = () => {
 
     dispatch(getTuppers({}));
     dispatch(getBeneficiarios({}));
-    dispatch(getAlimentoDeEntradas({}));
+    dispatch(getAllAlimentoDeEntradas({}));
     dispatch(getCheckouts({}));
   }, []);
 
@@ -148,6 +157,8 @@ export const AlimentoDeSalidaUpdate = () => {
                 data-cy="beneficiario"
                 label="Beneficiario"
                 type="select"
+                value={beneficiario}
+                onChange={(e) => setBeneficiario(e.target.value)}
               >
                 <option value="" key="0" />
                 {beneficiarios
@@ -172,7 +183,7 @@ export const AlimentoDeSalidaUpdate = () => {
                 {alimentoDeEntradas
                   ? alimentoDeEntradas.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.tipoDeAlimento !== null ? otherEntity.tipoDeAlimento.nombreAlimento : "Fruta y Verdura"} - {otherEntity.donante.idDonante}
+                        {otherEntity.tipoDeAlimento !== null ? otherEntity.tipoDeAlimento.nombreAlimento : "Fruta y Verdura"} - {otherEntity.donante.nombre}
                       </option>
                     ))
                   : null}

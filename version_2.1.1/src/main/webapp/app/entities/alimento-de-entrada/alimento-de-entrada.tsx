@@ -12,14 +12,20 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { getEntities } from './alimento-de-entrada.reducer';
 
+import './alimento-de-entrada.css';
+
 export const AlimentoDeEntrada = () => {
+  const [searchState, setSearchState] = useState<string>("");
+
+  const ORDEN_LISTA = DESC;
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
+    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'fechaYHoraEntrada'), location.search)
   );
 
   const alimentoDeEntradaList = useAppSelector(state => state.alimentoDeEntrada.entities);
@@ -31,14 +37,14 @@ export const AlimentoDeEntrada = () => {
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
-        sort: `${paginationState.sort},${paginationState.order}`,
+        sort: `${paginationState.sort},${ORDEN_LISTA}`,
       })
     );
   };
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${ORDEN_LISTA}`;
     if (location.search !== endURL) {
       navigate(`${location.pathname}${endURL}`);
     }
@@ -84,16 +90,23 @@ export const AlimentoDeEntrada = () => {
   const printList = (i) => {
     let arr = []
     let counter = 0;
-    for (const int of alimentoDeEntradaList[i].frutaYVerduras){ 
+    for (const int of alimentoDeEntradaList[i].frutaYVerduras ? alimentoDeEntradaList[i].frutaYVerduras:""){ 
+      
       arr[counter] =  int ? <Link key={counter} to={`/fruta-y-verdura/${int.id}`}>{int.nombreAlimento}</Link> : ''
       counter++;
       
-      arr[counter] = " - "
+      arr[counter] = " - ";
       counter++;
     }
     return arr.slice(0,-1);
     
   }
+
+  const filterSearch = (value) => {
+    setSearchState(value);
+  }
+
+
   return (
     <div>
       <h2 id="alimento-de-entrada-heading" data-cy="AlimentoDeEntradaHeading">
@@ -113,6 +126,10 @@ export const AlimentoDeEntrada = () => {
           </Link>
         </div>
       </h2>
+      <div className="search-entradas">
+        <label className="search-entrada" htmlFor="search">Buscar por Donante: &nbsp;</label>
+        <input type="text" placeholder="e.g. D-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
+      </div>
       <div className="table-responsive">
         {alimentoDeEntradaList && alimentoDeEntradaList.length > 0 ? (
           <Table responsive>
@@ -121,39 +138,50 @@ export const AlimentoDeEntrada = () => {
                 {/* <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
                 </th> */}
-                <th className="hand" onClick={sort('peso')}>
-                  Peso <FontAwesomeIcon icon="sort" />
+                {/* <th className="hand" onClick={sort('peso')}> */}
+                <th>
+                  Peso
+                  {/* Peso <FontAwesomeIcon icon="sort" /> */}
                 </th>
-                <th className="hand" onClick={sort('frutaYVerdura')}>
-                  Fruta Y Verdura <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('fechaYHoraEntrada')}>
-                  Fecha Y Hora Entrada <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" >
+                
+                
+                {/* <th className="hand" >
                   Fecha Y Hora Recogida 
-                </th>
+                </th> */}
                 {/* <th className="hand" >
                   Fecha Y Hora Preparacion 
                 </th> */}
-               
+                 {/* <th className="hand" onClick={sort('fechaYHoraEntrada')}> */}
+                 <th>
+                  Fecha Y Hora Entrada
+                  {/* Fecha Y Hora Entrada <FontAwesomeIcon icon="sort" /> */}
+                </th>
                 <th>
                   Donante 
                 </th>
-                <th onClick={sort('tupper')}>
-                  Tupper <FontAwesomeIcon icon="sort" />
-                </th>
+                
+                {/* <th className="hand" onClick={sort('frutaYVerdura')}> */}
                 <th>
-                  Tipo De Alimento
+                  Fruta Y Verdura
+                  {/* Fruta Y Verdura <FontAwesomeIcon icon="sort" /> */}
                 </th>
                 <th>
                   Frutas y Verduras
                 </th>
+                {/* <th onClick={sort('tupper')}> */}
+                <th>
+                  Tupper
+                  {/* Tupper <FontAwesomeIcon icon="sort" /> */}
+                </th>
+                <th>
+                  Tipo De Alimento
+                </th>
+                
                 <th />
               </tr>
             </thead>
             <tbody>
-              {alimentoDeEntradaList.map((alimentoDeEntrada, i) => (
+              {alimentoDeEntradaList.filter(x => x.donante.idDonante.includes(searchState)).map((alimentoDeEntrada, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   {/* <td>
                     <Button tag={Link} to={`/alimento-de-entrada/${alimentoDeEntrada.id}`} color="link" size="sm">
@@ -161,23 +189,12 @@ export const AlimentoDeEntrada = () => {
                     </Button>
                   </td> */}
                   <td>{alimentoDeEntrada.peso} kg</td>
-                  <td className="peso-column">{alimentoDeEntrada.frutaYVerdura ? 'Si' : 'No'}</td>
+                  
                   <td>
                     {alimentoDeEntrada.fechaYHoraEntrada ? (
                       <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraEntrada} format={APP_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>
-                    {alimentoDeEntrada.fechaYHoraRecogida ? (
-                      <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraRecogida} format={APP_DATE_FORMAT} />
-                    ) : null}
-                  </td>
-                  {/* <td>
-                    {alimentoDeEntrada.fechaYHoraPreparacion ? (
-                      <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
-                    ) : null}
-                  </td> */}
-                  
                   <td>
                     {alimentoDeEntrada.donante ? (
                       <Link to={`/donante/${alimentoDeEntrada.donante.id}`}>{alimentoDeEntrada.donante.idDonante}</Link>
@@ -185,6 +202,21 @@ export const AlimentoDeEntrada = () => {
                       ''
                     )}
                   </td>
+                  <td className="peso-column">{alimentoDeEntrada.frutaYVerdura ? 'Si' : 'No'}</td>
+                  <td>{printList(i)}</td>
+
+                  {/* <td>
+                    {alimentoDeEntrada.fechaYHoraRecogida ? (
+                      <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraRecogida} format={APP_DATE_FORMAT} />
+                    ) : null}
+                  </td> */}
+                  {/* <td>
+                    {alimentoDeEntrada.fechaYHoraPreparacion ? (
+                      <TextFormat type="date" value={alimentoDeEntrada.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
+                    ) : null}
+                  </td> */}
+                  
+                 
                   <td>
                     {alimentoDeEntrada.tupper ? (
                       <Link to={`/tupper/${alimentoDeEntrada.tupper.id}`}>{alimentoDeEntrada.tupper.modelo}</Link>
@@ -199,7 +231,6 @@ export const AlimentoDeEntrada = () => {
                       ''
                     )}
                   </td>
-                  <td>{printList(i)}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button

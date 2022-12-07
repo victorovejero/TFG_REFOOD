@@ -5,7 +5,7 @@ import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT, ORDEN_LISTA } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -13,13 +13,17 @@ import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
 import { getEntities } from './alimento-de-salida.reducer';
 
 export const AlimentoDeSalida = () => {
+  const [searchState, setSearchState] = useState<string>("");
+
+  
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();
   const navigate = useNavigate();
 
   const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'id'), location.search)
+    overridePaginationStateWithQueryParams(getSortState(location, ITEMS_PER_PAGE, 'fechaSalida'), location.search)
   );
 
   const alimentoDeSalidaList = useAppSelector(state => state.alimentoDeSalida.entities);
@@ -31,14 +35,14 @@ export const AlimentoDeSalida = () => {
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
-        sort: `${paginationState.sort},${paginationState.order}`,
+        sort: `${paginationState.sort},${ORDEN_LISTA}`,
       })
     );
   };
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${ORDEN_LISTA}`;
     if (location.search !== endURL) {
       navigate(`${location.pathname}${endURL}`);
     }
@@ -81,6 +85,10 @@ export const AlimentoDeSalida = () => {
     sortEntities();
   };
 
+
+  const filterSearch = (value) => {
+    setSearchState(value);
+  }
   return (
     <div>
       <h2 id="alimento-de-salida-heading" data-cy="AlimentoDeSalidaHeading">
@@ -100,31 +108,44 @@ export const AlimentoDeSalida = () => {
           </Link>
         </div>
       </h2>
+      <div className="search-salida">
+        <label className="search-salida" htmlFor="search">
+          Buscar Alimento por Beneficiario: &nbsp;
+        </label>
+        <input id="search" type="text" placeholder="e.g. B-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
+      </div>
       <div className="table-responsive">
         {alimentoDeSalidaList && alimentoDeSalidaList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
-                  ID <FontAwesomeIcon icon="sort" />
+                {/* <th className="hand" onClick={sort('id')}> */}
+                <th>
+                  ID
+                  {/* ID <FontAwesomeIcon icon="sort" /> */}
                 </th>
-                <th className="hand" onClick={sort('fechaSalida')}>
-                  Fecha Salida <FontAwesomeIcon icon="sort" />
+                {/* <th className="hand" onClick={sort('fechaSalida')}> */}
+                <th>
+                  Fecha Salida
+                  {/* Fecha Salida <FontAwesomeIcon icon="sort" /> */}
                 </th>
                 <th>
-                  Tupper <FontAwesomeIcon icon="sort" />
+                  Beneficiario
+                  {/* Beneficiario <FontAwesomeIcon icon="sort" /> */}
                 </th>
                 <th>
-                  Beneficiario <FontAwesomeIcon icon="sort" />
+                  Tupper
+                  {/* Tupper <FontAwesomeIcon icon="sort" /> */}
                 </th>
                 <th>
-                  Alimento De Entrada <FontAwesomeIcon icon="sort" />
+                  Alimento De Entrada
+                  {/* Alimento De Entrada <FontAwesomeIcon icon="sort" /> */}
                 </th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {alimentoDeSalidaList.map((alimentoDeSalida, i) => (
+              {alimentoDeSalidaList.filter(x => x.beneficiario.idBeneficiario.includes(searchState)).map((alimentoDeSalida, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
                   <td>
                     <Button tag={Link} to={`/alimento-de-salida/${alimentoDeSalida.id}`} color="link" size="sm">
@@ -137,19 +158,19 @@ export const AlimentoDeSalida = () => {
                     ) : null}
                   </td>
                   <td>
-                    {alimentoDeSalida.tupper ? <Link to={`/tupper/${alimentoDeSalida.tupper.id}`}>{alimentoDeSalida.tupper.id}</Link> : ''}
-                  </td>
-                  <td>
                     {alimentoDeSalida.beneficiario ? (
-                      <Link to={`/beneficiario/${alimentoDeSalida.beneficiario.id}`}>{alimentoDeSalida.beneficiario.id}</Link>
+                      <Link to={`/beneficiario/${alimentoDeSalida.beneficiario.id}`}>{alimentoDeSalida.beneficiario.idBeneficiario}</Link>
                     ) : (
                       ''
                     )}
                   </td>
                   <td>
+                    {alimentoDeSalida.tupper ? <Link to={`/tupper/${alimentoDeSalida.tupper.id}`}>{alimentoDeSalida.tupper.modelo}</Link> : ''}
+                  </td>
+                  <td>
                     {alimentoDeSalida.alimentoDeEntrada ? (
                       <Link to={`/alimento-de-entrada/${alimentoDeSalida.alimentoDeEntrada.id}`}>
-                        {alimentoDeSalida.alimentoDeEntrada.id}
+                        {alimentoDeSalida.alimentoDeEntrada.tipoDeAlimento.nombreAlimento}
                       </Link>
                     ) : (
                       ''

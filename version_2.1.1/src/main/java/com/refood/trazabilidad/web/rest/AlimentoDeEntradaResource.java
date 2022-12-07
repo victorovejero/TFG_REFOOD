@@ -1,5 +1,7 @@
 package com.refood.trazabilidad.web.rest;
 
+import com.refood.trazabilidad.domain.AlimentoDeEntrada;
+
 import com.refood.trazabilidad.repository.AlimentoDeEntradaRepository;
 import com.refood.trazabilidad.service.AlimentoDeEntradaService;
 import com.refood.trazabilidad.service.dto.AlimentoDeEntradaDTO;
@@ -26,7 +28,8 @@ import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
- * REST controller for managing {@link com.refood.trazabilidad.domain.AlimentoDeEntrada}.
+ * REST controller for managing
+ * {@link com.refood.trazabilidad.domain.AlimentoDeEntrada}.
  */
 @RestController
 @RequestMapping("/api")
@@ -44,49 +47,65 @@ public class AlimentoDeEntradaResource {
     private final AlimentoDeEntradaRepository alimentoDeEntradaRepository;
 
     public AlimentoDeEntradaResource(
-        AlimentoDeEntradaService alimentoDeEntradaService,
-        AlimentoDeEntradaRepository alimentoDeEntradaRepository
-    ) {
+            AlimentoDeEntradaService alimentoDeEntradaService,
+            AlimentoDeEntradaRepository alimentoDeEntradaRepository) {
         this.alimentoDeEntradaService = alimentoDeEntradaService;
         this.alimentoDeEntradaRepository = alimentoDeEntradaRepository;
+    }
+
+    // Implementación Endpoint para sacar todos los elementos de la tabla
+    @GetMapping("/alimento-de-entradas-all")
+    public ResponseEntity<List<AlimentoDeEntrada>> getAll() {
+        List<AlimentoDeEntrada> alimentoDeEntrada = alimentoDeEntradaService.findAll();
+        log.debug("REST request to get TipoDeAlimento : {}", alimentoDeEntrada);
+        return ResponseEntity.ok().body(alimentoDeEntrada);
+
     }
 
     /**
      * {@code POST  /alimento-de-entradas} : Create a new alimentoDeEntrada.
      *
      * @param alimentoDeEntradaDTO the alimentoDeEntradaDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new alimentoDeEntradaDTO, or with status {@code 400 (Bad Request)} if the alimentoDeEntrada has already an ID.
+     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with
+     *         body the new alimentoDeEntradaDTO, or with status
+     *         {@code 400 (Bad Request)} if the alimentoDeEntrada has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/alimento-de-entradas")
-    public ResponseEntity<AlimentoDeEntradaDTO> createAlimentoDeEntrada(@Valid @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO)
-        throws URISyntaxException {
+    public ResponseEntity<AlimentoDeEntradaDTO> createAlimentoDeEntrada(
+            @Valid @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO)
+            throws URISyntaxException {
         log.debug("REST request to save AlimentoDeEntrada : {}", alimentoDeEntradaDTO);
         if (alimentoDeEntradaDTO.getId() != null) {
-            throw new BadRequestAlertException("A new alimentoDeEntrada cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException("A new alimentoDeEntrada cannot already have an ID", ENTITY_NAME,
+                    "idexists");
         }
         AlimentoDeEntradaDTO result = alimentoDeEntradaService.save(alimentoDeEntradaDTO);
         return ResponseEntity
-            .created(new URI("/api/alimento-de-entradas/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+                .created(new URI("/api/alimento-de-entradas/" + result.getId()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME,
+                        result.getId().toString()))
+                .body(result);
     }
 
     /**
-     * {@code PUT  /alimento-de-entradas/:id} : Updates an existing alimentoDeEntrada.
+     * {@code PUT  /alimento-de-entradas/:id} : Updates an existing
+     * alimentoDeEntrada.
      *
-     * @param id the id of the alimentoDeEntradaDTO to save.
+     * @param id                   the id of the alimentoDeEntradaDTO to save.
      * @param alimentoDeEntradaDTO the alimentoDeEntradaDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated alimentoDeEntradaDTO,
-     * or with status {@code 400 (Bad Request)} if the alimentoDeEntradaDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the alimentoDeEntradaDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated alimentoDeEntradaDTO,
+     *         or with status {@code 400 (Bad Request)} if the alimentoDeEntradaDTO
+     *         is not valid,
+     *         or with status {@code 500 (Internal Server Error)} if the
+     *         alimentoDeEntradaDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/alimento-de-entradas/{id}")
     public ResponseEntity<AlimentoDeEntradaDTO> updateAlimentoDeEntrada(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO
-    ) throws URISyntaxException {
+            @PathVariable(value = "id", required = false) final Long id,
+            @Valid @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO) throws URISyntaxException {
         log.debug("REST request to update AlimentoDeEntrada : {}, {}", id, alimentoDeEntradaDTO);
         if (alimentoDeEntradaDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -101,27 +120,33 @@ public class AlimentoDeEntradaResource {
 
         AlimentoDeEntradaDTO result = alimentoDeEntradaService.update(alimentoDeEntradaDTO);
         return ResponseEntity
-            .ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, alimentoDeEntradaDTO.getId().toString()))
-            .body(result);
+                .ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
+                        alimentoDeEntradaDTO.getId().toString()))
+                .body(result);
     }
 
     /**
-     * {@code PATCH  /alimento-de-entradas/:id} : Partial updates given fields of an existing alimentoDeEntrada, field will ignore if it is null
+     * {@code PATCH  /alimento-de-entradas/:id} : Partial updates given fields of an
+     * existing alimentoDeEntrada, field will ignore if it is null
      *
-     * @param id the id of the alimentoDeEntradaDTO to save.
+     * @param id                   the id of the alimentoDeEntradaDTO to save.
      * @param alimentoDeEntradaDTO the alimentoDeEntradaDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated alimentoDeEntradaDTO,
-     * or with status {@code 400 (Bad Request)} if the alimentoDeEntradaDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the alimentoDeEntradaDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the alimentoDeEntradaDTO couldn't be updated.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the updated alimentoDeEntradaDTO,
+     *         or with status {@code 400 (Bad Request)} if the alimentoDeEntradaDTO
+     *         is not valid,
+     *         or with status {@code 404 (Not Found)} if the alimentoDeEntradaDTO is
+     *         not found,
+     *         or with status {@code 500 (Internal Server Error)} if the
+     *         alimentoDeEntradaDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/alimento-de-entradas/{id}", consumes = { "application/json", "application/merge-patch+json" })
+    @PatchMapping(value = "/alimento-de-entradas/{id}", consumes = { "application/json",
+            "application/merge-patch+json" })
     public ResponseEntity<AlimentoDeEntradaDTO> partialUpdateAlimentoDeEntrada(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO
-    ) throws URISyntaxException {
+            @PathVariable(value = "id", required = false) final Long id,
+            @NotNull @RequestBody AlimentoDeEntradaDTO alimentoDeEntradaDTO) throws URISyntaxException {
         log.debug("REST request to partial update AlimentoDeEntrada partially : {}, {}", id, alimentoDeEntradaDTO);
         if (alimentoDeEntradaDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -137,23 +162,24 @@ public class AlimentoDeEntradaResource {
         Optional<AlimentoDeEntradaDTO> result = alimentoDeEntradaService.partialUpdate(alimentoDeEntradaDTO);
 
         return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, alimentoDeEntradaDTO.getId().toString())
-        );
+                result,
+                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME,
+                        alimentoDeEntradaDTO.getId().toString()));
     }
 
     /**
      * {@code GET  /alimento-de-entradas} : get all the alimentoDeEntradas.
      *
-     * @param pageable the pagination information.
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of alimentoDeEntradas in body.
+     * @param pageable  the pagination information.
+     * @param eagerload flag to eager load entities from relationships (This is
+     *                  applicable for many-to-many).
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list
+     *         of alimentoDeEntradas in body.
      */
     @GetMapping("/alimento-de-entradas")
     public ResponseEntity<List<AlimentoDeEntradaDTO>> getAllAlimentoDeEntradas(
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable,
-        @RequestParam(required = false, defaultValue = "false") boolean eagerload
-    ) {
+            @org.springdoc.api.annotations.ParameterObject Pageable pageable,
+            @RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get a page of AlimentoDeEntradas");
         Page<AlimentoDeEntradaDTO> page;
         if (eagerload) {
@@ -161,7 +187,8 @@ public class AlimentoDeEntradaResource {
         } else {
             page = alimentoDeEntradaService.findAll(pageable);
         }
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        HttpHeaders headers = PaginationUtil
+                .generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
@@ -169,7 +196,8 @@ public class AlimentoDeEntradaResource {
      * {@code GET  /alimento-de-entradas/:id} : get the "id" alimentoDeEntrada.
      *
      * @param id the id of the alimentoDeEntradaDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the alimentoDeEntradaDTO, or with status {@code 404 (Not Found)}.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body
+     *         the alimentoDeEntradaDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/alimento-de-entradas/{id}")
     public ResponseEntity<AlimentoDeEntradaDTO> getAlimentoDeEntrada(@PathVariable Long id) {
@@ -179,7 +207,8 @@ public class AlimentoDeEntradaResource {
     }
 
     /**
-     * {@code DELETE  /alimento-de-entradas/:id} : delete the "id" alimentoDeEntrada.
+     * {@code DELETE  /alimento-de-entradas/:id} : delete the "id"
+     * alimentoDeEntrada.
      *
      * @param id the id of the alimentoDeEntradaDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
@@ -189,8 +218,8 @@ public class AlimentoDeEntradaResource {
         log.debug("REST request to delete AlimentoDeEntrada : {}", id);
         alimentoDeEntradaService.delete(id);
         return ResponseEntity
-            .noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
-            .build();
+                .noContent()
+                .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+                .build();
     }
 }

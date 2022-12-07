@@ -45,7 +45,8 @@ export const CheckoutDetail = () => {
             {checkoutEntity.alimentoDeSalidas
               ? checkoutEntity.alimentoDeSalidas.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    {val.alimentoDeEntrada.frutaYVerdura ? val.alimentoDeEntrada.frutasYVerduras : (val.alimentoDeEntrada.tipoDeAlimento.nombreAlimento + " - " + val.beneficiario.idBeneficiario)}
+                    {/* {val.id} */}
                     {checkoutEntity.alimentoDeSalidas && i === checkoutEntity.alimentoDeSalidas.length - 1 ? '' : ', '}
                   </span>
                 ))

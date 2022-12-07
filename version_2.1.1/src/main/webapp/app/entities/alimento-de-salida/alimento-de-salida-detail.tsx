@@ -41,7 +41,7 @@ export const AlimentoDeSalidaDetail = () => {
           <dt>Beneficiario</dt>
           <dd>{alimentoDeSalidaEntity.beneficiario ? alimentoDeSalidaEntity.beneficiario.id : ''}</dd>
           <dt>Alimento De Entrada</dt>
-          <dd>{alimentoDeSalidaEntity.alimentoDeEntrada ? alimentoDeSalidaEntity.alimentoDeEntrada.id : ''}</dd>
+          <dd>{alimentoDeSalidaEntity.alimentoDeEntrada ? (alimentoDeSalidaEntity.alimentoDeEntrada.tipoDeAlimento.nombreAlimento  + " - " + alimentoDeSalidaEntity.alimentoDeEntrada.donante.idDonante): ''} </dd>
         </dl>
         <Button tag={Link} to="/alimento-de-salida" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

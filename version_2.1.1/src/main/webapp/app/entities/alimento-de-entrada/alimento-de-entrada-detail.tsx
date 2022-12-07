@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
 import { TextFormat } from 'react-jhipster';
@@ -9,16 +9,21 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { getEntity } from './alimento-de-entrada.reducer';
 
+
 export const AlimentoDeEntradaDetail = () => {
+const [tupperId, setTupperId] = useState();
+
   const dispatch = useAppDispatch();
 
   const { id } = useParams<'id'>();
-
+  console.log(id);
   useEffect(() => {
     dispatch(getEntity(id));
+    
   }, []);
 
   const alimentoDeEntradaEntity = useAppSelector(state => state.alimentoDeEntrada.entity);
+  
   return (
     <Row>
       <Col md="8">
@@ -32,10 +37,12 @@ export const AlimentoDeEntradaDetail = () => {
             <span id="peso">Peso</span>
           </dt>
           <dd>{alimentoDeEntradaEntity.peso}</dd>
-          <dt>
-            <span id="frutaYVerdura">Fruta Y Verdura</span>
-          </dt>
-          <dd>{alimentoDeEntradaEntity.frutaYVerdura ? 'true' : 'false'}</dd>
+          <dt>Donante</dt>
+          <dd>
+            <Link to={`/donante/${id}`}>
+              {alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.idDonante : ''}
+            </Link> 
+          </dd>
           <dt>
             <span id="fechaYHoraEntrada">Fecha Y Hora Entrada</span>
           </dt>
@@ -44,6 +51,7 @@ export const AlimentoDeEntradaDetail = () => {
               <TextFormat value={alimentoDeEntradaEntity.fechaYHoraEntrada} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
+          
           <dt>
             <span id="fechaYHoraRecogida">Fecha Y Hora Recogida</span>
           </dt>
@@ -60,6 +68,10 @@ export const AlimentoDeEntradaDetail = () => {
               <TextFormat value={alimentoDeEntradaEntity.fechaYHoraPreparacion} type="date" format={APP_DATE_FORMAT} />
             ) : null}
           </dd>
+           <dt>
+            <span id="frutaYVerdura">Fruta Y Verdura</span>
+          </dt>
+          <dd>{alimentoDeEntradaEntity.frutaYVerdura ? 'true' : 'false'}</dd>
           <dt>Fruta Y Verdura</dt>
           <dd>
             {alimentoDeEntradaEntity.frutaYVerduras
@@ -77,16 +89,11 @@ export const AlimentoDeEntradaDetail = () => {
             {alimentoDeEntradaEntity.tupper ? alimentoDeEntradaEntity.tupper.modelo : ''}
           </Link>
           </dd>
-          <dt>Donante</dt>
-          <dd>
-            <Link to={`/donante/${id}`}>
-              {alimentoDeEntradaEntity.donante ? alimentoDeEntradaEntity.donante.idDonante : ''}
-            </Link> 
-          </dd>
+          
           <dt>Tipo De Alimento</dt>
           <dd>
-            <Link to={`/tipo-de-alimento/${id}`}>
-                {alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.nombreAlimento : ''}
+            <Link to={`/tipo-de-alimento/${id}`} onChange={(e) => console.log(e)}>
+                {alimentoDeEntradaEntity.tipoDeAlimento ? alimentoDeEntradaEntity.tipoDeAlimento.id : ''}
             </Link>
           </dd>
         </dl>

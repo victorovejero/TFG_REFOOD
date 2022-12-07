@@ -42,3 +42,11 @@
 } 
 
 
+div.search-entradas{
+  margin:0;
+  padding:2%;
+}
+
+label.search-entrada{
+  font-weight:bold;
+}

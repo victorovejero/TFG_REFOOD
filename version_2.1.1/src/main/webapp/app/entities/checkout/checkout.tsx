@@ -12,7 +12,11 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntities } from './checkout.reducer';
 
+import './checkout.css';
 export const Checkout = () => {
+  const [searchState, setSearchState] = useState<string>("");
+
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -81,6 +85,24 @@ export const Checkout = () => {
     sortEntities();
   };
 
+
+  const printList = (i) => {
+    let arr = []
+    let counter = 0;
+    for (const int of checkoutList[i].alimentoDeSalidas){ 
+      arr[counter] =  int ? <Link key={counter} to={`/alimento-de-salida/${int.id}`}>{int.alimentoDeEntrada.tipoDeAlimento.nombreAlimento}</Link> : ''
+      counter++;
+      
+      arr[counter] = " - "
+      counter++;
+    }
+    return arr.slice(0,-1);
+    
+  }
+
+  const filterSearch = (value) => {
+    setSearchState(value);
+  }
   return (
     <div>
       <h2 id="checkout-heading" data-cy="CheckoutHeading">
@@ -95,6 +117,12 @@ export const Checkout = () => {
           </Link>
         </div>
       </h2>
+      <div className="search-salida">
+        <label className="search-salida" htmlFor="search">
+          Buscar Alimento por Beneficiario: &nbsp;
+        </label>
+        <input id="search" type="text" placeholder="e.g. B-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
+      </div>
       <div className="table-responsive">
         {checkoutList && checkoutList.length > 0 ? (
           <Table responsive>
@@ -112,6 +140,9 @@ export const Checkout = () => {
                 <th>
                   Beneficiario <FontAwesomeIcon icon="sort" />
                 </th>
+                <th>
+                  Alimentos de Salida
+                </th>
                 <th />
               </tr>
             </thead>
@@ -128,8 +159,9 @@ export const Checkout = () => {
                   </td>
                   <td>{checkout.peso}</td>
                   <td>
-                    {checkout.beneficiario ? <Link to={`/beneficiario/${checkout.beneficiario.id}`}>{checkout.beneficiario.id}</Link> : ''}
+                    {checkout.beneficiario ? <Link to={`/beneficiario/${checkout.beneficiario.id}`}>{checkout.beneficiario.idBeneficiario}</Link> : ''}
                   </td>
+                  <td>{printList(i)}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/checkout/${checkout.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -19,7 +19,6 @@ import {getToday} from 'app/shared/util/date-utils'
 export const CheckoutUpdate = () => {
   const PESO_MAX = 15;
   const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
-  const [beneficiario, setBeneficiario] = useState<number>(0);
   const peso = useRef<Number>();
   const pesoMaxNotify = useRef<Boolean>(false);
   
@@ -37,6 +36,8 @@ export const CheckoutUpdate = () => {
   const loading = useAppSelector(state => state.checkout.loading);
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
+
+  const [beneficiario, setBeneficiario] = useState<number>( isNew? 0 : checkoutEntity?.beneficiario?.id);
 
   console.log(alimentoDeSalidas);
   const handleClose = () => {
@@ -81,7 +82,7 @@ export const CheckoutUpdate = () => {
       : {
           ...checkoutEntity,
           alimentoDeSalidas: checkoutEntity?.alimentoDeSalidas?.map(e => e.id.toString()),
-          beneficiario: checkoutEntity?.beneficiario?.id,
+          beneficiario: beneficiario
         };
 
   const pesoAlert = (event) => {
@@ -95,7 +96,7 @@ export const CheckoutUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.checkout.home.createOrEditLabel" data-cy="CheckoutCreateUpdateHeading">
-            Crear o editar Checkout {JSON.stringify(beneficiario)}
+            Crear o editar Checkout
           </h2>
         </Col>
       </Row>
@@ -132,7 +133,7 @@ export const CheckoutUpdate = () => {
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
-              <ValidatedField id="checkout-beneficiario" name="beneficiario" data-cy="beneficiario" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))}>
+              <ValidatedField id="checkout-beneficiario" name="beneficiario" data-cy="beneficiario" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} required>
                 <option value="ninguno" key="0" />
                 {beneficiarios
                   ? beneficiarios.map(otherEntity => (
@@ -149,8 +150,9 @@ export const CheckoutUpdate = () => {
                 type="select"
                 multiple
                 name="alimentoDeSalidas"
+                required
               >
-                <option value="ninguno" key="0" />
+                <option value="" key="0" >No se ha presentado</option>
                 {alimentoDeSalidas
                   ? alimentoDeSalidas.map(otherEntity => (
                     otherEntity.beneficiario.id == beneficiario && otherEntity.fechaSalida == getToday(false)? 

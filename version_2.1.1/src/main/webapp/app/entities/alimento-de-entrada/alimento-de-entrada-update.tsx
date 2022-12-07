@@ -36,6 +36,11 @@ export const AlimentoDeEntradaUpdate = () => {
   const pesoMaxNotify = useRef<boolean>(false);
   const [showPesoAlert,setShowPesoAlert] = useState<boolean>(false);
   const [crearAlimento, setCrearAlimento] = useState<boolean>(false);
+  const [donante, setDonante] = useState(localStorage.getItem("donante-actual") ?? "");
+
+  useEffect(() => {
+    localStorage.setItem("donante-actual", donante);
+  },[donante])
 
   // const [tiposAlimentoUpdate, setTiposAlimentoUpdate] = useState(undefined);
   const dispatch = useAppDispatch();
@@ -56,7 +61,8 @@ export const AlimentoDeEntradaUpdate = () => {
   const updateSuccess = useAppSelector(state => state.alimentoDeEntrada.updateSuccess);
   // console.log("Tipo de Alimentos " + tipoDeAlimentos);
   const handleClose = () => {
-    navigate('/alimento-de-entrada' + location.search);
+    location.reload();
+    navigate('/alimento-de-entrada/new' + location.search);
   };
 
   useEffect(() => {
@@ -327,7 +333,7 @@ export const AlimentoDeEntradaUpdate = () => {
                     ))
                   : null}
               </ValidatedField> 
-              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select" required>
+              <ValidatedField id="alimento-de-entrada-donante" name="donante" data-cy="donante" label="Donante" type="select" required value={donante} onChange={(e) => setDonante(e.target.value)}>
                 <option value="" key="0" />
                 {donantes
                   ? donantes.map(otherEntity => (
