@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.refood.trazabilidad.domain.FrutaYVerdura;
 import com.refood.trazabilidad.repository.FrutaYVerduraRepository;
 import com.refood.trazabilidad.service.FrutaYVerduraService;
@@ -26,9 +29,20 @@ public class FrutaYVerduraServiceImpl implements FrutaYVerduraService {
 
     private final FrutaYVerduraMapper frutaYVerduraMapper;
 
-    public FrutaYVerduraServiceImpl(FrutaYVerduraRepository frutaYVerduraRepository, FrutaYVerduraMapper frutaYVerduraMapper) {
+    public FrutaYVerduraServiceImpl(FrutaYVerduraRepository frutaYVerduraRepository,
+            FrutaYVerduraMapper frutaYVerduraMapper) {
         this.frutaYVerduraRepository = frutaYVerduraRepository;
         this.frutaYVerduraMapper = frutaYVerduraMapper;
+    }
+
+    @Override
+    public List<FrutaYVerdura> findAll() {
+
+        List<FrutaYVerdura> frutaYVerduras = frutaYVerduraRepository.findAll();
+        // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
+        // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
+
+        return frutaYVerduras;
     }
 
     @Override
@@ -52,14 +66,14 @@ public class FrutaYVerduraServiceImpl implements FrutaYVerduraService {
         log.debug("Request to partially update FrutaYVerdura : {}", frutaYVerduraDTO);
 
         return frutaYVerduraRepository
-            .findById(frutaYVerduraDTO.getId())
-            .map(existingFrutaYVerdura -> {
-                frutaYVerduraMapper.partialUpdate(existingFrutaYVerdura, frutaYVerduraDTO);
+                .findById(frutaYVerduraDTO.getId())
+                .map(existingFrutaYVerdura -> {
+                    frutaYVerduraMapper.partialUpdate(existingFrutaYVerdura, frutaYVerduraDTO);
 
-                return existingFrutaYVerdura;
-            })
-            .map(frutaYVerduraRepository::save)
-            .map(frutaYVerduraMapper::toDto);
+                    return existingFrutaYVerdura;
+                })
+                .map(frutaYVerduraRepository::save)
+                .map(frutaYVerduraMapper::toDto);
     }
 
     @Override

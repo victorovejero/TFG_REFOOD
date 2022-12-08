@@ -42,7 +42,7 @@ export const NucleoUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...nucleoEntity,
+      //...nucleoEntity,
       ...values,
     };
 

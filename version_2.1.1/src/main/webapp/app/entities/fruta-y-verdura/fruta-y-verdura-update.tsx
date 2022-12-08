@@ -47,7 +47,7 @@ export const FrutaYVerduraUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...frutaYVerduraEntity,
+      //...frutaYVerduraEntity,
       ...values,
     };
 

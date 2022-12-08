@@ -170,7 +170,7 @@ export const AlimentoDeSalida = () => {
                   <td>
                     {alimentoDeSalida.alimentoDeEntrada ? (
                       <Link to={`/alimento-de-entrada/${alimentoDeSalida.alimentoDeEntrada.id}`}>
-                        {alimentoDeSalida.alimentoDeEntrada.tipoDeAlimento.nombreAlimento}
+                        {alimentoDeSalida.alimentoDeEntrada.tipoDeAlimento ? alimentoDeSalida.alimentoDeEntrada.tipoDeAlimento.nombreAlimento : "Fruta y Verdura"}
                       </Link>
                     ) : (
                       ''

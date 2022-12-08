@@ -9,7 +9,7 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector} from 'app/config/store';
 
 import { IFrutaYVerdura } from 'app/shared/model/fruta-y-verdura.model';
-import { getEntities as getFrutaYVerduras } from 'app/entities/fruta-y-verdura/fruta-y-verdura.reducer';
+import { getAllEntities as getFrutaYVerduras } from 'app/entities/fruta-y-verdura/fruta-y-verdura.reducer';
 import { ITupper } from 'app/shared/model/tupper.model';
 import { getAllEntities as getAllTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IDonante } from 'app/shared/model/donante.model';

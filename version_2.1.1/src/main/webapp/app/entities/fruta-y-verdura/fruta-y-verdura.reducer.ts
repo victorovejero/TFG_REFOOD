@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk, isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
-import { loadMoreDataWhenScrolled, parseHeaderForLinks } from 'react-jhipster';
+
 
 import { cleanEntity } from 'app/shared/util/entity-utils';
 import { IQueryParams, createEntitySlice, EntityState, serializeAxiosError } from 'app/shared/reducers/reducer.utils';
@@ -20,6 +20,11 @@ const initialState: EntityState<IFrutaYVerdura> = {
 const apiUrl = 'api/fruta-y-verduras';
 
 // Actions
+export const getAllEntities = createAsyncThunk('frutaYVerdura/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+  const requestUrl = 'api/fruta-y-verdura-all';
+  return axios.get<IFrutaYVerdura[]>(requestUrl);
+});
+
 
 export const getEntities = createAsyncThunk('frutaYVerdura/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
@@ -86,13 +91,14 @@ export const FrutaYVerduraSlice = createEntitySlice({
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
         const { data, headers } = action.payload;
-        const links = parseHeaderForLinks(headers.link);
+        // const links = parseHeaderForLinks(headers.link);
 
         return {
           ...state,
           loading: false,
-          links,
-          entities: loadMoreDataWhenScrolled(state.entities, data, links),
+          entities:data,
+          // links,
+          // entities: loadMoreDataWhenScrolled(state.entities, data, links),
           totalItems: parseInt(headers['x-total-count'], 10),
         };
       })

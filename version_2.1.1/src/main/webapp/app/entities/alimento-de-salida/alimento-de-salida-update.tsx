@@ -178,6 +178,7 @@ export const AlimentoDeSalidaUpdate = () => {
                 data-cy="alimentoDeEntrada"
                 label="Alimento De Entrada"
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {alimentoDeEntradas

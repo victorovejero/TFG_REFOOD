@@ -42,7 +42,7 @@ export const SocioUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...socioEntity,
+      // ...socioEntity,
       ...values,
     };
 

@@ -55,7 +55,7 @@ export const IntoleranciaUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...intoleranciaEntity,
+      // ...intoleranciaEntity,
       ...values,
     };
 
