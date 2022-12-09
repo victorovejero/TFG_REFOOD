@@ -13,7 +13,7 @@ import { getAllEntities as getFrutaYVerduras } from 'app/entities/fruta-y-verdur
 import { ITupper } from 'app/shared/model/tupper.model';
 import { getAllEntities as getAllTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IDonante } from 'app/shared/model/donante.model';
-import { getEntities as getDonantes } from 'app/entities/donante/donante.reducer';
+import { getAllEntities as getDonantes } from 'app/entities/donante/donante.reducer';
 import { ITipoDeAlimento } from 'app/shared/model/tipo-de-alimento.model';
 import { getAllEntities as getAllTipoDeAlimentos } from 'app/entities/tipo-de-alimento/tipo-de-alimento.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';

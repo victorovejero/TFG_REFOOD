@@ -1,5 +1,9 @@
 package com.refood.trazabilidad.web.rest;
 
+
+import java.util.List;
+import com.refood.trazabilidad.domain.Beneficiario;
+
 import com.refood.trazabilidad.repository.BeneficiarioRepository;
 import com.refood.trazabilidad.service.BeneficiarioService;
 import com.refood.trazabilidad.service.dto.BeneficiarioDTO;
@@ -46,6 +50,15 @@ public class BeneficiarioResource {
     public BeneficiarioResource(BeneficiarioService beneficiarioService, BeneficiarioRepository beneficiarioRepository) {
         this.beneficiarioService = beneficiarioService;
         this.beneficiarioRepository = beneficiarioRepository;
+    }
+
+
+    @GetMapping("/beneficiarios-all")
+    public ResponseEntity<List<Beneficiario>> getAll() {
+        List<Beneficiario> beneficiarios = beneficiarioService.findAll();
+        log.debug("REST request to get Beneficiario : {}", beneficiarios);
+        return ResponseEntity.ok().body(beneficiarios);
+
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.refood.trazabilidad.web.rest;
 
+import com.refood.trazabilidad.domain.Donante;
+
 import com.refood.trazabilidad.repository.DonanteRepository;
 import com.refood.trazabilidad.service.DonanteService;
 import com.refood.trazabilidad.service.dto.DonanteDTO;
@@ -46,6 +48,13 @@ public class DonanteResource {
     public DonanteResource(DonanteService donanteService, DonanteRepository donanteRepository) {
         this.donanteService = donanteService;
         this.donanteRepository = donanteRepository;
+    }
+
+    @GetMapping("/donantes-all")
+    public ResponseEntity<List<Donante>> getAll() {
+        List<Donante> donantes = donanteService.findAll();
+        log.debug("REST request to get Donantes : {}", donantes);
+        return ResponseEntity.ok().body(donantes);
     }
 
     /**

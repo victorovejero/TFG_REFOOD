@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.refood.trazabilidad.domain.AlimentoDeSalida;
 import com.refood.trazabilidad.repository.AlimentoDeSalidaRepository;
 import com.refood.trazabilidad.service.AlimentoDeSalidaService;
@@ -32,6 +35,16 @@ public class AlimentoDeSalidaServiceImpl implements AlimentoDeSalidaService {
     ) {
         this.alimentoDeSalidaRepository = alimentoDeSalidaRepository;
         this.alimentoDeSalidaMapper = alimentoDeSalidaMapper;
+    }
+
+    @Override
+    public List<AlimentoDeSalida> findAll() {
+
+        List<AlimentoDeSalida> alimentosDeSalida = alimentoDeSalidaRepository.findAll();
+        // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
+        // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
+
+        return alimentosDeSalida;
     }
 
     @Override

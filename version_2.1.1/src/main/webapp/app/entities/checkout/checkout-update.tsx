@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
+import { Button, Row, Col, FormText,Alert } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,9 +9,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IAlimentoDeSalida } from 'app/shared/model/alimento-de-salida.model';
-import { getEntities as getAlimentoDeSalidas } from 'app/entities/alimento-de-salida/alimento-de-salida.reducer';
+import { getAllEntities as getAlimentoDeSalidas } from 'app/entities/alimento-de-salida/alimento-de-salida.reducer';
 import { IBeneficiario } from 'app/shared/model/beneficiario.model';
-import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
+import { getAllEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
 import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntity, updateEntity, createEntity, reset } from './checkout.reducer';
 import {getToday} from 'app/shared/util/date-utils'
@@ -19,8 +19,8 @@ import {getToday} from 'app/shared/util/date-utils'
 export const CheckoutUpdate = () => {
   const PESO_MAX = 15;
   const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
-  const peso = useRef<Number>();
-  const pesoMaxNotify = useRef<Boolean>(false);
+  const pesoMaxNotify = useRef<boolean>(false);
+  const [showPesoAlert,setShowPesoAlert] = useState<boolean>(false);
   
   
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ export const CheckoutUpdate = () => {
   const loading = useAppSelector(state => state.checkout.loading);
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
-
+  console.log(alimentoDeSalidas)
   const [beneficiario, setBeneficiario] = useState<number>( isNew? 0 : checkoutEntity?.beneficiario?.id);
 
   console.log(alimentoDeSalidas);
@@ -85,12 +85,22 @@ export const CheckoutUpdate = () => {
           beneficiario: beneficiario
         };
 
-  const pesoAlert = (event) => {
-    peso.current = event.target.value;
-    if(peso.current >= PESO_MAX && pesoMaxNotify.current === false){
-      confirm("¿Está seguro de que el peso es mayor a "+ PESO_MAX + "Kg? \n\n Si acepta, no le volveremos a notificar.") ? pesoMaxNotify.current = true : null
-    }
-  }
+        const pesoAlert = (event) => {
+          switch(event.target.value >= 10 && event.target.value !==""){
+            case true:
+              if(pesoMaxNotify.current === false){
+                setShowPesoAlert(!showPesoAlert);
+                pesoMaxNotify.current = true;
+              }
+              break;
+            case false:
+              if(pesoMaxNotify.current === true){
+                setShowPesoAlert(!showPesoAlert);
+                pesoMaxNotify.current = false;
+              }
+              break;
+            }
+        }
   return (
     <div>
       <Row className="justify-content-center">
@@ -120,19 +130,22 @@ export const CheckoutUpdate = () => {
                 }}
               />
               <ValidatedField
+                autoComplete="off"
                 label="Peso"
                 id="checkout-peso"
                 name="peso"
                 data-cy="peso"
                 type="text"
                 maxlength="6"
-                value={peso.current}
                 onChange={pesoAlert}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
+              <Alert color="danger"  isOpen={showPesoAlert}>
+                ¿Está seguro de que el peso es mayor a {PESO_MAX}Kg?
+              </Alert>
               <ValidatedField id="checkout-beneficiario" name="beneficiario" data-cy="beneficiario" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} required>
                 <option value="ninguno" key="0" />
                 {beneficiarios

@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.refood.trazabilidad.domain.Beneficiario;
 import com.refood.trazabilidad.repository.BeneficiarioRepository;
 import com.refood.trazabilidad.service.BeneficiarioService;
@@ -29,6 +32,16 @@ public class BeneficiarioServiceImpl implements BeneficiarioService {
     public BeneficiarioServiceImpl(BeneficiarioRepository beneficiarioRepository, BeneficiarioMapper beneficiarioMapper) {
         this.beneficiarioRepository = beneficiarioRepository;
         this.beneficiarioMapper = beneficiarioMapper;
+    }
+
+    @Override
+    public List<Beneficiario> findAll() {
+
+        List<Beneficiario> beneficiarios = beneficiarioRepository.findAll();
+        // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
+        // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
+
+        return beneficiarios;
     }
 
     @Override

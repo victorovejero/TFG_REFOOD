@@ -1,5 +1,9 @@
 package com.refood.trazabilidad.service;
 
+import java.util.List;
+import com.refood.trazabilidad.domain.Donante;
+
+
 import com.refood.trazabilidad.service.dto.DonanteDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -9,6 +13,9 @@ import org.springframework.data.domain.Pageable;
  * Service Interface for managing {@link com.refood.trazabilidad.domain.Donante}.
  */
 public interface DonanteService {
+
+    List<Donante> findAll();
+
     /**
      * Save a donante.
      *

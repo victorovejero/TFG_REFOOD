@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service.impl;
 
+import java.util.List;
+import java.util.Arrays;
+
 import com.refood.trazabilidad.domain.Donante;
 import com.refood.trazabilidad.repository.DonanteRepository;
 import com.refood.trazabilidad.service.DonanteService;
@@ -29,6 +32,17 @@ public class DonanteServiceImpl implements DonanteService {
     public DonanteServiceImpl(DonanteRepository donanteRepository, DonanteMapper donanteMapper) {
         this.donanteRepository = donanteRepository;
         this.donanteMapper = donanteMapper;
+    }
+
+
+    @Override
+    public List<Donante> findAll() {
+
+        List<Donante> donantes = donanteRepository.findAll();
+        // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
+        // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
+
+        return donantes;
     }
 
     @Override

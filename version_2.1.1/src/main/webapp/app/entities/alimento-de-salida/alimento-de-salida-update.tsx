@@ -9,9 +9,9 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { ITupper } from 'app/shared/model/tupper.model';
-import { getEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
+import { getAllEntities as getTuppers } from 'app/entities/tupper/tupper.reducer';
 import { IBeneficiario } from 'app/shared/model/beneficiario.model';
-import { getEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
+import { getAllEntities as getBeneficiarios } from 'app/entities/beneficiario/beneficiario.reducer';
 import { IAlimentoDeEntrada } from 'app/shared/model/alimento-de-entrada.model';
 import { getAllEntities as getAllAlimentoDeEntradas } from 'app/entities/alimento-de-entrada/alimento-de-entrada.reducer';
 import { ICheckout } from 'app/shared/model/checkout.model';

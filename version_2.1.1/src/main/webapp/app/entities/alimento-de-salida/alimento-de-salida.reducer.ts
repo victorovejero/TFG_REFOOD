@@ -19,6 +19,11 @@ const apiUrl = 'api/alimento-de-salidas';
 
 // Actions
 
+export const getAllEntities = createAsyncThunk('alimentoDeSalida/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/alimento-de-salida-all';
+  return axios.get<IAlimentoDeSalida[]>(requestUrl);
+})
+
 export const getEntities = createAsyncThunk('alimentoDeSalida/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
   return axios.get<IAlimentoDeSalida[]>(requestUrl);

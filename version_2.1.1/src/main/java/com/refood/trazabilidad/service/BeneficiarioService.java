@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service;
 
+import java.util.List;
+import com.refood.trazabilidad.domain.Beneficiario;
+
 import com.refood.trazabilidad.service.dto.BeneficiarioDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -9,6 +12,9 @@ import org.springframework.data.domain.Pageable;
  * Service Interface for managing {@link com.refood.trazabilidad.domain.Beneficiario}.
  */
 public interface BeneficiarioService {
+
+    List<Beneficiario> findAll();
+
     /**
      * Save a beneficiario.
      *

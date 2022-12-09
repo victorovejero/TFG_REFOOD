@@ -14,6 +14,9 @@ import { getEntities } from './checkout.reducer';
 
 import './checkout.css';
 export const Checkout = () => {
+
+  const ORDEN_LISTA = DESC;
+
   const [searchState, setSearchState] = useState<string>("");
 
 
@@ -35,14 +38,14 @@ export const Checkout = () => {
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
-        sort: `${paginationState.sort},${paginationState.order}`,
+        sort: `${paginationState.sort},${ORDEN_LISTA}`,
       })
     );
   };
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${ORDEN_LISTA}`;
     if (location.search !== endURL) {
       navigate(`${location.pathname}${endURL}`);
     }
@@ -128,17 +131,22 @@ export const Checkout = () => {
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/* <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
+                </th> */}
+                {/* <th className="hand" onClick={sort('fechaSalida')}> */}
+                <th>
+                  {/* Fecha Salida <FontAwesomeIcon icon="sort" /> */}
+                  Fecha Salida
                 </th>
-                <th className="hand" onClick={sort('fechaSalida')}>
-                  Fecha Salida <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('peso')}>
-                  Peso <FontAwesomeIcon icon="sort" />
+                {/* <th className="hand" onClick={sort('peso')}> */}
+                <th>
+                  {/* Peso <FontAwesomeIcon icon="sort" /> */}
+                  Peso
                 </th>
                 <th>
-                  Beneficiario <FontAwesomeIcon icon="sort" />
+                  {/* Beneficiario <FontAwesomeIcon icon="sort" /> */}
+                  Beneficiario
                 </th>
                 <th>
                   Alimentos de Salida
@@ -147,13 +155,14 @@ export const Checkout = () => {
               </tr>
             </thead>
             <tbody>
-              {checkoutList.map((checkout, i) => (
+            {checkoutList.filter(x => x.beneficiario.idBeneficiario.includes(searchState)).map
+              ((checkout, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/* <td>
                     <Button tag={Link} to={`/checkout/${checkout.id}`} color="link" size="sm">
                       {checkout.id}
                     </Button>
-                  </td>
+                  </td> */}
                   <td>
                     {checkout.fechaSalida ? <TextFormat type="date" value={checkout.fechaSalida} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>

@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service;
 
+import java.util.List;
+import com.refood.trazabilidad.domain.AlimentoDeSalida;
+
 import com.refood.trazabilidad.service.dto.AlimentoDeSalidaDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -9,6 +12,10 @@ import org.springframework.data.domain.Pageable;
  * Service Interface for managing {@link com.refood.trazabilidad.domain.AlimentoDeSalida}.
  */
 public interface AlimentoDeSalidaService {
+
+    List<AlimentoDeSalida> findAll();
+
+
     /**
      * Save a alimentoDeSalida.
      *

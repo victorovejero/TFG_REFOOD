@@ -6,6 +6,15 @@ const EntitiesMenu = ({ Admin }) => {
   return (
     <>
       {/* prettier-ignore */}
+      <MenuItem icon="asterisk" to="/alimento-de-entrada">
+        Alimento De Entrada
+      </MenuItem>
+      <MenuItem icon="asterisk" to="/alimento-de-salida">
+        Alimento De Salida
+      </MenuItem>
+      <MenuItem icon="asterisk" to="/checkout">
+        Checkout
+      </MenuItem>
       {Admin ? (
         <MenuItem icon="asterisk" to="/nucleo">
           Nucleo
@@ -21,12 +30,7 @@ const EntitiesMenu = ({ Admin }) => {
           Beneficiario
         </MenuItem>
       ) : null}
-      <MenuItem icon="asterisk" to="/alimento-de-entrada">
-        Alimento De Entrada
-      </MenuItem>
-      <MenuItem icon="asterisk" to="/alimento-de-salida">
-        Alimento De Salida
-      </MenuItem>
+      
       {Admin ? (
         <MenuItem icon="asterisk" to="/tipo-de-alimento">
           Tipo De Alimento
@@ -57,9 +61,7 @@ const EntitiesMenu = ({ Admin }) => {
         Persona Beneficiaria
       </MenuItem>
       ) : null}
-      <MenuItem icon="asterisk" to="/checkout">
-        Checkout
-      </MenuItem>
+      
       {Admin ? (
       <MenuItem icon="asterisk" to="/fruta-y-verdura">
         Fruta Y Verdura

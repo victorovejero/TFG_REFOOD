@@ -18,6 +18,11 @@ const initialState: EntityState<IBeneficiario> = {
 const apiUrl = 'api/beneficiarios';
 
 // Actions
+export const getAllEntities = createAsyncThunk('beneficiario/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/beneficiarios-all';
+  return axios.get<IBeneficiario[]>(requestUrl);
+})
+
 
 export const getEntities = createAsyncThunk('beneficiario/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
