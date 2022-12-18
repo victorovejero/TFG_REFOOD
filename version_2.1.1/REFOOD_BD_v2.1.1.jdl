@@ -60,10 +60,10 @@ entity PersonaBeneficiaria{
     situacionProfesional String required
 }
 entity AlimentoDeEntrada {
-    // @Id idRegistroEntrada Integer required,
-    // tipoAlimento String required, ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ON TO MANY
-    // descripcionAlimento String required, LO MISMO AQUI
-    // idDonante Integer required, // 1 to many rel. with DONANTE
+// @Id idRegistroEntrada Integer required,
+// tipoAlimento String required, ESTO LO QUITAMOS POR QUE ES MEJOR HACER UNA RELACION ON TO MANY
+// descripcionAlimento String required, LO MISMO AQUI
+// idDonante Integer required, // 1 to many rel. with DONANTE
     peso Double required,
     frutaYVerdura Boolean required,
     fechaYHoraEntrada ZonedDateTime required,
@@ -83,15 +83,11 @@ fechaSalida LocalDate required, // fechaYHoraEntrada ZonedDateTime required, MED
 }
 
 entity Checkout{
-
-	//ID Beneficiario
-	fechaSalida LocalDate required,
-    peso Integer required
-    // Relacion con Alimento de Salido Muchos a Muchos
-    
-    
+    // ID Beneficiario
+    fechaSalida LocalDate required,
+    peso Integer required,
+// Relacion con Alimento de Salido Muchos a Muchos
 }
-
 entity FrutaYVerdura{
     nombreAlimento String required
 }

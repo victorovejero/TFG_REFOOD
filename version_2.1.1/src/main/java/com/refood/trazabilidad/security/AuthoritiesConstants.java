@@ -9,9 +9,12 @@ public final class AuthoritiesConstants {
 
     public static final String USER = "ROLE_USER";
 
-    public static final String NUCLEO = "ROLE_NUCLEO";
+    public static final String RESPONSABLE = "RESPONSABLE_NUCLEO";
+
+    public static final String VOLUNTARIO = "VOLUNTARIO_NUCLEO";
 
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";
 
-    private AuthoritiesConstants() {}
+    private AuthoritiesConstants() {
+    }
 }

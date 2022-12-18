@@ -31,11 +31,10 @@ public class SecurityConfiguration {
     private final SecurityProblemSupport problemSupport;
 
     public SecurityConfiguration(
-        TokenProvider tokenProvider,
-        CorsFilter corsFilter,
-        JHipsterProperties jHipsterProperties,
-        SecurityProblemSupport problemSupport
-    ) {
+            TokenProvider tokenProvider,
+            CorsFilter corsFilter,
+            JHipsterProperties jHipsterProperties,
+            SecurityProblemSupport problemSupport) {
         this.tokenProvider = tokenProvider;
         this.corsFilter = corsFilter;
         this.problemSupport = problemSupport;
@@ -84,6 +83,8 @@ public class SecurityConfiguration {
             .antMatchers("/api/account/reset-password/finish").permitAll()
             .antMatchers("/api/admin/**").hasAuthority(AuthoritiesConstants.ADMIN)
             .antMatchers("/api/**").authenticated()
+            .antMatchers("/api/responsable/**").hasAuthority(AuthoritiesConstants.RESPONSABLE)
+            .antMatchers("/api/voluntario/**").hasAuthority(AuthoritiesConstants.VOLUNTARIO)
             .antMatchers("/management/health").permitAll()
             .antMatchers("/management/health/**").permitAll()
             .antMatchers("/management/info").permitAll()
