@@ -57,6 +57,7 @@ Navbar styles
     text-decoration: none;
   }
   .brand-icon {
+    margin-right:15px;
     height: 35px;
     width: auto;
     display: inline-block;
@@ -81,4 +82,8 @@ Navbar styles
   position: absolute;
   top: 0px;
   z-index: 1031;
+}
+.header-logo{
+  border:solid;
+  border-radius:6%
 }

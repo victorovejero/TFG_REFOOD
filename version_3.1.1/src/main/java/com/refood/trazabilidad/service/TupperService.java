@@ -1,5 +1,8 @@
 package com.refood.trazabilidad.service;
 
+import java.util.List;
+import com.refood.trazabilidad.domain.Tupper;
+
 import com.refood.trazabilidad.service.dto.TupperDTO;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -9,6 +12,13 @@ import org.springframework.data.domain.Pageable;
  * Service Interface for managing {@link com.refood.trazabilidad.domain.Tupper}.
  */
 public interface TupperService {
+
+    /**
+     * get all tuppers.
+     *
+     */
+    List<Tupper> findAll();
+
     /**
      * Save a tupper.
      *

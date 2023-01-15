@@ -193,7 +193,7 @@ relationship ManyToMany {
     // AlEnt{frutaYVerdura} to FrutaYVerdura{alEnt}
     Checkout{alSal} to AlSal{checkout}
 }
-paginate Intol, Nucleo, Tupper, Socio, TipoAl, Donante, Benef, AlEnt, AlSal, Voluntario, Checkout, PBenef with infinite-scroll
+paginate Intol, Nucleo, Tupper, Socio, TipoAl, Donante, Benef, AlEnt, AlSal, Voluntario, Checkout, PBenef with pagination
 service all with serviceImpl
 // Use Data Transfer Objects (DTO)
 dto * with mapstruct

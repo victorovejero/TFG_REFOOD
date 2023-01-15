@@ -3,7 +3,7 @@ package com.refood.trazabilidad.config;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * Properties specific to Refood Trazabilidad App V 3.
+ * Properties specific to Reefood Trazabilidad App V 3.
  * <p>
  * Properties are configured in the {@code application.yml} file.
  * See {@link tech.jhipster.config.JHipsterProperties} for a good example.

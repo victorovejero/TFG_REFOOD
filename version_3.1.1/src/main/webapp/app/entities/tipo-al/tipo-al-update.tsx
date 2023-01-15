@@ -13,7 +13,11 @@ import { getEntities as getIntols } from 'app/entities/intol/intol.reducer';
 import { ITipoAl } from 'app/shared/model/tipo-al.model';
 import { getEntity, updateEntity, createEntity, reset } from './tipo-al.reducer';
 
-export const TipoAlUpdate = () => {
+interface IShowTitle {
+  showTitle?:boolean;
+  submitNavigate?:string;
+}
+export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShowTitle) => {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -21,14 +25,14 @@ export const TipoAlUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const intols = useAppSelector(state => state.intol.entities);
+  const intolerancias = useAppSelector(state => state.intol.entities);
   const tipoAlEntity = useAppSelector(state => state.tipoAl.entity);
   const loading = useAppSelector(state => state.tipoAl.loading);
   const updating = useAppSelector(state => state.tipoAl.updating);
   const updateSuccess = useAppSelector(state => state.tipoAl.updateSuccess);
 
   const handleClose = () => {
-    navigate('/tipo-al');
+    navigate(submitNavigate);
   };
 
   useEffect(() => {
@@ -47,12 +51,13 @@ export const TipoAlUpdate = () => {
 
   const saveEntity = values => {
     const entity = {
-      ...tipoAlEntity,
+      // ...tipoDeAlimentoEntity,
       ...values,
-      intols: mapIdList(values.intols),
+      intolerancias: mapIdList(values.intolerancias),
     };
 
     if (isNew) {
+      console.log(entity);
       dispatch(createEntity(entity));
     } else {
       dispatch(updateEntity(entity));
@@ -64,25 +69,27 @@ export const TipoAlUpdate = () => {
       ? {}
       : {
           ...tipoAlEntity,
-          intols: tipoAlEntity?.intols?.map(e => e.id.toString()),
+          intolerancias: tipoAlEntity?.intolerancias?.map(e => e.id.toString()),
         };
 
   return (
     <div>
-      <Row className="justify-content-center">
+      {showTitle ? <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="refoodTrazabilidadAppV3App.tipoAl.home.createOrEditLabel" data-cy="TipoAlCreateUpdateHeading">
-            Crear o editar Tipo Al
+          <h2 id="refoodTrazabilidadApp.tipoDeAlimento.home.createOrEditLabel" data-cy="TipoDeAlimentoCreateUpdateHeading">
+            Crear o editar Tipo De Alimento
           </h2>
         </Col>
-      </Row>
+      </Row> : null}
       <Row className="justify-content-center">
         <Col md="8">
           {loading ? (
             <p>Loading...</p>
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
-              {!isNew ? <ValidatedField name="id" required readOnly id="tipo-al-id" label="ID" validate={{ required: true }} /> : null}
+              {!isNew ? (
+                <ValidatedField name="id" required readOnly id="tipo-al-id" label="ID" validate={{ required: true }} />
+              ) : null}
               <ValidatedField
                 label="Nombre Alimento"
                 id="tipo-al-nombreAlimento"
@@ -93,19 +100,18 @@ export const TipoAlUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <ValidatedField
-                label="Fruta Y Verdura"
-                id="tipo-al-frutaYVerdura"
-                name="frutaYVerdura"
-                data-cy="frutaYVerdura"
-                check
-                type="checkbox"
-              />
               <ValidatedField label="Descripcion" id="tipo-al-descripcion" name="descripcion" data-cy="descripcion" type="text" />
-              <ValidatedField label="Intol" id="tipo-al-intol" data-cy="intol" type="select" multiple name="intols">
+              <ValidatedField
+                label="Intolerancias"
+                id="tipo-al-intolerancia"
+                data-cy="intolerancia"
+                type="select"
+                multiple
+                name="intolerancias"
+              >
                 <option value="" key="0" />
-                {intols
-                  ? intols.map(otherEntity => (
+                {intolerancias
+                  ? intolerancias.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.id}
                       </option>

@@ -20,6 +20,12 @@ const initialState: EntityState<IDonante> = {
 const apiUrl = 'api/donantes';
 
 // Actions
+export const getAllEntities = createAsyncThunk('donante/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/donantes-all';
+  return axios.get<IDonante[]>(requestUrl);
+})
+
+
 
 export const getEntities = createAsyncThunk('donante/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;

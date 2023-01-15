@@ -20,6 +20,12 @@ const initialState: EntityState<ITipoAl> = {
 const apiUrl = 'api/tipo-als';
 
 // Actions
+export const getAllEntities = createAsyncThunk('tipoAl/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/tipo-al-all';
+  return axios.get<ITipoAl[]>(requestUrl);
+})
+
+
 
 export const getEntities = createAsyncThunk('tipoAl/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;

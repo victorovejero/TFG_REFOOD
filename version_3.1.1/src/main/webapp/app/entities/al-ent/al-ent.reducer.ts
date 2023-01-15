@@ -20,6 +20,10 @@ const initialState: EntityState<IAlEnt> = {
 const apiUrl = 'api/al-ents';
 
 // Actions
+export const getAllEntities = createAsyncThunk('alEnt/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
+  const requestUrl = 'api/al-ent-all';
+  return axios.get<IAlEnt[]>(requestUrl);
+});
 
 export const getEntities = createAsyncThunk('alEnt/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;

@@ -11,7 +11,27 @@
     <property name="datetimeType" value="datetime(6)" dbms="mysql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152506_added_entity_Nucleo.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152507_added_entity_Donante.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152508_added_entity_Benef.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152509_added_entity_PBenef.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152510_added_entity_AlEnt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152511_added_entity_AlSal.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152512_added_entity_Checkout.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152513_added_entity_TipoAl.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152514_added_entity_Tupper.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152515_added_entity_Intol.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152516_added_entity_Voluntario.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152517_added_entity_Socio.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230115152507_added_entity_constraints_Donante.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152508_added_entity_constraints_Benef.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152509_added_entity_constraints_PBenef.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152510_added_entity_constraints_AlEnt.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152511_added_entity_constraints_AlSal.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152512_added_entity_constraints_Checkout.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152513_added_entity_constraints_TipoAl.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20230115152516_added_entity_constraints_Voluntario.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

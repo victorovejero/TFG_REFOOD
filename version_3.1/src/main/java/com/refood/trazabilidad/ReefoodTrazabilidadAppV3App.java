@@ -21,18 +21,18 @@ import tech.jhipster.config.JHipsterConstants;
 
 @SpringBootApplication
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
-public class RefoodTrazabilidadAppV3App {
+public class ReefoodTrazabilidadAppV3App {
 
-    private static final Logger log = LoggerFactory.getLogger(RefoodTrazabilidadAppV3App.class);
+    private static final Logger log = LoggerFactory.getLogger(ReefoodTrazabilidadAppV3App.class);
 
     private final Environment env;
 
-    public RefoodTrazabilidadAppV3App(Environment env) {
+    public ReefoodTrazabilidadAppV3App(Environment env) {
         this.env = env;
     }
 
     /**
-     * Initializes Refood_Trazabilidad_App_v3.
+     * Initializes Reefood_Trazabilidad_App_v3.
      * <p>
      * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
      * <p>
@@ -65,7 +65,7 @@ public class RefoodTrazabilidadAppV3App {
      * @param args the command line arguments.
      */
     public static void main(String[] args) {
-        SpringApplication app = new SpringApplication(RefoodTrazabilidadAppV3App.class);
+        SpringApplication app = new SpringApplication(ReefoodTrazabilidadAppV3App.class);
         DefaultProfileUtil.addDefaultProfile(app);
         Environment env = app.run(args).getEnvironment();
         logApplicationStartup(env);

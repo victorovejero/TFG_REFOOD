@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity TipoAl.
+    -->
+    <changeSet id="20230115152513-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="tipo_al_id"
+                                 baseTableName="rel_tipo_al__intol"
+                                 constraintName="fk_rel_tipo_al__intol__tipo_al_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_al"/>
+
+        <addForeignKeyConstraint baseColumnNames="intol_id"
+                                 baseTableName="rel_tipo_al__intol"
+                                 constraintName="fk_rel_tipo_al__intol__intol_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intol"/>
+    </changeSet>
+</databaseChangeLog>

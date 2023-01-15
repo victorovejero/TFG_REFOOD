@@ -20,6 +20,12 @@ const initialState: EntityState<ITupper> = {
 const apiUrl = 'api/tuppers';
 
 // Actions
+export const getAllEntities = createAsyncThunk('tupper/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/tuppers-all';
+  return axios.get<ITupper[]>(requestUrl);
+})
+
+
 
 export const getEntities = createAsyncThunk('tupper/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;

@@ -1,6 +1,6 @@
 package com.refood.trazabilidad;
 
-import com.refood.trazabilidad.RefoodTrazabilidadAppV3App;
+import com.refood.trazabilidad.ReefoodTrazabilidadAppV3App;
 import com.refood.trazabilidad.config.AsyncSyncConfiguration;
 import com.refood.trazabilidad.config.EmbeddedSQL;
 import java.lang.annotation.ElementType;
@@ -15,7 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-@SpringBootTest(classes = { RefoodTrazabilidadAppV3App.class, AsyncSyncConfiguration.class })
+@SpringBootTest(classes = { ReefoodTrazabilidadAppV3App.class, AsyncSyncConfiguration.class })
 @EmbeddedSQL
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public @interface IntegrationTest {

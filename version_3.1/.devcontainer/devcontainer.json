@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.209.6/containers/java
 {
-  "name": "Refood_Trazabilidad_App_v3",
+  "name": "Reefood_Trazabilidad_App_v3",
   "build": {
     "dockerfile": "Dockerfile",
     "args": {

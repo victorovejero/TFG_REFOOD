@@ -64,8 +64,8 @@ describe('/account/register', () => {
   });
 
   it('register a valid user', () => {
-    const randomEmail = 'Jasmin59@gmail.com';
-    const randomUsername = 'Greta51';
+    const randomEmail = 'Alene73@gmail.com';
+    const randomUsername = 'Sterling72';
     cy.get(usernameRegisterSelector).type(randomUsername);
     cy.get(emailRegisterSelector).type(randomEmail);
     cy.get(firstPasswordRegisterSelector).type('jondoe');

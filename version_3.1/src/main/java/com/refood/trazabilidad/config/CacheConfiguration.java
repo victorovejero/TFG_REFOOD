@@ -48,6 +48,37 @@ public class CacheConfiguration {
             createCache(cm, com.refood.trazabilidad.domain.User.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.Authority.class.getName());
             createCache(cm, com.refood.trazabilidad.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".donantes");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".benefs");
+            createCache(cm, com.refood.trazabilidad.domain.Nucleo.class.getName() + ".voluntarios");
+            createCache(cm, com.refood.trazabilidad.domain.Donante.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Donante.class.getName() + ".alEnts");
+            createCache(cm, com.refood.trazabilidad.domain.Benef.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Benef.class.getName() + ".alSals");
+            createCache(cm, com.refood.trazabilidad.domain.Benef.class.getName() + ".pBenefs");
+            createCache(cm, com.refood.trazabilidad.domain.Benef.class.getName() + ".checkouts");
+            createCache(cm, com.refood.trazabilidad.domain.Benef.class.getName() + ".intols");
+            createCache(cm, com.refood.trazabilidad.domain.PBenef.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.PBenef.class.getName() + ".intols");
+            createCache(cm, com.refood.trazabilidad.domain.AlEnt.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.AlEnt.class.getName() + ".alSals");
+            createCache(cm, com.refood.trazabilidad.domain.AlSal.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.AlSal.class.getName() + ".checkouts");
+            createCache(cm, com.refood.trazabilidad.domain.Checkout.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Checkout.class.getName() + ".alSals");
+            createCache(cm, com.refood.trazabilidad.domain.TipoAl.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.TipoAl.class.getName() + ".alEnts");
+            createCache(cm, com.refood.trazabilidad.domain.TipoAl.class.getName() + ".intols");
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName() + ".alSals");
+            createCache(cm, com.refood.trazabilidad.domain.Tupper.class.getName() + ".alEnts");
+            createCache(cm, com.refood.trazabilidad.domain.Intol.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Intol.class.getName() + ".benefs");
+            createCache(cm, com.refood.trazabilidad.domain.Intol.class.getName() + ".pBenefs");
+            createCache(cm, com.refood.trazabilidad.domain.Intol.class.getName() + ".tipoAls");
+            createCache(cm, com.refood.trazabilidad.domain.Voluntario.class.getName());
+            createCache(cm, com.refood.trazabilidad.domain.Socio.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

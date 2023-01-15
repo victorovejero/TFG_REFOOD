@@ -1,0 +1,64 @@
+{
+  "applications": "*",
+  "changelogDate": "20230115152509",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "p_benef",
+  "fields": [
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerApellido",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellido",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "fechaNacimiento",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sexo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "parentesco",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "situacionProfesional",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "PBenef",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "intol",
+      "otherEntityRelationshipName": "pBenef",
+      "ownerSide": true,
+      "relationshipName": "intol",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "benef",
+      "otherEntityRelationshipName": "pBenef",
+      "relationshipName": "benef",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

@@ -1,8 +1,8 @@
 {
-  "name": "refood-trazabilidad-app-v-3",
+  "name": "reefood-trazabilidad-app-v-3",
   "version": "0.0.1-SNAPSHOT",
   "private": true,
-  "description": "Description for Refood_Trazabilidad_App_v3",
+  "description": "Description for Reefood_Trazabilidad_App_v3",
   "license": "UNLICENSED",
   "scripts": {
     "app:start": "./mvnw",

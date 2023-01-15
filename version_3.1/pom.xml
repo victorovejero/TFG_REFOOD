@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.refood.trazabilidad</groupId>
-    <artifactId>refood-trazabilidad-app-v-3</artifactId>
+    <artifactId>reefood-trazabilidad-app-v-3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Refood Trazabilidad App V 3</name>
-    <description>Description for Refood_Trazabilidad_App_v3</description>
+    <name>Reefood Trazabilidad App V 3</name>
+    <description>Description for Reefood_Trazabilidad_App_v3</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -34,7 +34,7 @@
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <start-class>com.refood.trazabilidad.RefoodTrazabilidadAppV3App</start-class>
+        <start-class>com.refood.trazabilidad.ReefoodTrazabilidadAppV3App</start-class>
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx1G</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
@@ -577,7 +577,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>refood_trazabilidad_app_v3:latest</image>
+                            <image>reefood_trazabilidad_app_v3:latest</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -966,8 +966,8 @@
                                 <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                                 <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                                 <driver>com.mysql.cj.jdbc.Driver</driver>
-                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3</url>
-                                <defaultSchemaName>Refood_Trazabilidad_App_v3</defaultSchemaName>
+                                <url>jdbc:mysql://localhost:3306/Reefood_Trazabilidad_App_v3</url>
+                                <defaultSchemaName>Reefood_Trazabilidad_App_v3</defaultSchemaName>
                                 <username>root</username>
                                 <password></password>
                                 <referenceUrl>hibernate:spring:com.refood.trazabilidad.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
@@ -1061,8 +1061,8 @@
                                 <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                                 <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                                 <driver>com.mysql.cj.jdbc.Driver</driver>
-                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3</url>
-                                <defaultSchemaName>Refood_Trazabilidad_App_v3</defaultSchemaName>
+                                <url>jdbc:mysql://localhost:3306/Reefood_Trazabilidad_App_v3</url>
+                                <defaultSchemaName>Reefood_Trazabilidad_App_v3</defaultSchemaName>
                                 <username>root</username>
                                 <password></password>
                                 <referenceUrl>hibernate:spring:com.refood.trazabilidad.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>

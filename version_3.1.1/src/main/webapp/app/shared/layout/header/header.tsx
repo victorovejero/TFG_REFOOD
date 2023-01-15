@@ -32,17 +32,20 @@ const Header = (props: IHeaderProps) => {
 
   return (
     <div id="app-header">
-      {renderDevRibbon()}
+      {/* {renderDevRibbon()} */}
       <LoadingBar className="loading-bar" />
       <Navbar data-cy="navbar" dark expand="md" fixed="top" className="bg-primary">
         <NavbarToggler aria-label="Menu" onClick={toggleMenu} />
         <Brand />
         <Collapse isOpen={menuOpen} navbar>
           <Nav id="header-tabs" className="ms-auto" navbar>
-            <Home />
-            {props.isAuthenticated && <EntitiesMenu />}
+            
+            {/* Comprobación de Tipo de usuario, is es admin se devuelve el Admin dropdown, si no el normal. Se pasa el prop isAdmin al entities Menu para filtrar lo que se muestra y lo que no.*/}
+            {props.isAuthenticated && <EntitiesMenu Admin={props.isAdmin}/>}
+            {/* {props.isAuthenticated && props.isAdmin && <EntitiesMenuAdmin />} */}
             {props.isAuthenticated && props.isAdmin && <AdminMenu showOpenAPI={props.isOpenAPIEnabled} />}
             <AccountMenu isAuthenticated={props.isAuthenticated} />
+            <Home />
           </Nav>
         </Collapse>
       </Navbar>
