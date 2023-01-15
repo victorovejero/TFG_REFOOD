@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Benef.
+    -->
+    <changeSet id="20230115092628-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="benef_id"
+                                 baseTableName="rel_benef__intol"
+                                 constraintName="fk_rel_benef__intol__benef_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="benef"/>
+
+        <addForeignKeyConstraint baseColumnNames="intol_id"
+                                 baseTableName="rel_benef__intol"
+                                 constraintName="fk_rel_benef__intol__intol_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="intol"/>
+
+        <addForeignKeyConstraint baseColumnNames="nucleo_id"
+                                 baseTableName="benef"
+                                 constraintName="fk_benef__nucleo_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="nucleo"/>
+    </changeSet>
+</databaseChangeLog>

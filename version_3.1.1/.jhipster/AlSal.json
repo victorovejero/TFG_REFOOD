@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20230115092631",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "al_sal",
+  "fields": [
+    {
+      "fieldName": "fechaSalida",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlSal",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tupper",
+      "otherEntityRelationshipName": "alSal",
+      "relationshipName": "tupper",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "benef",
+      "otherEntityRelationshipName": "alSal",
+      "relationshipName": "benef",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "alEnt",
+      "otherEntityRelationshipName": "alSal",
+      "relationshipName": "alEnt",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "alSal",
+      "ownerSide": false,
+      "relationshipName": "checkout",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

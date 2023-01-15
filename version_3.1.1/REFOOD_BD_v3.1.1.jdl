@@ -190,7 +190,7 @@ relationship ManyToMany {
 	PBenef{intol} to Intol{pBenef}
    // Registro{voluntario} to Voluntario{registro}
     TipoAl{intol} to Intol{tipoAl}
-    AlEnt{frutaYVerdura} to FrutaYVerdura{alEnt}
+    // AlEnt{frutaYVerdura} to FrutaYVerdura{alEnt}
     Checkout{alSal} to AlSal{checkout}
 }
 paginate Intol, Nucleo, Tupper, Socio, TipoAl, Donante, Benef, AlEnt, AlSal, Voluntario, Checkout, PBenef with infinite-scroll

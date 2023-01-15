@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Checkout.
+    -->
+    <changeSet id="20230115092632-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="checkout_id"
+                                 baseTableName="rel_checkout__al_sal"
+                                 constraintName="fk_rel_checkout__al_sal__checkout_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="checkout"/>
+
+        <addForeignKeyConstraint baseColumnNames="al_sal_id"
+                                 baseTableName="rel_checkout__al_sal"
+                                 constraintName="fk_rel_checkout__al_sal__al_sal_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="al_sal"/>
+
+        <addForeignKeyConstraint baseColumnNames="benef_id"
+                                 baseTableName="checkout"
+                                 constraintName="fk_checkout__benef_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="benef"/>
+    </changeSet>
+</databaseChangeLog>

@@ -122,6 +122,5 @@ declare global {
   }
 }
 
-import 'cypress-audit/commands';
 // Convert this to a module instead of script (allows import/export)
 export {};
