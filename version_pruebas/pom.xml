@@ -6,11 +6,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.refood.trazabilidad</groupId>
-    <artifactId>refood-trazabilidad-app</artifactId>
+    <artifactId>refood-trazabilidad-app-v-3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Refood Trazabilidad App</name>
-    <description>Description for Refood_Trazabilidad_App</description>
+    <name>Refood Trazabilidad App V 3</name>
+    <description>Description for Refood_Trazabilidad_App_v3</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -18,6 +18,7 @@
 
     <pluginRepositories>
         <!-- jhipster-needle-maven-plugin-repository -->
+        
     </pluginRepositories>
 
     <!-- jhipster-needle-distribution-management -->
@@ -27,14 +28,14 @@
         <maven.version>3.2.5</maven.version>
         <java.version>11</java.version>
         <node.version>v16.17.0</node.version>
-        <npm.version>9.1.2</npm.version>
-        <!-- 8.19.1 original version when everything was created -->
+        <npm.version>8.19.1</npm.version>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <start-class>com.refood.trazabilidad.RefoodTrazabilidadApp</start-class>
+        <start-class>com.refood.trazabilidad.RefoodTrazabilidadAppV3App</start-class>
         <argLine>-Djava.security.egd=file:/dev/./urandom -Xmx1G</argLine>
         <m2e.apt.activation>jdt_apt</m2e.apt.activation>
         <run.addResources>false</run.addResources>
@@ -91,10 +92,9 @@
 
         <!-- jhipster-needle-maven-property -->
     </properties>
+
     <dependencyManagement>
-        
         <dependencies>
-       
             <dependency>
                 <groupId>tech.jhipster</groupId>
                 <artifactId>jhipster-dependencies</artifactId>
@@ -107,6 +107,12 @@
     </dependencyManagement>
 
     <dependencies>
+    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.17</version>
+        </dependency>
         <dependency>
             <groupId>tech.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
@@ -264,17 +270,10 @@
             <groupId>org.zalando</groupId>
             <artifactId>problem-spring-web</artifactId>
         </dependency>
-        <!-- FOR WEBDEV BUILD -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
         </dependency>
-        <!-- FOR PRODUCTION BUILD -->
-        <!-- <dependency>
-              <groupId>org.springframework.boot</groupId>
-              <artifactId>spring-boot-starter-undertow</artifactId>
-              <scope>provided</scope>
-        </dependency> -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -585,7 +584,7 @@
                             </platforms>
                         </from>
                         <to>
-                            <image>refood_trazabilidad_app:latest</image>
+                            <image>refood_trazabilidad_app_v3:latest</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -974,10 +973,10 @@
                                 <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                                 <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                                 <driver>com.mysql.cj.jdbc.Driver</driver>
-                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App</url>
-                                <defaultSchemaName>Refood_Trazabilidad_App</defaultSchemaName>
+                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3</url>
+                                <defaultSchemaName>Refood_Trazabilidad_App_v3</defaultSchemaName>
                                 <username>root</username>
-                                <password></password>
+                                <password>root-Familia123</password>
                                 <referenceUrl>hibernate:spring:com.refood.trazabilidad.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                                 <verbose>true</verbose>
                                 <logging>debug</logging>
@@ -1069,10 +1068,10 @@
                                 <changeLogFile>${project.basedir}/src/main/resources/config/liquibase/master.xml</changeLogFile>
                                 <diffChangeLogFile>${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                                 <driver>com.mysql.cj.jdbc.Driver</driver>
-                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App</url>
-                                <defaultSchemaName>Refood_Trazabilidad_App</defaultSchemaName>
+                                <url>jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3</url>
+                                <defaultSchemaName>Refood_Trazabilidad_App_v3</defaultSchemaName>
                                 <username>root</username>
-                                <password>root-Familia123</password>
+                                <password></password>
                                 <referenceUrl>hibernate:spring:com.refood.trazabilidad.domain?dialect=org.hibernate.dialect.MySQL8Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>
                                 <verbose>true</verbose>
                                 <logging>debug</logging>
@@ -1277,6 +1276,31 @@
                                     </pluginExecutions>
                                 </lifecycleMappingMetadata>
                             </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
+            <id>e2e</id>
+            <properties>
+                <profile.e2e>,e2e</profile.e2e>
+            </properties>
+            <build>
+                <finalName>e2e</finalName>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-maven-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>repackage</id>
+                                    <goals>
+                                        <goal>repackage</goal>
+                                    </goals>
+                                </execution>
+                            </executions>
                         </plugin>
                     </plugins>
                 </pluginManagement>

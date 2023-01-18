@@ -21,6 +21,11 @@ const apiUrl = 'api/al-sals';
 
 // Actions
 
+export const getAllEntities = createAsyncThunk('alSal/fetch_entity_list', async({ page, size, sort}: IQueryParams)  => {
+  const requestUrl = 'api/al-sal-all';
+  return axios.get<IAlSal[]>(requestUrl);
+})
+
 export const getEntities = createAsyncThunk('alSal/fetch_entity_list', async ({ page, size, sort }: IQueryParams) => {
   const requestUrl = `${apiUrl}${sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'}cacheBuster=${new Date().getTime()}`;
   return axios.get<IAlSal[]>(requestUrl);
@@ -86,13 +91,14 @@ export const AlSalSlice = createEntitySlice({
       })
       .addMatcher(isFulfilled(getEntities), (state, action) => {
         const { data, headers } = action.payload;
-        const links = parseHeaderForLinks(headers.link);
+        // const links = parseHeaderForLinks(headers.link);
 
         return {
           ...state,
           loading: false,
-          links,
-          entities: loadMoreDataWhenScrolled(state.entities, data, links),
+          entities:data,
+          // links,
+          // entities: loadMoreDataWhenScrolled(state.entities, data, links),
           totalItems: parseInt(headers['x-total-count'], 10),
         };
       })

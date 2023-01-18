@@ -1,0 +1,121 @@
+{
+  "applications": "*",
+  "changelogDate": "20230115092628",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "benef",
+  "fields": [
+    {
+      "fieldName": "idBeneficiario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreRepresentante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerApellidoRepresentante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellidoRepresentante",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroPersonas",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefono",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonoSecundario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaBaja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "numeroNinios",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "idDual",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Benef",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alSal",
+      "otherEntityRelationshipName": "benef",
+      "relationshipName": "alSal",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "pBenef",
+      "otherEntityRelationshipName": "benef",
+      "relationshipName": "pBenef",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "benef",
+      "relationshipName": "checkout",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "intol",
+      "otherEntityRelationshipName": "benef",
+      "ownerSide": true,
+      "relationshipName": "intol",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "nucleo",
+      "otherEntityRelationshipName": "benef",
+      "relationshipName": "nucleo",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl",
+  "skipClient": true
+}

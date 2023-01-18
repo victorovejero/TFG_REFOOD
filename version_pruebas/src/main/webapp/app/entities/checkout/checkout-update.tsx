@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText,Alert } from 'reactstrap';
+import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,19 +9,13 @@ import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IAlSal } from 'app/shared/model/al-sal.model';
-import { getAllEntities as getAlSals } from 'app/entities/al-sal/al-sal.reducer';
+import { getEntities as getAlSals } from 'app/entities/al-sal/al-sal.reducer';
 import { IBenef } from 'app/shared/model/benef.model';
-import { getAllEntities as getBenefs } from 'app/entities/benef/benef.reducer';
+import { getEntities as getBenefs } from 'app/entities/benef/benef.reducer';
 import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntity, updateEntity, createEntity, reset } from './checkout.reducer';
-import {getToday} from 'app/shared/util/date-utils'
 
 export const CheckoutUpdate = () => {
-  const PESO_MAX = 15;
-  const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
-  const pesoMaxNotify = useRef<boolean>(false);
-  const [showPesoAlert,setShowPesoAlert] = useState<boolean>(false);
-
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -35,16 +29,13 @@ export const CheckoutUpdate = () => {
   const loading = useAppSelector(state => state.checkout.loading);
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
-  const [beneficiario, setBeneficiario] = useState<number>( isNew? 0 : checkoutEntity?.beneficiario?.id);
 
   const handleClose = () => {
-    navigate('/checkout' + location.search);
+    navigate('/checkout');
   };
 
   useEffect(() => {
-    if (isNew) {
-      dispatch(reset());
-    } else {
+    if (!isNew) {
       dispatch(getEntity(id));
     }
 
@@ -75,33 +66,20 @@ export const CheckoutUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {fechaSalida:defaultToday}
+      ? {}
       : {
-          ...checkoutEntity,
+          // ...checkoutEntity,
+          fechaSalida: checkoutEntity.fechaSalida,
+          peso: checkoutEntity?.peso,
           alSals: checkoutEntity?.alSals?.map(e => e.id.toString()),
-          benef: beneficiario
+          benef: checkoutEntity?.benef?.id,
         };
-  const pesoAlert = (event) => {
-    switch(event.target.value >= 10 && event.target.value !==""){
-      case true:
-        if(pesoMaxNotify.current === false){
-          setShowPesoAlert(!showPesoAlert);
-          pesoMaxNotify.current = true;
-        }
-        break;
-      case false:
-        if(pesoMaxNotify.current === true){
-          setShowPesoAlert(!showPesoAlert);
-          pesoMaxNotify.current = false;
-        }
-        break;
-      }
-  }
+
   return (
     <div>
       <Row className="justify-content-center">
         <Col md="8">
-          <h2 id="reefoodTrazabilidadAppV3App.checkout.home.createOrEditLabel" data-cy="CheckoutCreateUpdateHeading">
+          <h2 id="refoodTrazabilidadAppV3App.checkout.home.createOrEditLabel" data-cy="CheckoutCreateUpdateHeading">
             Crear o editar Checkout
           </h2>
         </Col>
@@ -119,50 +97,41 @@ export const CheckoutUpdate = () => {
                 name="fechaSalida"
                 data-cy="fechaSalida"
                 type="date"
-                value={isNew ? defaultToday : null}
-                onChange={isNew ? (e) => setDefaultToday(e.target.value) : null}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
               <ValidatedField
-                autoComplete="off"
                 label="Peso"
                 id="checkout-peso"
                 name="peso"
                 data-cy="peso"
                 type="text"
-                onChange={pesoAlert}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                   validate: v => isNumber(v) || 'Este campo debe ser un número.',
                 }}
               />
-              <Alert color="danger"  isOpen={showPesoAlert}>
-                ¿Está seguro de que el peso es mayor a {PESO_MAX}Kg?
-              </Alert>
-              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} >
+              <ValidatedField label="Al Sal" id="checkout-alSal" data-cy="alSal" type="select" multiple name="alSals">
                 <option value="" key="0" />
-                {benefs
-                  ? benefs.map(otherEntity => (
+                {alSals
+                  ? alSals.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.idBeneficiario}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField label="Alimentos de Salida" id="checkout-alSal" data-cy="alSal" type="select" multiple name="alSals">
+              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Benef" type="select">
                 <option value="" key="0" />
-                {alSals
-                  ? alSals.map(otherEntity => (
-                    otherEntity.benef.id == beneficiario && otherEntity.fechaSalida == getToday(false)? 
+                {benefs
+                  ? benefs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.alEnt.peso} kg
-                      </option> : ""
+                        {otherEntity.id}
+                      </option>
                     ))
                   : null}
               </ValidatedField>
-             
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/checkout" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
