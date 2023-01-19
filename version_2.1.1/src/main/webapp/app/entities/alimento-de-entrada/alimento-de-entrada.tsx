@@ -17,7 +17,7 @@ import './alimento-de-entrada.css';
 export const AlimentoDeEntrada = () => {
   const [searchState, setSearchState] = useState<string>("");
 
-  const ORDEN_LISTA = DESC;
+  const ORDEN_LISTA = ASC;
 
   const dispatch = useAppDispatch();
 

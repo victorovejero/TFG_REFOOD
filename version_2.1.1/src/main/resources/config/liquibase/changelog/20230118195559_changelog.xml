@@ -1,0 +1,348 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <changeSet author="victorovejero (generated)" id="1674071765535-3">
+        <createTable tableName="checkout">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="checkoutPK"/>
+            </column>
+            <column name="fecha_salida" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="peso" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="beneficiario_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-4">
+        <createTable tableName="fruta_y_verdura">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="fruta_y_verduraPK"/>
+            </column>
+            <column name="nombre_alimento" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-5">
+        <createTable tableName="persona_beneficiaria">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="persona_beneficiariaPK"/>
+            </column>
+            <column name="fecha_nacimiento" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nombre" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="parentesco" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="primer_apellido" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="segundo_apellido" type="VARCHAR(255)"/>
+            <column name="sexo" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="situacion_profesional" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="beneficiario_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-6">
+        <createTable tableName="rel_alimento_de_entrada__frutayverdura">
+            <column name="alimento_de_entrada_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_alimento_de_entrada__frutayverduraPK"/>
+            </column>
+            <column name="frutayverdura_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_alimento_de_entrada__frutayverduraPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-7">
+        <createTable tableName="rel_checkout__alimento_de_salida">
+            <column name="checkout_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_checkout__alimento_de_salidaPK"/>
+            </column>
+            <column name="alimento_de_salida_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_checkout__alimento_de_salidaPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-8">
+        <createTable tableName="rel_persona_beneficiaria__intolerancia">
+            <column name="persona_beneficiaria_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_persona_beneficiaria__intoleranciaPK"/>
+            </column>
+            <column name="intolerancia_id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="rel_persona_beneficiaria__intoleranciaPK"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-9">
+        <addColumn tableName="donante">
+            <column name="categoria" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-10">
+        <addColumn tableName="voluntario">
+            <column name="categoria_perfil" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-11">
+        <addColumn tableName="beneficiario">
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-12">
+        <addColumn tableName="donante">
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-13">
+        <addColumn tableName="nucleo">
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-14">
+        <addColumn tableName="socio">
+            <column name="codigo_postal" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-15">
+        <addColumn tableName="socio">
+            <column name="comunicacion" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-16">
+        <addColumn tableName="tipo_de_alimento">
+            <column name="descripcion" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-17">
+        <addColumn tableName="voluntario">
+            <column name="descripcion_categoria" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-18">
+        <addColumn tableName="voluntario">
+            <column name="dia_refood" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-19">
+        <addColumn tableName="beneficiario">
+            <column name="direccion" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-20">
+        <addColumn tableName="socio">
+            <column name="direccion" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-21">
+        <addColumn tableName="voluntario">
+            <column name="direccion" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-22">
+        <addColumn tableName="beneficiario">
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-23">
+        <addColumn tableName="beneficiario">
+            <column name="fecha_alta" type="date">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-24">
+        <addColumn tableName="beneficiario">
+            <column name="fecha_baja" type="date"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-25">
+        <addColumn tableName="alimento_de_entrada">
+            <column name="fruta_y_verdura" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-26">
+        <addColumn tableName="socio">
+            <column name="i_ban" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-27">
+        <addColumn tableName="nucleo">
+            <column name="id_nucleo" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-28">
+        <addColumn tableName="voluntario">
+            <column name="id_voluntario" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-29">
+        <addColumn tableName="beneficiario">
+            <column name="nombre_representante" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-30">
+        <addColumn tableName="socio">
+            <column name="nucleo_asociado" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-31">
+        <addColumn tableName="socio">
+            <column name="pais" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-32">
+        <addColumn tableName="beneficiario">
+            <column name="primer_apellido_representante" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-33">
+        <addColumn tableName="donante">
+            <column name="provincia" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-34">
+        <addColumn tableName="socio">
+            <column name="provincia" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-35">
+        <addColumn tableName="beneficiario">
+            <column name="segundo_apellido_representante" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-36">
+        <addColumn tableName="beneficiario">
+            <column name="telefono" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-37">
+        <addColumn tableName="beneficiario">
+            <column name="telefono_secundario" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-38">
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id" baseTableName="rel_tipo_de_alimento__intolerancia" constraintName="FK3gvxn3fqthwokaok7la52h7d3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="intolerancia" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-39">
+        <addForeignKeyConstraint baseColumnNames="alimento_de_salida_id" baseTableName="rel_checkout__alimento_de_salida" constraintName="FK5bu62qlr6ekmlia305d5x7exv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="alimento_de_salida" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-40">
+        <addForeignKeyConstraint baseColumnNames="alimento_de_entrada_id" baseTableName="rel_alimento_de_entrada__frutayverdura" constraintName="FK6owjumeh7n9p0mnr0m49b2107" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="alimento_de_entrada" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-41">
+        <addForeignKeyConstraint baseColumnNames="beneficiario_id" baseTableName="persona_beneficiaria" constraintName="FK8sw88xcp5w4u21ploa66hecep" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="beneficiario" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-42">
+        <addForeignKeyConstraint baseColumnNames="checkout_id" baseTableName="rel_checkout__alimento_de_salida" constraintName="FKbrlnpcbr8kcnynw5jcw0s2c95" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="checkout" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-43">
+        <addForeignKeyConstraint baseColumnNames="persona_beneficiaria_id" baseTableName="rel_persona_beneficiaria__intolerancia" constraintName="FKbschenep8ld887i2btu5h9wey" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="persona_beneficiaria" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-44">
+        <addForeignKeyConstraint baseColumnNames="nucleo_id" baseTableName="voluntario" constraintName="FKfad6hjrhpl70irl55dn4t27qs" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="nucleo" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-45">
+        <addForeignKeyConstraint baseColumnNames="tipo_de_alimento_id" baseTableName="rel_tipo_de_alimento__intolerancia" constraintName="FKfpn4wf4cxw2hj8yi9wbkfyu7o" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="tipo_de_alimento" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-46">
+        <addForeignKeyConstraint baseColumnNames="frutayverdura_id" baseTableName="rel_alimento_de_entrada__frutayverdura" constraintName="FKg7srn1asdpecilwj2d1939uke" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="fruta_y_verdura" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-47">
+        <addForeignKeyConstraint baseColumnNames="registro_id" baseTableName="rel_registro__voluntario" constraintName="FKkbt9fv36ml8in7fb0y5dpeu7m" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="registro" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-48">
+        <addForeignKeyConstraint baseColumnNames="beneficiario_id" baseTableName="checkout" constraintName="FKme3qwqansxd6qgm3chy43fn88" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="beneficiario" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-49">
+        <addForeignKeyConstraint baseColumnNames="nucleo_id" baseTableName="registro" constraintName="FKqgkss66av2r7p3py70qyuvwn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="nucleo" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-50">
+        <addForeignKeyConstraint baseColumnNames="intolerancia_id" baseTableName="rel_persona_beneficiaria__intolerancia" constraintName="FKsc6vbo8a2cn1c7rb01vgjvg4e" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="intolerancia" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-51">
+        <addForeignKeyConstraint baseColumnNames="voluntario_id" baseTableName="rel_registro__voluntario" constraintName="FKte8q3wwtuedqtqgpf46n8t31h" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="voluntario" validate="true"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-52">
+        <dropColumn columnName="nombre" tableName="beneficiario"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-53">
+        <dropColumn columnName="nucleo_id" tableName="socio"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-54">
+        <dropColumn columnName="numero_rutas" tableName="nucleo"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-55">
+        <dropColumn columnName="peso" tableName="alimento_de_salida"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-56">
+        <dropColumn columnName="responsable_dia" tableName="voluntario"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-57">
+        <dropColumn columnName="ruta" tableName="donante"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-58">
+        <dropColumn columnName="tipo" tableName="donante"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-59">
+        <dropColumn columnName="tipo" tableName="voluntario"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-60">
+        <dropColumn columnName="tipo_turno" tableName="voluntario"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-1">
+        <dropUniqueConstraint constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="victorovejero (generated)" id="1674071765535-2">
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>
