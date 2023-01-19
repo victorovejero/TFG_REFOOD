@@ -29,7 +29,7 @@ export const CheckoutDetail = () => {
           </dt>
           <dd>{checkoutEntity.id}</dd>
           <dt>
-            <span id="fechaSalida">Fecha Salida</span>
+            <span id="fechaSalida">Fecha de Salida</span>
           </dt>
           <dd>
             {checkoutEntity.fechaSalida ? (
@@ -40,19 +40,19 @@ export const CheckoutDetail = () => {
             <span id="peso">Peso</span>
           </dt>
           <dd>{checkoutEntity.peso}</dd>
-          <dt>Al Sal</dt>
+          <dt>Alimentos de Salida</dt>
           <dd>
             {checkoutEntity.alSals
               ? checkoutEntity.alSals.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    <span>{val.alEnt.tipoAl.nombreAlimento}</span>
                     {checkoutEntity.alSals && i === checkoutEntity.alSals.length - 1 ? '' : ', '}
                   </span>
                 ))
               : null}
           </dd>
-          <dt>Benef</dt>
-          <dd>{checkoutEntity.benef ? checkoutEntity.benef.id : ''}</dd>
+          <dt>Beneficiario</dt>
+          <dd>{checkoutEntity.benef ? checkoutEntity.benef.idBeneficiario : ''}</dd>
         </dl>
         <Button tag={Link} to="/checkout" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

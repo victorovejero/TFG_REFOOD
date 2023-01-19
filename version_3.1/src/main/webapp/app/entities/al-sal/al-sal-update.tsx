@@ -142,7 +142,7 @@ export const AlSalUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
-              <ValidatedField id="al-sal-benef" name="benef" data-cy="benef" label="Beneficiario" type="select">
+              <ValidatedField id="al-sal-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" required>
                 <option value="" key="0" />
                 {benefs
                   ? benefs.map(otherEntity => (
@@ -166,7 +166,7 @@ export const AlSalUpdate = () => {
                 <input  className="slider" type="range" min="0" max="3" value={rangoEntradas} onChange={(e) => setRangoEntradas(Number(e.target.value))} />
                 <p>{rangoEntradas} días</p>
               </div>
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/al-sal" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Volver</span>

@@ -141,7 +141,7 @@ export const CheckoutUpdate = () => {
               <Alert color="danger"  isOpen={showPesoAlert}>
                 ¿Está seguro de que el peso es mayor a {PESO_MAX}Kg?
               </Alert>
-              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} >
+              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} required>
                 <option value="" key="0" />
                 {benefs
                   ? benefs.map(otherEntity => (
@@ -163,7 +163,7 @@ export const CheckoutUpdate = () => {
                   : null}
               </ValidatedField>
              
-              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/checkout" replace color="info">
+              <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;
                 <span className="d-none d-md-inline">Volver</span>

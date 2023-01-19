@@ -6,7 +6,7 @@ import { Translate, TextFormat, getSortState } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT, ORDEN_LISTA } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -14,6 +14,8 @@ import { IAlEnt } from 'app/shared/model/al-ent.model';
 import { getEntities, reset } from './al-ent.reducer';
 
 export const AlEnt = () => {
+  const [searchState, setSearchState] = useState<string>("");
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -36,7 +38,7 @@ export const AlEnt = () => {
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
-        sort: `${paginationState.sort},${paginationState.order}`,
+        sort: `${paginationState.sort},${ORDEN_LISTA}`,
       })
     );
   };
@@ -95,20 +97,27 @@ export const AlEnt = () => {
     resetAll();
   };
 
+  const filterSearch = (value) => {
+    setSearchState(value);
+  }
   return (
     <div>
       <h2 id="al-ent-heading" data-cy="AlEntHeading">
-        Al Ents
+        Alimentos de Entrada
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refrescar lista
           </Button>
           <Link to="/al-ent/new" className="btn btn-primary jh-create-entity" id="jh-create-entity" data-cy="entityCreateButton">
             <FontAwesomeIcon icon="plus" />
-            &nbsp; Crear nuevo Al Ent
+            &nbsp; Crear nuevo Alimento de Entrada
           </Link>
         </div>
       </h2>
+      <div className="search-entradas">
+        <label className="search-entrada" htmlFor="search">Buscar por Donante: &nbsp;</label>
+        <input type="text" placeholder="e.g. D-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
+      </div>
       <div className="table-responsive">
         <InfiniteScroll
           dataLength={alEntList ? alEntList.length : 0}
@@ -120,50 +129,51 @@ export const AlEnt = () => {
             <Table responsive>
               <thead>
                 <tr>
-                  <th className="hand" onClick={sort('id')}>
+                  {/* <th className="hand" onClick={sort('id')}>
                     ID <FontAwesomeIcon icon="sort" />
+                  </th> */}
+                  <th>
+                    Peso 
                   </th>
-                  <th className="hand" onClick={sort('peso')}>
-                    Peso <FontAwesomeIcon icon="sort" />
+                  <th >
+                    Fruta Y Verdura 
                   </th>
-                  <th className="hand" onClick={sort('frutaYVerdura')}>
-                    Fruta Y Verdura <FontAwesomeIcon icon="sort" />
+                  <th >
+                    Fecha Y Hora Entrada 
                   </th>
-                  <th className="hand" onClick={sort('fechaYHoraEntrada')}>
-                    Fecha Y Hora Entrada <FontAwesomeIcon icon="sort" />
+                  {/* <th >
+                    Fecha Y Hora Recogida 
                   </th>
-                  <th className="hand" onClick={sort('fechaYHoraRecogida')}>
-                    Fecha Y Hora Recogida <FontAwesomeIcon icon="sort" />
-                  </th>
-                  <th className="hand" onClick={sort('fechaYHoraPreparacion')}>
-                    Fecha Y Hora Preparacion <FontAwesomeIcon icon="sort" />
+                  <th >
+                    Fecha Y Hora Preparacion 
+                  </th> */}
+                  <th>
+                    Donante 
                   </th>
                   <th>
-                    Tupper <FontAwesomeIcon icon="sort" />
+                    Alimento 
                   </th>
                   <th>
-                    Donante <FontAwesomeIcon icon="sort" />
+                    Tupper 
                   </th>
-                  <th>
-                    Tipo Al <FontAwesomeIcon icon="sort" />
-                  </th>
+                  
                   <th />
                 </tr>
               </thead>
               <tbody>
-                {alEntList.map((alEnt, i) => (
+                {alEntList.filter(x => x.donante.idDonante.includes(searchState)).map((alEnt, i) => (
                   <tr key={`entity-${i}`} data-cy="entityTable">
-                    <td>
+                    {/* <td>
                       <Button tag={Link} to={`/al-ent/${alEnt.id}`} color="link" size="sm">
                         {alEnt.id}
                       </Button>
-                    </td>
+                    </td> */}
                     <td>{alEnt.peso}</td>
-                    <td>{alEnt.frutaYVerdura ? 'true' : 'false'}</td>
+                    <td>{alEnt.tipoAl.frutaYVerdura ? 'Sí' : 'No'}</td>
                     <td>
                       {alEnt.fechaYHoraEntrada ? <TextFormat type="date" value={alEnt.fechaYHoraEntrada} format={APP_DATE_FORMAT} /> : null}
                     </td>
-                    <td>
+                    {/* <td>
                       {alEnt.fechaYHoraRecogida ? (
                         <TextFormat type="date" value={alEnt.fechaYHoraRecogida} format={APP_DATE_FORMAT} />
                       ) : null}
@@ -172,10 +182,11 @@ export const AlEnt = () => {
                       {alEnt.fechaYHoraPreparacion ? (
                         <TextFormat type="date" value={alEnt.fechaYHoraPreparacion} format={APP_DATE_FORMAT} />
                       ) : null}
-                    </td>
-                    <td>{alEnt.tupper ? <Link to={`/tupper/${alEnt.tupper.id}`}>{alEnt.tupper.id}</Link> : ''}</td>
-                    <td>{alEnt.donante ? <Link to={`/donante/${alEnt.donante.id}`}>{alEnt.donante.id}</Link> : ''}</td>
-                    <td>{alEnt.tipoAl ? <Link to={`/tipo-al/${alEnt.tipoAl.id}`}>{alEnt.tipoAl.id}</Link> : ''}</td>
+                    </td> */}
+                    <td>{alEnt.donante ? <Link to={`/donante/${alEnt.donante.id}`}>{alEnt.donante.idDonante}</Link> : ''}</td>
+                    <td>{alEnt.tipoAl ? <Link to={`/tipo-al/${alEnt.tipoAl.id}`}>{alEnt.tipoAl.nombreAlimento}</Link> : ''}</td>
+                    <td>{alEnt.tupper ? <Link to={`/tupper/${alEnt.tupper.id}`}>{alEnt.tupper.modelo}</Link> : ''}</td>
+                    
                     <td className="text-end">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`/al-ent/${alEnt.id}`} color="info" size="sm" data-cy="entityDetailsButton">

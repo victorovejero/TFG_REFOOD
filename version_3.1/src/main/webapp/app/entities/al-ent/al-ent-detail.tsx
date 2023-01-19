@@ -22,7 +22,7 @@ export const AlEntDetail = () => {
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="alEntDetailsHeading">Al Ent</h2>
+        <h2 data-cy="alEntDetailsHeading">Alimento de Entrada</h2>
         <dl className="jh-entity-details">
           <dt>
             <span id="id">ID</span>
@@ -35,7 +35,7 @@ export const AlEntDetail = () => {
           <dt>
             <span id="frutaYVerdura">Fruta Y Verdura</span>
           </dt>
-          <dd>{alEntEntity.frutaYVerdura ? 'true' : 'false'}</dd>
+          <dd>{alEntEntity.frutaYVerdura ? 'Sí' : 'No'}</dd>
           <dt>
             <span id="fechaYHoraEntrada">Fecha Y Hora Entrada</span>
           </dt>
@@ -61,11 +61,11 @@ export const AlEntDetail = () => {
             ) : null}
           </dd>
           <dt>Tupper</dt>
-          <dd>{alEntEntity.tupper ? alEntEntity.tupper.id : ''}</dd>
+          <dd>{alEntEntity.tupper ? alEntEntity.tupper.modelo : ''}</dd>
           <dt>Donante</dt>
-          <dd>{alEntEntity.donante ? alEntEntity.donante.id : ''}</dd>
-          <dt>Tipo Al</dt>
-          <dd>{alEntEntity.tipoAl ? alEntEntity.tipoAl.id : ''}</dd>
+          <dd>{alEntEntity.donante ? alEntEntity.donante.idDonante : ''}</dd>
+          <dt>Alimento</dt>
+          <dd>{alEntEntity.tipoAl ? alEntEntity.tipoAl.nombreAlimento : ''}</dd>
         </dl>
         <Button tag={Link} to="/al-ent" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

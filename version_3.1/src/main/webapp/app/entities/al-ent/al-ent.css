@@ -25,7 +25,9 @@
 }
 
 .checkbox{
-  padding-bottom: 2%;
+  padding-top: 1%;
+  /* text-align:center;
+  display:blocl; */
 }
 
 .hide{

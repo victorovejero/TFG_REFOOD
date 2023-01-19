@@ -22,7 +22,7 @@ export const AlSalDetail = () => {
   return (
     <Row>
       <Col md="8">
-        <h2 data-cy="alSalDetailsHeading">Al Sal</h2>
+        <h2 data-cy="alSalDetailsHeading">Alimento de Salida</h2>
         <dl className="jh-entity-details">
           <dt>
             <span id="id">ID</span>
@@ -35,11 +35,11 @@ export const AlSalDetail = () => {
             {alSalEntity.fechaSalida ? <TextFormat value={alSalEntity.fechaSalida} type="date" format={APP_LOCAL_DATE_FORMAT} /> : null}
           </dd>
           <dt>Tupper</dt>
-          <dd>{alSalEntity.tupper ? alSalEntity.tupper.id : ''}</dd>
-          <dt>Benef</dt>
-          <dd>{alSalEntity.benef ? alSalEntity.benef.id : ''}</dd>
-          <dt>Al Ent</dt>
-          <dd>{alSalEntity.alEnt ? alSalEntity.alEnt.id : ''}</dd>
+          <dd>{alSalEntity.tupper ? alSalEntity.tupper.modelo : ''}</dd>
+          <dt>Beneficiario</dt>
+          <dd>{alSalEntity.benef ? alSalEntity.benef.idBeneficiario : ''}</dd>
+          <dt>Alimento de Entrada</dt>
+          <dd>{alSalEntity.alEnt ? alSalEntity.alEnt.tipoAl.nombreAlimento : ''}</dd>
         </dl>
         <Button tag={Link} to="/al-sal" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Volver</span>

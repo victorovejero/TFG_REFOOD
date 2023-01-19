@@ -39,6 +39,10 @@ export const AlEntUpdate = () => {
   const [crearAlimento, setCrearAlimento] = useState<boolean>(false);
   const [donante, setDonante] = useState(localStorage.getItem("donante-actual") ?? "");
 
+  //Manejo Fruta y Verdura
+  const [tipoAl, setTipoAl] = useState("");
+  const [frutaYVerdura, setFrutaYVerdura] = useState(false);
+
   useEffect(() => {
     localStorage.setItem("donante-actual", donante);
   },[donante])
@@ -148,7 +152,7 @@ export const AlEntUpdate = () => {
     //   setFrutaYVerdura(frutaYVerdura => !frutaYVerdura);
     // }
  
-
+console.log(tipoAl);
     // Se ejecuta al cambiar el valor del input de peso. (Implementación del Warning de peso mayor que x)
     const pesoAlert = (event) => {
       switch(event.target.value >= 10 && event.target.value !==""){
@@ -200,12 +204,25 @@ export const AlEntUpdate = () => {
               ) : null}
 
 
+              <label htmlFor="al-ent-fYV">Fruta o Verdura
+              <ValidatedField
+              id="al-ent-fYV"
+              name="fYV"
+              data-cy="fYV"
+              className="checkbox"
+              type="checkbox"
+              value={frutaYVerdura}
+              onChange={(e) => setFrutaYVerdura(e.target.checked)}>
+              </ValidatedField>
+              </label>
               <ValidatedField
                 id="al-ent-tipoAl"
                 name="tipoAl"
                 data-cy="tipoAl"
                 label="Tipo De Alimento"
                 type="select"
+                value={frutaYVerdura ? "12":tipoAl}
+                onChange={(e) => setTipoAl(e.target.value)}
                 required={true}
               >
                 <option value="" key="0"/>

@@ -15,7 +15,7 @@ describe('AlEnt e2e test', () => {
   const alEntPageUrlPattern = new RegExp('/al-ent(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const alEntSample = { peso: 35805, frutaYVerdura: false, fechaYHoraEntrada: '2023-01-15T13:32:11.220Z' };
+  const alEntSample = { peso: 35805, frutaYVerdura: false, fechaYHoraEntrada: '2023-01-15T13:32:11.220Z', tupper:1,donante:1 };
 
   let alEnt;
 
@@ -28,7 +28,7 @@ describe('AlEnt e2e test', () => {
     cy.intercept('POST', '/api/al-ents').as('postEntityRequest');
     cy.intercept('DELETE', '/api/al-ents/*').as('deleteEntityRequest');
   });
-
+// Deletes entity created after each test.
   afterEach(() => {
     if (alEnt) {
       cy.authenticatedRequest({
@@ -51,7 +51,7 @@ describe('AlEnt e2e test', () => {
       }
     });
     cy.getEntityHeading('AlEnt').should('exist');
-    cy.url().should('match', alEntPageUrlPattern);
+    cy.url().should('match', alEntPageUrlPattern).pause();
   });
 
   describe('AlEnt page', () => {
@@ -66,7 +66,7 @@ describe('AlEnt e2e test', () => {
         cy.url().should('match', new RegExp('/al-ent/new$'));
         cy.getEntityCreateUpdateHeading('AlEnt');
         cy.get(entityCreateSaveButtonSelector).should('exist');
-        cy.get(entityCreateCancelButtonSelector).click();
+        cy.get(entityCreateCancelButtonSelector).click().pause();
         cy.wait('@entitiesRequest').then(({ response }) => {
           expect(response.statusCode).to.equal(200);
         });

@@ -5,7 +5,7 @@ import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
+import { ASC, DESC, ITEMS_PER_PAGE, SORT, ORDEN_LISTA } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
@@ -13,6 +13,9 @@ import { ICheckout } from 'app/shared/model/checkout.model';
 import { getEntities } from './checkout.reducer';
 
 export const Checkout = () => {
+
+  const [searchState, setSearchState] = useState<string>("");
+
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -31,14 +34,14 @@ export const Checkout = () => {
       getEntities({
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
-        sort: `${paginationState.sort},${paginationState.order}`,
+        sort: `${paginationState.sort},${ORDEN_LISTA}`,
       })
     );
   };
 
   const sortEntities = () => {
     getAllEntities();
-    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${paginationState.order}`;
+    const endURL = `?page=${paginationState.activePage}&sort=${paginationState.sort},${ORDEN_LISTA}`;
     if (location.search !== endURL) {
       navigate(`${location.pathname}${endURL}`);
     }
@@ -80,6 +83,23 @@ export const Checkout = () => {
   const handleSyncList = () => {
     sortEntities();
   };
+  const printList = (i) => {
+    let arr = []
+    let counter = 0;
+    for (const int of checkoutList[i].alSals){ 
+      arr[counter] =  int ? <Link key={counter} to={`/al-sal/${int.id}`}>{int.alEnt.tipoAl.nombreAlimento}</Link> : ''
+      counter++;
+      
+      arr[counter] = " - "
+      counter++;
+    }
+    return arr.slice(0,-1);
+    
+  }
+
+  const filterSearch = (value) => {
+    setSearchState(value);
+  }
 
   return (
     <div>
@@ -95,39 +115,47 @@ export const Checkout = () => {
           </Link>
         </div>
       </h2>
+      <div className="search-salida">
+        <label className="search-salida" htmlFor="search">
+          Buscar Alimento por Beneficiario: &nbsp;
+        </label>
+        <input id="search" type="text" placeholder="e.g. B-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
+      </div>
       <div className="table-responsive">
         {checkoutList && checkoutList.length > 0 ? (
           <Table responsive>
             <thead>
               <tr>
-                <th className="hand" onClick={sort('id')}>
+                {/* <th className="hand" onClick={sort('id')}>
                   ID <FontAwesomeIcon icon="sort" />
+                </th> */}
+                <th >
+                  Fecha Salida 
                 </th>
-                <th className="hand" onClick={sort('fechaSalida')}>
-                  Fecha Salida <FontAwesomeIcon icon="sort" />
-                </th>
-                <th className="hand" onClick={sort('peso')}>
-                  Peso <FontAwesomeIcon icon="sort" />
+                <th >
+                  Peso 
                 </th>
                 <th>
-                  Benef <FontAwesomeIcon icon="sort" />
+                  Benef
                 </th>
+                <th>Alimentos de Salida</th>
                 <th />
               </tr>
             </thead>
             <tbody>
-              {checkoutList.map((checkout, i) => (
+              {checkoutList.filter(x => x.benef.idBeneficiario.includes(searchState)).map((checkout, i) => (
                 <tr key={`entity-${i}`} data-cy="entityTable">
-                  <td>
+                  {/* <td>
                     <Button tag={Link} to={`/checkout/${checkout.id}`} color="link" size="sm">
                       {checkout.id}
                     </Button>
-                  </td>
+                  </td> */}
                   <td>
                     {checkout.fechaSalida ? <TextFormat type="date" value={checkout.fechaSalida} format={APP_LOCAL_DATE_FORMAT} /> : null}
                   </td>
                   <td>{checkout.peso}</td>
-                  <td>{checkout.benef ? <Link to={`/benef/${checkout.benef.id}`}>{checkout.benef.id}</Link> : ''}</td>
+                  <td>{checkout.benef ? <Link to={`/benef/${checkout.benef.id}`}>{checkout.benef.idBeneficiario}</Link> : ''}</td>
+                  <td>{printList(i)}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/checkout/${checkout.id}`} color="info" size="sm" data-cy="entityDetailsButton">
