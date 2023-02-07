@@ -1,0 +1,80 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172015",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "nucleo",
+  "fields": [
+    {
+      "fieldName": "idNucleo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombre",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "provincia",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "responsable",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefono",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Nucleo",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "donante",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "donante",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "beneficiario",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "beneficiario",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "voluntario",
+      "otherEntityRelationshipName": "nucleo",
+      "relationshipName": "voluntario",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}

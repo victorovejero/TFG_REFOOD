@@ -1,0 +1,120 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172017",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "beneficiario",
+  "fields": [
+    {
+      "fieldName": "idBeneficiario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "nombreRepresentante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "primerApellidoRepresentante",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "segundoApellidoRepresentante",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroPersonas",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefono",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "telefonoSecundario",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "direccion",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "codigoPostal",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaAlta",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaBaja",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "numeroNinios",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "idDual",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "activo",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Beneficiario",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alimentoDeSalida",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "alimentoDeSalida",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "personaBeneficiaria",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "personaBeneficiaria",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "checkout",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "intolerancia",
+      "otherEntityRelationshipName": "beneficiario",
+      "ownerSide": true,
+      "relationshipName": "intolerancia",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "nucleo",
+      "otherEntityRelationshipName": "beneficiario",
+      "relationshipName": "nucleo",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

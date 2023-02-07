@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity AlimentoDeEntrada.
+    -->
+    <changeSet id="20221022172018-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="alimento_de_entrada_id"
+                                 baseTableName="rel_alimento_de_entrada__frutayverdura"
+                                 constraintName="fk_rel_alimento_de_entrada__fru__alimento_de_entrada_d2_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="alimento_de_entrada"/>
+
+        <addForeignKeyConstraint baseColumnNames="frutayverdura_id"
+                                 baseTableName="rel_alimento_de_entrada__frutayverdura"
+                                 constraintName="fk_rel_alimento_de_entrada__frutayverdura__frutayverdura_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="fruta_y_verdura"/>
+
+        <addForeignKeyConstraint baseColumnNames="tupper_id"
+                                 baseTableName="alimento_de_entrada"
+                                 constraintName="fk_alimento_de_entrada__tupper_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tupper"/>
+
+        <addForeignKeyConstraint baseColumnNames="donante_id"
+                                 baseTableName="alimento_de_entrada"
+                                 constraintName="fk_alimento_de_entrada__donante_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="donante"/>
+
+        <addForeignKeyConstraint baseColumnNames="tipo_de_alimento_id"
+                                 baseTableName="alimento_de_entrada"
+                                 constraintName="fk_alimento_de_entrada__tipo_de_alimento_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tipo_de_alimento"/>
+    </changeSet>
+</databaseChangeLog>

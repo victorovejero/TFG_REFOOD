@@ -1,0 +1,47 @@
+{
+  "applications": "*",
+  "changelogDate": "20221022172019",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "alimento_de_salida",
+  "fields": [
+    {
+      "fieldName": "fechaSalida",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlimentoDeSalida",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "tupper",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "tupper",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "beneficiario",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "beneficiario",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "alimentoDeEntrada",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "relationshipName": "alimentoDeEntrada",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "checkout",
+      "otherEntityRelationshipName": "alimentoDeSalida",
+      "ownerSide": false,
+      "relationshipName": "checkout",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}
