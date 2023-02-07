@@ -105,12 +105,12 @@ jhipster:
         # - In the JHipster Registry (which includes a Spring Cloud Config server)
         # - In a separate `application-prod.yml` file, in the same folder as your executable JAR file
         # - In the `JHIPSTER_SECURITY_AUTHENTICATION_JWT_BASE64_SECRET` environment variable
-        base64-secret: MTg2ZDJlN2UxNzM5YjZlM2FiN2I5NTg5ZmUzZDc4NDU5ZjJkMTdhMjdjMjI3MTgwYTZmN2Q5MGE2YTI0NDhlMTVlNDQ4ODA4MTY4NGI3MGE1YTRmNjg2NWE1ZDBjMjM0MjYxYWY0MzFiYzJmYTYwNjc2MWQwNWQxMDEyNzgxMjA=
+        base64-secret: U0lHTkVEX0tFWS0xNzI4NjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIz
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000
   mail: # specific JHipster mail property, for standard properties see MailProperties
-    base-url: http://my-server-url-to-change # Modify according to your server's URL
+    base-url: http://127.0.0.1:8080 # Modify according to your server's URL
   logging:
     use-json-format: false # By default, logs are not in Json format
     logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration

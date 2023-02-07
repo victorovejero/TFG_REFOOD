@@ -8,7 +8,7 @@
     <groupId>com.refood.trazabilidad</groupId>
     <artifactId>reefood-trazabilidad-app-v-3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <name>Reefood Trazabilidad App V 3</name>
     <description>Description for Reefood_Trazabilidad_App_v3</description>
 

@@ -85,7 +85,7 @@ fechaSalida LocalDate required, // fechaYHoraEntrada ZonedDateTime required, MED
 entity Checkout{
     // ID Beneficiario
     fechaSalida LocalDate required,
-    peso Integer required,
+    peso Double required,
 // Relacion con Alimento de Salido Muchos a Muchos
 }
 // QUEREMOS QUITAR ESTA TABLA PARA HACERLA UNA VISTA. TODOS LOS ALIMENTOS DEBERIAN ESTAR DENTRO DE UNA MISMA TABLA, SOLO HACE FALTA UN CAMPO QUE LOS IDENTIFIQUE COMO FRUTA Y VERDURA
