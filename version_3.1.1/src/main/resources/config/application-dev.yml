@@ -33,7 +33,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: refood_trazabilidad_app
+    username: refood
     password: refood_DB123
     hikari:
       poolName: Hikari
@@ -86,7 +86,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: NjI0ZDI3NDhkNmJiYmQyY2QwZTAwYjU4ZmFjZTQ3YTIyNTVmZjIzYmIwOWE4YzU5MDMwYjE3N2RkMTFhOTY3NDAxYjNmZWZkYjYxZGFiY2VmYjc2ODg2YWFmNTNjYzBkNmIxNDA2OWRhMjIzYzQxMmMwNmI2N2ZjNGI4NzJkYTU=
+        base64-secret: U0lHTkVEX0tFWS0xNzI4NjEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIz
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

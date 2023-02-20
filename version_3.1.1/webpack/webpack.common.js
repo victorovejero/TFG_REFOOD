@@ -124,7 +124,7 @@ module.exports = async options => {
           template: './src/main/webapp/index.html',
           chunksSortMode: 'auto',
           inject: 'body',
-          base: '/refood-trazabilidad-app/',
+          base: '/',
         }),
       ],
     }
