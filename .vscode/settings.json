@@ -1,3 +1,7 @@
 {
-  "java.configuration.updateBuildConfiguration": "interactive"
+  "java.configuration.updateBuildConfiguration": "interactive",
+  "java.project.sourcePaths": [
+    "version_3.1.1/src/main/java/com/refood/trazabilidad/service",
+    "version_3.1.1"
+  ]
 }

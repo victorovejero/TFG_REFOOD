@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity AlSal.
+    -->
+    <changeSet id="20230215131424-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="tupper_id"
+                                 baseTableName="al_sal"
+                                 constraintName="fk_al_sal__tupper_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="tupper"/>
+
+        <addForeignKeyConstraint baseColumnNames="benef_id"
+                                 baseTableName="al_sal"
+                                 constraintName="fk_al_sal__benef_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="benef"/>
+
+        <addForeignKeyConstraint baseColumnNames="al_ent_id"
+                                 baseTableName="al_sal"
+                                 constraintName="fk_al_sal__al_ent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="al_ent"/>
+    </changeSet>
+</databaseChangeLog>

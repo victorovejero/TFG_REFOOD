@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20230215131425",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "checkout",
+  "fields": [
+    {
+      "fieldName": "fechaSalida",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Checkout",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alSal",
+      "otherEntityRelationshipName": "checkout",
+      "ownerSide": true,
+      "relationshipName": "alSal",
+      "relationshipType": "many-to-many"
+    },
+    {
+      "otherEntityName": "benef",
+      "otherEntityRelationshipName": "checkout",
+      "relationshipName": "benef",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}
