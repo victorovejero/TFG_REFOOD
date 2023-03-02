@@ -157,7 +157,7 @@ export const AlSalUpdate = () => {
                 {alEnts
                   ? alEnts.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.tipoAl.nombreAlimento} - {otherEntity.donante.nombre}
+                        {otherEntity.tipoAl ? otherEntity.tipoAl.nombreAlimento : "Fruta y Verdura"} - {otherEntity.donante.nombre}
                       </option>
                     ))
                   : null}

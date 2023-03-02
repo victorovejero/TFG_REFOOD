@@ -23,6 +23,8 @@ import TipoAlModal from './tipo-al-modal';
 import './al-ent.css';
 
 
+
+
 export const AlEntUpdate = () => {
   const PESO_MAX = 10;
   const [mostrarHoraPrep,setMostrarHoraPrep] = useState<Boolean>(false);
