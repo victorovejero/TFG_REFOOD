@@ -36,7 +36,8 @@ export const CheckoutUpdate = () => {
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
   const [beneficiario, setBeneficiario] = useState<number>( isNew? 0 : checkoutEntity?.beneficiario?.id);
-
+  console.log("BENEFICIARIO STATE" + beneficiario);
+  console.log(benefs)
   const handleClose = () => {
     navigate('/checkout' + location.search);
   };
@@ -127,7 +128,7 @@ export const CheckoutUpdate = () => {
               />
               <ValidatedField
                 autoComplete="off"
-                label="Peso"
+                label="Peso (kg)"
                 id="checkout-peso"
                 name="peso"
                 data-cy="peso"
@@ -155,7 +156,7 @@ export const CheckoutUpdate = () => {
                 <option value="" key="0" />
                 {alSals
                   ? alSals.map(otherEntity => (
-                    otherEntity.benef.id == beneficiario && otherEntity.fechaSalida == getToday(false) && !otherEntity.benef? 
+                    otherEntity.benef.id == beneficiario && otherEntity.fechaSalida == getToday(false) && otherEntity.benef? 
                       <option value={otherEntity.id} key={otherEntity.id}>
                         {otherEntity.alEnt.peso} kg
                       </option> : ""

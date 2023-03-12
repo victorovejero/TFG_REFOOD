@@ -140,7 +140,7 @@ export const AlSal = () => {
                   <td>{alSal.fechaSalida ? <TextFormat type="date" value={alSal.fechaSalida} format={APP_LOCAL_DATE_FORMAT} /> : null}</td>
                   <td>{alSal.tupper ? <Link to={`/tupper/${alSal.tupper.id}`}>{alSal.tupper.modelo}</Link> : ''}</td>
                   <td>{alSal.benef ? <Link to={`/benef/${alSal.benef.id}`}>{alSal.benef.idBeneficiario}</Link> : ''}</td>
-                  <td>{alSal.alEnt ? <Link to={`/al-ent/${alSal.alEnt.id}`}>{alSal.alEnt.tipoAl.nombreAlimento}</Link> : ''}</td>
+                  <td>{alSal.alEnt ? <Link to={`/al-ent/${alSal.alEnt.id}`}>{alSal.alEnt.tipoAl ? alSal.alEnt.tipoAl.nombreAlimento : "Fruta y Verdura"}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/al-sal/${alSal.id}`} color="info" size="sm" data-cy="entityDetailsButton">

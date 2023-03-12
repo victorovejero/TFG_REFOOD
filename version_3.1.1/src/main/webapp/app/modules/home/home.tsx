@@ -49,7 +49,7 @@ export const Home = () => {
       </> : 
       <>
       <Row>
-          <h1 id="home-title">¡Bienvenido a Refood! PRUEBA</h1>
+          <h1 id="home-title">¡Bienvenido a Refood!</h1>
         </Row>
         <Row>
           <Col md="4" className="home-col logo unsigned">
