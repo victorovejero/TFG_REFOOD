@@ -33,12 +33,9 @@ spring:
       enabled: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: root
-    password: root-Familia123
-    # url: jdbc:mysql://refood-db-prod.chpafctp7edl.eu-west-1.rds.amazonaws.com:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    # username: admin
-    # password: adminDB-awsprod123
+    url: jdbc:mysql://refood-db-prod.chpafctp7edl.eu-west-1.rds.amazonaws.com:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    username: admin
+    password: adminDB-awsprod123
     hikari:
       poolName: Hikari
       auto-commit: false

@@ -311,7 +311,7 @@ console.log(tipoAl);
               />
               
               
-              <ValidatedField id="al-ent-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" required={true}>
+              <ValidatedField id="al-ent-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" className={!frutaYVerdura? "":"hide" }>
                 <option value="" key="0" />
                 {tuppers
                   ? tuppers.map(otherEntity => (
