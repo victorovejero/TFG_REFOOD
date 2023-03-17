@@ -18,35 +18,50 @@ export const Home = () => {
         <Row>
         <h1 id="home-title">¡Bienvenido, Gracias por Colaborar!</h1>
         </Row>
-        <Row>
-          <Col md="4" className="home-col">
-            <Link to="/al-ent/new" className="btn btn-primary home-button">Registrar Alimento de Entrada</Link>
-          </Col>
-          <Col md="4" className="home-col" >
+
+        {/* CHATGPT */}
+        <div className="container">
+          <div className="left-column">
             <img src="../../../content/images/Logo_Refood.jpg" className="logo signed"></img>
-            {/* <span className="hipster rounded" /> */}
-          </Col>
-          <Col md="4" className="home-col">
-            <Link to="/al-sal/new" className="btn btn-primary home-button">Registrar Alimento de Salida</Link>
-            </Col>
-        </Row>
-        <Row>
-          <Col md="12" className="home-col-2">
-            <Link to="/checkout/new" className="btn btn-primary home-button-2">Checkout</Link>
-          </Col>
-        </Row>
-        {/* <Row>
-        <Col md="6" className="registro-col">
-            <Link to="/registro/new" className="btn btn-primary home-button">Registro Diario de Rutas</Link>
-          </Col>
-          <Col md="4" className="registro-text">
-            <p>El registro diario de rutas sirve para saber que voluntarios han hecho cada ruta, únicamente hay que rellenarlo una vez por ruta, al día.</p>
-          </Col>
-          <Col md="2">
-          </Col>
+          </div>
+          <div className="right-column">
+            <div className="button-container">
+              <Link to="/al-ent/new" className="btn btn-primary home-button-gpt">Registrar Alimento de Entrada</Link>
+              <Link to="/al-sal/new" className="btn btn-primary home-button-gpt">Registrar Alimento de Salida</Link>
+              <Link to="/checkout/new" className="btn btn-primary home-button-gpt">Checkout</Link>
+            </div>
+          </div>
+        </div>
+        </> : 
+        // <Row>
+        //   <Col md="4" className="home-col">
+        //     <Link to="/al-ent/new" className="btn btn-primary home-button">Registrar Alimento de Entrada</Link>
+        //   </Col>
+        //   <Col md="4" className="home-col" >
+        //     <img src="../../../content/images/Logo_Refood.jpg" className="logo signed"></img>
+        //     {/* <span className="hipster rounded" /> */}
+        //   </Col>
+        //   <Col md="4" className="home-col">
+        //     <Link to="/al-sal/new" className="btn btn-primary home-button">Registrar Alimento de Salida</Link>
+        //     </Col>
+        // </Row>
+        // <Row>
+        //   <Col md="12" className="home-col-2">
+        //     <Link to="/checkout/new" className="btn btn-primary home-button-2">Checkout</Link>
+        //   </Col>
+        // </Row>
+        // {/* <Row>
+        // <Col md="6" className="registro-col">
+        //     <Link to="/registro/new" className="btn btn-primary home-button">Registro Diario de Rutas</Link>
+        //   </Col>
+        //   <Col md="4" className="registro-text">
+        //     <p>El registro diario de rutas sirve para saber que voluntarios han hecho cada ruta, únicamente hay que rellenarlo una vez por ruta, al día.</p>
+        //   </Col>
+        //   <Col md="2">
+        //   </Col>
           
-        </Row> */}
-      </> : 
+        // </Row> */}
+      
       <>
       <Row>
           <h1 id="home-title">¡Bienvenido a Refood!</h1>

@@ -79,14 +79,14 @@ const LoginModal = (props: ILoginModalProps) => {
             </Col>
           </Row>
           <div className="mt-1">&nbsp;</div>
-          <Alert color="warning">
+          {/* <Alert color="warning">
             <Link to="/account/reset/request" data-cy="forgetYourPasswordSelector">
               ¿Ha olvidado su contraseña?
             </Link>
           </Alert>
           <Alert color="warning">
             <span>¿Aún no tienes una cuenta?</span> <Link to="/account/register">Crea una cuenta</Link>
-          </Alert>
+          </Alert> */}
         </ModalBody>
         <ModalFooter>
           <Button color="secondary" onClick={handleClose} tabIndex={1}>

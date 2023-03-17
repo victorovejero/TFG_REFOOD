@@ -18,7 +18,8 @@ Main page styles
   display: inline-block;
   width: 100%;
   height:100%;
-  //  border:1px outset;
+  
+   border:1px groove black;
   //  border-color:#f9b718;
 }
 
@@ -106,3 +107,49 @@ Main page styles
   font-weight: bold;
 }
 
+
+
+
+
+// CHATGPT
+.container {
+  display: flex;
+  flex-direction: row;
+  padding:5rem;
+}
+
+.left-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.right-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left:10%;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.home-button-gpt {
+  margin: 30px;
+  padding: 10px;
+  font-size:25px;
+  background-color:#f9b718;
+  color:black;
+  border:outset black 3px;
+  width:100%;
+
+
+}

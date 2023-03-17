@@ -32,9 +32,12 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
+    # url: jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
+    # username: refood
+    # password: refood_DB123
     url: jdbc:mysql://localhost:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: refood
-    password: refood_DB123
+    username: root
+    password: root-Familia123
     hikari:
       poolName: Hikari
       auto-commit: false
