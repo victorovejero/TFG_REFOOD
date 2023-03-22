@@ -103,7 +103,7 @@ export const CheckoutUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="reefoodTrazabilidadAppV3App.checkout.home.createOrEditLabel" data-cy="CheckoutCreateUpdateHeading">
-            Crear o editar Checkout
+            { isNew ? "Crear Checkout":"Editar Checkout"}
           </h2>
         </Col>
       </Row>

@@ -191,7 +191,7 @@ console.log(tipoAl);
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.alEnt.home.createOrEditLabel" data-cy="AlEntCreateUpdateHeading">
-            Crear o editar Alimento De Entrada
+            {isNew ? "Crear Alimento De Entrada" : "Editar Alimento de Entrada"}
           </h2>
         </Col>
       </Row>

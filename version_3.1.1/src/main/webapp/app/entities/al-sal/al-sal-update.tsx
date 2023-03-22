@@ -109,7 +109,7 @@ export const AlSalUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="reefoodTrazabilidadAppV3App.alSal.home.createOrEditLabel" data-cy="AlSalCreateUpdateHeading">
-            Crear o editar Alimento de Salida
+            { isNew ? "Crear Alimento de Salida":"Editar Alimento de Salida"}
           </h2>
         </Col>
       </Row>

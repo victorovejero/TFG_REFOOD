@@ -121,7 +121,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
                 {intolerancias
                   ? intolerancias.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nombre}
                       </option>
                     ))
                   : null}
