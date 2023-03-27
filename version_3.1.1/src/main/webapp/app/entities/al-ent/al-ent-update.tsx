@@ -191,7 +191,7 @@ console.log(tipoAl);
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.alEnt.home.createOrEditLabel" data-cy="AlEntCreateUpdateHeading">
-            {isNew ? "Crear Alimento De Entrada" : "Editar Alimento de Entrada"}
+            {isNew ? "Registrar Alimento De Entrada" : "Editar Alimento de Entrada"}
           </h2>
         </Col>
       </Row>
@@ -218,6 +218,7 @@ console.log(tipoAl);
               </ValidatedField>
               </label>
               <ValidatedField
+                className={!frutaYVerdura? "":"hide"}
                 id="al-ent-tipoAl"
                 name="tipoAl"
                 data-cy="tipoAl"
@@ -239,7 +240,7 @@ console.log(tipoAl);
               </ValidatedField> 
 
               <div className="modal-button-div">
-                <Button onClick={showModal} color="warning" >
+                <Button className={!frutaYVerdura? "":"hide"} onClick={showModal} tabIndex={-1} color="warning" >
                     &#10010;
                 </Button>
               </div>
@@ -249,12 +250,13 @@ console.log(tipoAl);
 
               <ValidatedField
                 autoComplete="off"
-                label="Peso"
+                label="Peso (Kg)"
                 id="al-ent-peso"
                 name="peso"
                 data-cy="peso"
                 type="text"
                 maxlength="6"
+                pattern="[0-9]*\.?[0-9]*"
                 onChange={pesoAlert}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
@@ -264,25 +266,13 @@ console.log(tipoAl);
               <Alert color="danger"  isOpen={showPesoAlert}>
                 ¿Está seguro de que el peso es mayor a {PESO_MAX}Kg?
               </Alert>
-              <ValidatedField
-                label="Fecha Y Hora Entrada"
-                id="al-ent-fechaYHoraEntrada"
-                name="fechaYHoraEntrada"
-                data-cy="fechaYHoraEntrada"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                value={isNew ? fechaElegida : null}
-                onChange={isNew ? ((e) => setFechaElegida(e.target.value)) : null}
-                validate={{
-                  required: { value: true, message: 'Este campo es obligatorio.' },
-                }}
-              />
+            
               {isNew ? <Row>
                 <Col className={`option-button-col ${mostrarHoraRecogida ? "hide":""}`} md="6">
-                  <button type="button" className="option-button" onClick={() => setMostrarHoraRecogida(!mostrarHoraRecogida)}>Insertar hora de Recogida</button> 
+                  <button type="button" className="option-button hide" onClick={() => setMostrarHoraRecogida(!mostrarHoraRecogida)}>Insertar hora de Recogida</button> 
                 </Col>
                 <Col className={`option-button-col ${mostrarHoraPrep ? "hide":""}`} md="6">
-                <button type="button" className="option-button" onClick={() => setMostrarHoraPrep(!mostrarHoraPrep)}>Insertar hora de Preparación</button> 
+                <button type="button" className="option-button hide" onClick={() => setMostrarHoraPrep(!mostrarHoraPrep)}>Insertar hora de Preparación</button> 
                 </Col>
               </Row>:null}
           
@@ -312,7 +302,6 @@ console.log(tipoAl);
               
               
               <ValidatedField id="al-ent-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select" className={!frutaYVerdura? "":"hide" }>
-                <option value="" key="0" />
                 {tuppers
                   ? tuppers.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
@@ -320,6 +309,8 @@ console.log(tipoAl);
                       </option>
                     ))
                   : null}
+                {frutaYVerdura ? <option selected={frutaYVerdura} value="" key="0" />:null}
+
               </ValidatedField> 
               <ValidatedField id="al-ent-donante" name="donante" data-cy="donante" label="Donante" type="select" required value={donante} onChange={(e) => setDonante(e.target.value)}>
                 <option value="" key="0" />
@@ -331,7 +322,19 @@ console.log(tipoAl);
                     ))
                   : null}
               </ValidatedField>
-              
+              <ValidatedField
+                label="Fecha Y Hora Entrada"
+                id="al-ent-fechaYHoraEntrada"
+                name="fechaYHoraEntrada"
+                data-cy="fechaYHoraEntrada"
+                type="datetime-local"
+                placeholder="YYYY-MM-DD HH:mm"
+                value={isNew ? fechaElegida : null}
+                onChange={isNew ? ((e) => setFechaElegida(e.target.value)) : null}
+                validate={{
+                  required: { value: true, message: 'Este campo es obligatorio.' },
+                }}
+              />
               
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

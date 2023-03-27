@@ -109,7 +109,7 @@ export const AlSalUpdate = () => {
       <Row className="justify-content-center">
         <Col md="8">
           <h2 id="reefoodTrazabilidadAppV3App.alSal.home.createOrEditLabel" data-cy="AlSalCreateUpdateHeading">
-            { isNew ? "Crear Alimento de Salida":"Editar Alimento de Salida"}
+            { isNew ? "Registrar Alimento de Salida":"Editar Alimento de Salida"}
           </h2>
         </Col>
       </Row>
@@ -132,16 +132,6 @@ export const AlSalUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
-              <ValidatedField id="al-sal-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select">
-                <option value="" key="0" />
-                {tuppers
-                  ? tuppers.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.modelo}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <ValidatedField id="al-sal-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" required>
                 <option value="" key="0" />
                 {benefs
@@ -166,6 +156,18 @@ export const AlSalUpdate = () => {
                 <input  className="slider" type="range" min="0" max="3" value={rangoEntradas} onChange={(e) => setRangoEntradas(Number(e.target.value))} />
                 <p>{rangoEntradas} días</p>
               </div>
+              <ValidatedField id="al-sal-tupper" name="tupper" data-cy="tupper" label="Tupper" type="select">
+                <option value="" key="0" />
+                {tuppers
+                  ? tuppers.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.modelo}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              
+              
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

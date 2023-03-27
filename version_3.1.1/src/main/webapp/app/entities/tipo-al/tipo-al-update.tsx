@@ -77,7 +77,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
       {showTitle ? <Row className="justify-content-center">
         <Col md="8">
           <h2 id="refoodTrazabilidadApp.tipoDeAlimento.home.createOrEditLabel" data-cy="TipoDeAlimentoCreateUpdateHeading">
-            Crear o editar Tipo De Alimento
+            {isNew ? "Crear Tipo De Alimento": "Editar Tipo de Alimento"}
           </h2>
         </Col>
       </Row> : null}
@@ -108,7 +108,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
                 check
                 type="checkbox"
               />
-              <ValidatedField label="Descripcion" id="tipo-al-descripcion" name="descripcion" data-cy="descripcion" type="text" />
+              {/* <ValidatedField label="Descripcion" id="tipo-al-descripcion" name="descripcion" data-cy="descripcion" type="text" /> */}
               <ValidatedField
                 label="Intolerancias"
                 id="tipo-al-intolerancia"
@@ -126,6 +126,8 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
                     ))
                   : null}
               </ValidatedField>
+              <p>*Mantén pulsado CTRL para seleccionar múltiples intolerancias</p>
+
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/tipo-al" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

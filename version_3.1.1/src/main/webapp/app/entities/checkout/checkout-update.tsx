@@ -126,6 +126,16 @@ export const CheckoutUpdate = () => {
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} required>
+                <option value="" key="0" />
+                {benefs
+                  ? benefs.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.idBeneficiario} - {otherEntity.nombreRepresentante}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 autoComplete="off"
                 label="Peso (kg)"
@@ -142,23 +152,14 @@ export const CheckoutUpdate = () => {
               <Alert color="danger"  isOpen={showPesoAlert}>
                 ¿Está seguro de que el peso es mayor a {PESO_MAX}Kg?
               </Alert>
-              <ValidatedField id="checkout-benef" name="benef" data-cy="benef" label="Beneficiario" type="select" value={beneficiario} onChange={(e) => setBeneficiario(Number(e.target.value))} required>
-                <option value="" key="0" />
-                {benefs
-                  ? benefs.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.idBeneficiario}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
+              
               <ValidatedField label="Alimentos de Salida" id="checkout-alSal" data-cy="alSal" type="select" multiple name="alSals">
                 <option value="" key="0" />
                 {alSals
                   ? alSals.map(otherEntity => (
                     otherEntity.benef.id == beneficiario && otherEntity.fechaSalida == getToday(false) && otherEntity.benef? 
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.alEnt.peso} kg
+                      <option value={otherEntity.id} key={otherEntity.id} selected={true}>
+                        {otherEntity.tupper.modelo}
                       </option> : ""
                     ))
                   : null}
