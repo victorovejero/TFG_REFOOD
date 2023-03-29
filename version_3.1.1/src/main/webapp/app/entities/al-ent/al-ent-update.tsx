@@ -239,10 +239,15 @@ console.log(tipoAl);
                   }
               </ValidatedField> 
 
-              <div className="modal-button-div">
-                <Button className={!frutaYVerdura? "":"hide"} onClick={showModal} tabIndex={-1} color="warning" >
-                    &#10010;
-                </Button>
+              <div className={`modal-button-div ${!frutaYVerdura ? "":"hide"}`}>
+                <div className="column one">
+                  <Button className={!frutaYVerdura? "":"hide"} onClick={showModal} tabIndex={-1} color="warning" >
+                      &#10010;
+                  </Button>
+                </div>
+                <div className="column two"><p className={!frutaYVerdura? "":"hide"}>*Añadir alimento. En el caso de que no se encuentre el alimento deseado en la lista, crear el alimento pulsando este botón. </p></div>
+                <br></br>
+                <br />
               </div>
               
           
