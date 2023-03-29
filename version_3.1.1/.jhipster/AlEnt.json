@@ -1,0 +1,64 @@
+{
+  "applications": "*",
+  "changelogDate": "20230215131423",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "al_ent",
+  "fields": [
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "frutaYVerdura",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraEntrada",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "fechaYHoraRecogida",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "fechaYHoraPreparacion",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "AlEnt",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alSal",
+      "otherEntityRelationshipName": "alEnt",
+      "relationshipName": "alSal",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "tupper",
+      "otherEntityRelationshipName": "alEnt",
+      "relationshipName": "tupper",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "donante",
+      "otherEntityRelationshipName": "alEnt",
+      "relationshipName": "donante",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "tipoAl",
+      "otherEntityRelationshipName": "alEnt",
+      "relationshipName": "tipoAl",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

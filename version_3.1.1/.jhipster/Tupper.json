@@ -1,0 +1,53 @@
+{
+  "applications": "*",
+  "changelogDate": "20230215131427",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "tupper",
+  "fields": [
+    {
+      "fieldName": "peso",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "productor",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "modelo",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "precio",
+      "fieldType": "Double",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "descripcion",
+      "fieldType": "String"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Tupper",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "alSal",
+      "otherEntityRelationshipName": "tupper",
+      "relationshipName": "alSal",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "alEnt",
+      "otherEntityRelationshipName": "tupper",
+      "relationshipName": "alEnt",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceImpl"
+}
