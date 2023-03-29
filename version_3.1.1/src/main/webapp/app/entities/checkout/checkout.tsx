@@ -83,11 +83,12 @@ export const Checkout = () => {
   const handleSyncList = () => {
     sortEntities();
   };
+
   const printList = (i) => {
     let arr = []
     let counter = 0;
     for (const int of checkoutList[i].alSals){ 
-      arr[counter] =  int ? <Link key={counter} to={`/al-sal/${int.id}`}>{int.alEnt.tipoAl.nombreAlimento}</Link> : ''
+      arr[counter] =  int ? (int.alEnt.tipoAl ? <Link key={counter} to={`/al-sal/${int.id}`}>{int.alEnt.tipoAl.nombreAlimento}</Link> : 'fruta y verdura') : ''
       counter++;
       
       arr[counter] = " - "

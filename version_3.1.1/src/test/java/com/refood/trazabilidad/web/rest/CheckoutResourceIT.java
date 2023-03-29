@@ -1,5 +1,6 @@
 package com.refood.trazabilidad.web.rest;
 
+import static com.refood.trazabilidad.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.mockito.Mockito.*;
@@ -12,8 +13,10 @@ import com.refood.trazabilidad.repository.CheckoutRepository;
 import com.refood.trazabilidad.service.CheckoutService;
 import com.refood.trazabilidad.service.dto.CheckoutDTO;
 import com.refood.trazabilidad.service.mapper.CheckoutMapper;
-import java.time.LocalDate;
+import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -43,8 +46,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CheckoutResourceIT {
 
-    private static final LocalDate DEFAULT_FECHA_SALIDA = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_FECHA_SALIDA = LocalDate.now(ZoneId.systemDefault());
+    private static final ZonedDateTime DEFAULT_FECHA_SALIDA = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_FECHA_SALIDA = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     private static final Double DEFAULT_PESO = 1D;
     private static final Double UPDATED_PESO = 2D;
@@ -187,7 +190,7 @@ class CheckoutResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(checkout.getId().intValue())))
-            .andExpect(jsonPath("$.[*].fechaSalida").value(hasItem(DEFAULT_FECHA_SALIDA.toString())))
+            .andExpect(jsonPath("$.[*].fechaSalida").value(hasItem(sameInstant(DEFAULT_FECHA_SALIDA))))
             .andExpect(jsonPath("$.[*].peso").value(hasItem(DEFAULT_PESO.doubleValue())));
     }
 
@@ -220,7 +223,7 @@ class CheckoutResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(checkout.getId().intValue()))
-            .andExpect(jsonPath("$.fechaSalida").value(DEFAULT_FECHA_SALIDA.toString()))
+            .andExpect(jsonPath("$.fechaSalida").value(sameInstant(DEFAULT_FECHA_SALIDA)))
             .andExpect(jsonPath("$.peso").value(DEFAULT_PESO.doubleValue()));
     }
 

@@ -52,14 +52,14 @@ public class CheckoutServiceImpl implements CheckoutService {
         log.debug("Request to partially update Checkout : {}", checkoutDTO);
 
         return checkoutRepository
-            .findById(checkoutDTO.getId())
-            .map(existingCheckout -> {
-                checkoutMapper.partialUpdate(existingCheckout, checkoutDTO);
+                .findById(checkoutDTO.getId())
+                .map(existingCheckout -> {
+                    checkoutMapper.partialUpdate(existingCheckout, checkoutDTO);
 
-                return existingCheckout;
-            })
-            .map(checkoutRepository::save)
-            .map(checkoutMapper::toDto);
+                    return existingCheckout;
+                })
+                .map(checkoutRepository::save)
+                .map(checkoutMapper::toDto);
     }
 
     @Override

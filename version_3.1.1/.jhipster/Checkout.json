@@ -7,7 +7,7 @@
   "fields": [
     {
       "fieldName": "fechaSalida",
-      "fieldType": "LocalDate",
+      "fieldType": "ZonedDateTime",
       "fieldValidateRules": ["required"]
     },
     {
@@ -36,5 +36,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "service": "serviceImpl"
+  "service": "serviceImpl",
+  "skipClient": true
 }

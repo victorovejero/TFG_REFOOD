@@ -13,10 +13,6 @@ import org.springframework.data.domain.Pageable;
  */
 public interface TupperService {
 
-    /**
-     * get all tuppers.
-     *
-     */
     List<Tupper> findAll();
 
     /**
@@ -64,13 +60,5 @@ public interface TupperService {
      *
      * @param id the id of the entity.
      */
-    void delete(Long id);}
-
-    
-    
-    
-    
-    
-    
-
-    
+    void delete(Long id);
+}

@@ -2,7 +2,7 @@ package com.refood.trazabilidad.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -28,7 +28,7 @@ public class Checkout implements Serializable {
 
     @NotNull
     @Column(name = "fecha_salida", nullable = false)
-    private LocalDate fechaSalida;
+    private ZonedDateTime fechaSalida;
 
     @NotNull
     @Column(name = "peso", nullable = false)
@@ -63,16 +63,16 @@ public class Checkout implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getFechaSalida() {
+    public ZonedDateTime getFechaSalida() {
         return this.fechaSalida;
     }
 
-    public Checkout fechaSalida(LocalDate fechaSalida) {
+    public Checkout fechaSalida(ZonedDateTime fechaSalida) {
         this.setFechaSalida(fechaSalida);
         return this;
     }
 
-    public void setFechaSalida(LocalDate fechaSalida) {
+    public void setFechaSalida(ZonedDateTime fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 

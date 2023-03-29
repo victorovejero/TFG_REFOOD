@@ -36,11 +36,11 @@ public class BenefServiceImpl implements BenefService {
     @Override
     public List<Benef> findAll() {
 
-        List<Benef> beneficiarios = benefRepository.findAll();
+        List<Benef> benef = benefRepository.findAll();
         // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
         // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
 
-        return beneficiarios;
+        return benef;
     }
 
     @Override

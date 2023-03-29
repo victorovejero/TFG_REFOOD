@@ -6,9 +6,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 /**
- * Service Interface for managing {@link com.refood.trazabilidad.domain.Checkout}.
+ * Service Interface for managing
+ * {@link com.refood.trazabilidad.domain.Checkout}.
  */
 public interface CheckoutService {
+
     /**
      * Save a checkout.
      *

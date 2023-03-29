@@ -60,5 +60,6 @@
       "relationshipType": "many-to-one"
     }
   ],
-  "service": "serviceImpl"
+  "service": "serviceImpl",
+  "skipClient": true
 }

@@ -1,7 +1,7 @@
 package com.refood.trazabilidad.service.dto;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -16,10 +16,10 @@ public class CheckoutDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private LocalDate fechaSalida;
+    private ZonedDateTime fechaSalida;
 
     @NotNull
-    private Integer peso;
+    private Double peso;
 
     private Set<AlSalDTO> alSals = new HashSet<>();
 
@@ -33,19 +33,19 @@ public class CheckoutDTO implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getFechaSalida() {
+    public ZonedDateTime getFechaSalida() {
         return fechaSalida;
     }
 
-    public void setFechaSalida(LocalDate fechaSalida) {
+    public void setFechaSalida(ZonedDateTime fechaSalida) {
         this.fechaSalida = fechaSalida;
     }
 
-    public Integer getPeso() {
+    public Double getPeso() {
         return peso;
     }
 
-    public void setPeso(Integer peso) {
+    public void setPeso(Double peso) {
         this.peso = peso;
     }
 

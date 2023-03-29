@@ -10,11 +10,12 @@
         Added the entity Checkout.
     -->
     <changeSet id="20230215131425-1" author="jhipster">
+        <validCheckSum>8:b20146e25d857218f00d4d97ac6d4a8b</validCheckSum>
         <createTable tableName="checkout">
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="fecha_salida" type="date">
+            <column name="fecha_salida" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
             <column name="peso" type="double">
@@ -25,6 +26,7 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
+        <dropDefaultValue tableName="checkout" columnName="fecha_salida" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <changeSet id="20230215131425-1-relations" author="jhipster">
