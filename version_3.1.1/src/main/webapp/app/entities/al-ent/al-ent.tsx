@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getSortState } from 'react-jhipster';
+import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -33,7 +33,6 @@ export const AlEnt = () => {
   const entity = useAppSelector(state => state.alEnt.entity);
   const updateSuccess = useAppSelector(state => state.alEnt.updateSuccess);
 
-  console.log(alEntList)
   const getAllEntities = () => {
     dispatch(
       getEntities({
@@ -43,6 +42,12 @@ export const AlEnt = () => {
       })
     );
   };
+
+  const handlePagination = currentPage =>
+    setPaginationState({
+      ...paginationState,
+      activePage: currentPage,
+  });
 
   const resetAll = () => {
     dispatch(reset());
@@ -120,12 +125,7 @@ export const AlEnt = () => {
         <input type="text" placeholder="e.g. D-22 o 22" value={searchState} onChange={(e) => filterSearch(e.target.value)}/>
       </div>
       <div className="table-responsive">
-        <InfiniteScroll
-          dataLength={alEntList ? alEntList.length : 0}
-          next={handleLoadMore}
-          hasMore={paginationState.activePage - 1 < links.next}
-          loader={<div className="loader">Loading ...</div>}
-        >
+        
           {alEntList && alEntList.length > 0 ? (
             <Table responsive>
               <thead>
@@ -208,8 +208,25 @@ export const AlEnt = () => {
           ) : (
             !loading && <div className="alert alert-warning">Ningún Al Ents encontrado</div>
           )}
-        </InfiniteScroll>
       </div>
+      {totalItems ? (
+        <div className={alEntList && alEntList.length > 0 ? '' : 'd-none'}>
+          <div className="justify-content-center d-flex">
+            <JhiItemCount page={paginationState.activePage} total={totalItems} itemsPerPage={paginationState.itemsPerPage} />
+          </div>
+          <div className="justify-content-center d-flex">
+            <JhiPagination
+              activePage={paginationState.activePage}
+              onSelect={handlePagination}
+              maxButtons={5}
+              itemsPerPage={paginationState.itemsPerPage}
+              totalItems={totalItems}
+            />
+          </div>
+        </div>
+      ) : (
+        ''
+      )}
     </div>
   );
 };

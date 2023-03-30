@@ -152,7 +152,7 @@ export const Checkout = () => {
                     </Button>
                   </td> */}
                   <td>
-                    {checkout.fechaSalida ? <TextFormat type="date" value={checkout.fechaSalida} format={APP_LOCAL_DATE_FORMAT} /> : null}
+                    {checkout.fechaSalida ? <TextFormat type="date" value={checkout.fechaSalida} format={APP_DATE_FORMAT} /> : null}
                   </td>
                   <td>{checkout.peso}</td>
                   <td>{checkout.benef ? <Link to={`/benef/${checkout.benef.id}`}>{checkout.benef.idBeneficiario}</Link> : ''}</td>
