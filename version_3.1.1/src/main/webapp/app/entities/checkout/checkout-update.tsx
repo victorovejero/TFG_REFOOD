@@ -18,7 +18,7 @@ import {getToday} from 'app/shared/util/date-utils'
 
 export const CheckoutUpdate = () => {
   const PESO_MAX = 15;
-  const [defaultToday,setDefaultToday] = useState<String>(getToday(false));
+  const [defaultToday,setDefaultToday] = useState<String>(getToday(true));
   const pesoMaxNotify = useRef<boolean>(false);
   const [showPesoAlert,setShowPesoAlert] = useState<boolean>(false);
 
@@ -36,8 +36,7 @@ export const CheckoutUpdate = () => {
   const updating = useAppSelector(state => state.checkout.updating);
   const updateSuccess = useAppSelector(state => state.checkout.updateSuccess);
   const [beneficiario, setBeneficiario] = useState<number>( isNew? 0 : checkoutEntity?.beneficiario?.id);
-  console.log("BENEFICIARIO STATE" + beneficiario);
-  console.log(benefs)
+  
   const handleClose = () => {
     navigate('/checkout' + location.search);
   };
@@ -60,6 +59,8 @@ export const CheckoutUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
+    values.fechaSalida = convertDateTimeToServer(values.fechaSalida);
+
     const entity = {
       ...checkoutEntity,
       ...values,
@@ -119,7 +120,7 @@ export const CheckoutUpdate = () => {
                 id="checkout-fechaSalida"
                 name="fechaSalida"
                 data-cy="fechaSalida"
-                type="date"
+                type="datetime-local"
                 value={isNew ? defaultToday : null}
                 onChange={isNew ? (e) => setDefaultToday(e.target.value) : null}
                 validate={{

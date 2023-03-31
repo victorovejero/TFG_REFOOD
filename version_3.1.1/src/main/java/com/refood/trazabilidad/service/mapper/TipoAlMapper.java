@@ -13,7 +13,8 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface TipoAlMapper extends EntityMapper<TipoAlDTO, TipoAl> {
-    // @Mapping(target = "intols", source = "intols", qualifiedByName = "intolIdSet")
+    // @Mapping(target = "intols", source = "intols", qualifiedByName =
+    // "intolIdSet")
     TipoAlDTO toDto(TipoAl s);
 
     @Mapping(target = "removeIntol", ignore = true)

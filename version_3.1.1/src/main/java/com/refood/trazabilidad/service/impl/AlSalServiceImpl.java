@@ -36,11 +36,11 @@ public class AlSalServiceImpl implements AlSalService {
     @Override
     public List<AlSal> findAll() {
 
-        List<AlSal> alimentosDeSalida = alSalRepository.findAll();
+        List<AlSal> alimentoDeSalida = alSalRepository.findAll();
         // List<TipoDeAlimentoDTO> tipoDeAlimentoDtoList = Arrays
         // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
 
-        return alimentosDeSalida;
+        return alimentoDeSalida;
     }
 
     @Override

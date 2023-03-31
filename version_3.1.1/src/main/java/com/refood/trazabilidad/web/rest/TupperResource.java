@@ -50,7 +50,6 @@ public class TupperResource {
         this.tupperRepository = tupperRepository;
     }
 
-    // Implementación Endpoint para sacar todos los elementos de la tabla
     @GetMapping("/tuppers-all")
     public ResponseEntity<List<Tupper>> getAllTuppers() {
         List<Tupper> tuppers = tupperService.findAll();

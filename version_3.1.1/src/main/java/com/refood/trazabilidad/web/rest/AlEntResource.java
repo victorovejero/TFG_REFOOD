@@ -1,6 +1,7 @@
 package com.refood.trazabilidad.web.rest;
 
 import com.refood.trazabilidad.domain.AlEnt;
+
 import com.refood.trazabilidad.repository.AlEntRepository;
 import com.refood.trazabilidad.service.AlEntService;
 import com.refood.trazabilidad.service.dto.AlEntDTO;

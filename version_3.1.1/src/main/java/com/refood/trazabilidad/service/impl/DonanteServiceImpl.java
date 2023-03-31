@@ -34,14 +34,6 @@ public class DonanteServiceImpl implements DonanteService {
     }
 
     @Override
-    public DonanteDTO save(DonanteDTO donanteDTO) {
-        log.debug("Request to save Donante : {}", donanteDTO);
-        Donante donante = donanteMapper.toEntity(donanteDTO);
-        donante = donanteRepository.save(donante);
-        return donanteMapper.toDto(donante);
-    }
-
-    @Override
     public List<Donante> findAll() {
 
         List<Donante> donantes = donanteRepository.findAll();
@@ -49,6 +41,14 @@ public class DonanteServiceImpl implements DonanteService {
         // .asList(modelMapper.map(tipoDeAlimentos, TipoDeAlimentoDTO[].class));
 
         return donantes;
+    }
+
+    @Override
+    public DonanteDTO save(DonanteDTO donanteDTO) {
+        log.debug("Request to save Donante : {}", donanteDTO);
+        Donante donante = donanteMapper.toEntity(donanteDTO);
+        donante = donanteRepository.save(donante);
+        return donanteMapper.toDto(donante);
     }
 
     @Override

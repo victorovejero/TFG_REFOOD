@@ -1,6 +1,7 @@
 package com.refood.trazabilidad.web.rest;
 
 import com.refood.trazabilidad.domain.TipoAl;
+
 import com.refood.trazabilidad.repository.TipoAlRepository;
 import com.refood.trazabilidad.service.TipoAlService;
 import com.refood.trazabilidad.service.dto.TipoAlDTO;
