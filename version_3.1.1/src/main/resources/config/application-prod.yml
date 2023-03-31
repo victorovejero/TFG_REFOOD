@@ -34,8 +34,8 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://refood-db-prod.chpafctp7edl.eu-west-1.rds.amazonaws.com:3306/Refood_Trazabilidad_App_v3?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&createDatabaseIfNotExist=true
-    username: admin
-    password: adminDB-awsprod123
+    username: *********
+    password: *********
     hikari:
       poolName: Hikari
       auto-commit: false
