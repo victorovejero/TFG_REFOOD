@@ -60,13 +60,16 @@ export const AlEntUpdate = () => {
 
   // const frutaYVerduras = useAppSelector(state => state.frutaYVerdura.entities);
   const tuppers = useAppSelector(state => state.tupper.entities);
-  const donantes = useAppSelector(state => state.donante.entities);
+  // Filtro para solo coger los donantes activos
+  const donantes = useAppSelector(state => state.donante.entities).filter(x => x.activo == true);
   const tipoAls = useAppSelector(state => state.tipoAl.entities);
   const alEntEntity = useAppSelector(state => state.alEnt.entity);
   const loading = useAppSelector(state => state.alEnt.loading);
   const updating = useAppSelector(state => state.alEnt.updating);
   const updateSuccess = useAppSelector(state => state.alEnt.updateSuccess);
-  // console.log("Tipo de Alimentos " + tipoAls);
+  
+ 
+  
   const handleClose = () => {
     location.reload();
     navigate('/al-ent/new' + location.search);
@@ -149,12 +152,12 @@ export const AlEntUpdate = () => {
         };
         
  
+
     // Cambio de estado, para seleccionar frutas y verduras.
     // const changefrutaYVerdura = () => {
     //   setFrutaYVerdura(frutaYVerdura => !frutaYVerdura);
     // }
  
-console.log(tipoAl);
     // Se ejecuta al cambiar el valor del input de peso. (Implementación del Warning de peso mayor que x)
     const pesoAlert = (event) => {
       switch(event.target.value >= 10 && event.target.value !==""){
@@ -184,6 +187,11 @@ console.log(tipoAl);
       navigate("/al-ent/new");
       location.reload();
     }
+
+    // ORDENAR TIPO DE ALIMENTOS ALFABÉTICAMENTE
+    const sortedTipoAls = [...tipoAls].sort((a, b) => a.nombreAlimento.localeCompare(b.nombreAlimento));
+    console.log(sortedTipoAls)
+
 
     //EL FLOW DEL FORMULARIO SOLO PARA ENTRADAS NUEVAS, NO IMPLENENTADO PARA ENTRADAS YA EXISTENTES.
   return (
@@ -229,8 +237,8 @@ console.log(tipoAl);
                 required={frutaYVerdura ? false:true}
               >
                 <option value="fruta Y Verdura" key="0"></option>
-                {tipoAls
-                  ? tipoAls.map(otherEntity => (
+                {sortedTipoAls
+                  ? sortedTipoAls.map(otherEntity => (
                     <option value={otherEntity.id} key={otherEntity.id}>
                       {otherEntity.nombreAlimento}
                     </option>
