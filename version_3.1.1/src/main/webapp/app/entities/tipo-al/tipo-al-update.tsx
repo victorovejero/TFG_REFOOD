@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, Row, Col, FormText } from 'reactstrap';
+import { Button, Row, Col, FormText, Alert } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { IIntol } from 'app/shared/model/intol.model';
 import { getEntities as getIntols } from 'app/entities/intol/intol.reducer';
 import { ITipoAl } from 'app/shared/model/tipo-al.model';
+import { getAllEntities as getAllTipoAls } from 'app/entities/tipo-al/tipo-al.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './tipo-al.reducer';
 
 interface IShowTitle {
@@ -18,6 +19,11 @@ interface IShowTitle {
   submitNavigate?:string;
 }
 export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShowTitle) => {
+  const [tipoAl, setTipoAl] = useState("");
+  const [isDuplicateState, setIsDuplicateState] = useState(false)
+  const [showIsDuplicateAlert, setShowIsDuplicateAlert] = useState(false)
+
+
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -30,6 +36,10 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
   const loading = useAppSelector(state => state.tipoAl.loading);
   const updating = useAppSelector(state => state.tipoAl.updating);
   const updateSuccess = useAppSelector(state => state.tipoAl.updateSuccess);
+  // Para comprobar duplicados
+  const tipoAls = useAppSelector(state => state.tipoAl.entities);
+ 
+
 
   const handleClose = () => {
     navigate(submitNavigate);
@@ -39,7 +49,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
     if (!isNew) {
       dispatch(getEntity(id));
     }
-
+    dispatch(getAllTipoAls({}));
     dispatch(getIntols({}));
   }, []);
 
@@ -61,14 +71,17 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
       nombreAlimento: capitalizeFirstLetter(values.nombreAlimento),
       intolerancias: mapIdList(values.intolerancias),
     };
-
-    if (isNew) {
-      console.log(entity);
+    console.log("DUPLICATE " + isDuplicate)
+    if (isNew && isDuplicate === undefined ) {
       dispatch(createEntity(entity));
-    } else {
+    } else if(isNew && isDuplicate !== undefined){
+      setShowIsDuplicateAlert(true);
+    }else {
       dispatch(updateEntity(entity));
     }
   };
+
+  
 
   const defaultValues = () =>
     isNew
@@ -78,6 +91,9 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
           intolerancias: tipoAlEntity?.intolerancias?.map(e => e.id.toString()),
         };
 
+  
+  //Comprobacion de tipos de alimentos duplicados
+  const isDuplicate = tipoAls.find(item => item.nombreAlimento.toUpperCase() === tipoAl.toUpperCase());
   return (
     <div>
       {showTitle ? <Row className="justify-content-center">
@@ -102,10 +118,17 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
                 name="nombreAlimento"
                 data-cy="nombreAlimento"
                 type="text"
+                value={tipoAl}
+                onChange = {e => setTipoAl(e.target.value)}
                 validate={{
                   required: { value: true, message: 'Este campo es obligatorio.' },
                 }}
               />
+              <Alert color="danger"  isOpen={showIsDuplicateAlert}>
+                El alimento ya existe.
+              </Alert>
+              
+              
               <ValidatedField
                 label="Fruta Y Verdura"
                 id="tipo-al-frutaYVerdura"

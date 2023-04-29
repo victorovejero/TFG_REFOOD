@@ -68,7 +68,7 @@ export const AlEntUpdate = () => {
   const updating = useAppSelector(state => state.alEnt.updating);
   const updateSuccess = useAppSelector(state => state.alEnt.updateSuccess);
   
- 
+  console.log(useAppSelector(state=>state))
   
   const handleClose = () => {
     location.reload();
