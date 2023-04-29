@@ -49,10 +49,16 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
     }
   }, [updateSuccess]);
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
   const saveEntity = values => {
+    console.log(values)
     const entity = {
       // ...tipoDeAlimentoEntity,
+      
       ...values,
+      nombreAlimento: capitalizeFirstLetter(values.nombreAlimento),
       intolerancias: mapIdList(values.intolerancias),
     };
 
