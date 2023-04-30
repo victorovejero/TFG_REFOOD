@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Row, Col, FormText, Alert } from 'reactstrap';
 import { isNumber, ValidatedField, ValidatedForm } from 'react-jhipster';
@@ -22,7 +22,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
   const [tipoAl, setTipoAl] = useState("");
   const [isDuplicateState, setIsDuplicateState] = useState(false)
   const [showIsDuplicateAlert, setShowIsDuplicateAlert] = useState(false)
-
+  const renderCount = useRef(0)
 
   const dispatch = useAppDispatch();
 
@@ -46,6 +46,12 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
   };
 
   useEffect(() => {
+    renderCount.current = renderCount.current + 1
+    console.log(renderCount.current)
+  },[tipoAl])
+
+
+  useEffect(() => {
     if (!isNew) {
       dispatch(getEntity(id));
     }
@@ -63,7 +69,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
   const saveEntity = values => {
-    console.log(values)
+    console.log("hello" + values)
     const entity = {
       // ...tipoDeAlimentoEntity,
       
@@ -72,6 +78,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
       intolerancias: mapIdList(values.intolerancias),
     };
     console.log("DUPLICATE " + isDuplicate)
+    console.log("IS NEW? " + isNew)
     if (isNew && isDuplicate === undefined ) {
       dispatch(createEntity(entity));
     } else if(isNew && isDuplicate !== undefined){
@@ -88,6 +95,8 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
       ? {}
       : {
           ...tipoAlEntity,
+          // Fixes bug where tipoAlEntity overrides the state every time and cannot update tipoAlEntity
+          nombreAlimento:(renderCount.current <= 1 ? tipoAlEntity.nombreAlimento : tipoAl),
           intolerancias: tipoAlEntity?.intolerancias?.map(e => e.id.toString()),
         };
 
@@ -128,7 +137,7 @@ export const TipoAlUpdate = ({showTitle = true, submitNavigate="/tipo-al"}:IShow
                 El alimento ya existe.
               </Alert>
               
-              
+
               <ValidatedField
                 label="Fruta Y Verdura"
                 id="tipo-al-frutaYVerdura"
