@@ -26,6 +26,7 @@ import './al-ent.css';
 
 
 export const AlEntUpdate = () => {
+  const FRUTA_Y_VERDURA = 108; //ID del tipo de alimento "fruta y verdura"
   const PESO_MAX = 10;
   const [mostrarHoraPrep,setMostrarHoraPrep] = useState<Boolean>(false);
   const [mostrarHoraRecogida, setMostrarHoraRecogida] = useState<Boolean>(false);
@@ -68,7 +69,6 @@ export const AlEntUpdate = () => {
   const updating = useAppSelector(state => state.alEnt.updating);
   const updateSuccess = useAppSelector(state => state.alEnt.updateSuccess);
   
-  console.log(useAppSelector(state=>state))
   
   const handleClose = () => {
     location.reload();
@@ -110,6 +110,7 @@ export const AlEntUpdate = () => {
   //   }
 
   // }
+ 
   
   const saveEntity = values => {
     values.fechaYHoraEntrada = convertDateTimeToServer(values.fechaYHoraEntrada);
@@ -120,9 +121,10 @@ export const AlEntUpdate = () => {
       ...alEntEntity,
       ...values,
 
+      frutaYVerdura: frutaYVerdura,
       tupper: tuppers.find(it => it.id.toString() === values.tupper.toString()),
       donante: donantes.find(it => it.id.toString() === values.donante.toString()),
-      tipoAl: tipoAls.find(it => it.id.toString() === values.tipoAl.toString()),
+      tipoAl: frutaYVerdura ? tipoAls.find(it => it.id === FRUTA_Y_VERDURA):tipoAls.find(it => it.id.toString() === values.tipoAl.toString())
     };
 
     if (isNew) {
@@ -190,8 +192,7 @@ export const AlEntUpdate = () => {
 
     // ORDENAR TIPO DE ALIMENTOS ALFABÉTICAMENTE
     const sortedTipoAls = [...tipoAls].sort((a, b) => a.nombreAlimento.localeCompare(b.nombreAlimento));
-    console.log(sortedTipoAls)
-
+    
 
     //EL FLOW DEL FORMULARIO SOLO PARA ENTRADAS NUEVAS, NO IMPLENENTADO PARA ENTRADAS YA EXISTENTES.
   return (
@@ -232,11 +233,11 @@ export const AlEntUpdate = () => {
                 data-cy="tipoAl"
                 label="Tipo De Alimento"
                 type="select"
-                value={frutaYVerdura ? "0":tipoAl}
-                onChange={(e) => setTipoAl(e.target.value)}
+                // value={frutaYVerdura ? "0":tipoAl}
+                // onChange={(e) => setTipoAl(e.target.value)}
                 required={frutaYVerdura ? false:true}
               >
-                <option value="fruta Y Verdura" key="0"></option>
+                {/* <option value="0" key="0"></option> */}
                 {sortedTipoAls
                   ? sortedTipoAls.map(otherEntity => (
                     <option value={otherEntity.id} key={otherEntity.id}>

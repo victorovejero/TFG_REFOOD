@@ -170,7 +170,7 @@ export const AlEnt = () => {
                       </Button>
                     </td> */}
                     <td>{alEnt.peso}</td>
-                    <td>{alEnt.tipoAl ? "No":"Sí"}</td>
+                    <td>{alEnt.frutaYVerdura ? "Sí":"No"}</td>
                     <td>
                       {alEnt.fechaYHoraEntrada ? <TextFormat type="date" value={alEnt.fechaYHoraEntrada} format={APP_DATE_FORMAT} /> : null}
                     </td>
